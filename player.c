@@ -1,0 +1,84 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/27 11:59:48 by hfhad             #+#    #+#             */
+/*   Updated: 2025/04/27 13:20:55 by hfhad            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "header.h"
+
+void draw_player(t_game *game, int x, int y, int radius, int color)
+{
+	int i;
+	int	j;
+	int	dx;
+	int	dy;
+
+	i = -radius;
+	while (i <= radius)
+	{
+		j = -radius;
+		while (j <= radius)
+		{
+			dx = i;
+			dy = j;
+			if (dx * dx + dy * dy <= radius * radius)
+				put_pixel_in_img(game, x + dx, y + dy, color);
+			j++;
+		}
+		i++;
+	}
+}
+
+void draw_line(t_game *game, t_player *player, int x, int y, int line_length, int color)
+{
+    int dx;
+    int dy;
+    int sx;
+    int sy;
+    int e2;
+
+    player->mv.player_angle = 50 * M_PI / 180;
+    player->mv.dir_y = sin(player->mv.player_angle);
+    player->mv.dir_x = cos(player->mv.player_angle);
+    player->mv.end_x = (int)(x + player->mv.dir_x * line_length);
+    player->mv.end_y = (int)(y + player->mv.dir_y * line_length);
+    dx = abs(player->mv.end_x - x);
+    dy = abs(player->mv.end_y - y);
+    sx = x < player->mv.end_x ? 1 : -1;
+    sy = y < player->mv.end_y ? 1 : -1;
+    player->mv.err = dx - dy;
+    while (1)
+    {
+        if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT)
+        {
+            put_pixel_in_img(game, x, y, color);
+        }
+        if (x == player->mv.end_x && y == player->mv.end_y) // Fixed condition
+            break;
+        e2 = player->mv.err * 2;
+        if (e2 > -dy)
+        {
+            player->mv.err -= dy;
+            x += sx;
+        }
+        if (e2 < dx)
+        {
+            player->mv.err += dx;
+            y += sy;
+        }
+    }
+}
+
+void    init_player(t_player *player, t_game *game)
+{
+	player->player_x = WINDOW_WIDTH / 2;
+	player->player_y = WINDOW_HEIGHT / 2;
+	draw_player(game, player->player_x, player->player_y, 6, 0xFF0000);
+	draw_line(game, player ,player->player_x, player->player_y, 32, 0xFF0000);
+}
