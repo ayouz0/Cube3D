@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 11:59:48 by hfhad             #+#    #+#             */
-/*   Updated: 2025/04/27 15:33:31 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/04/27 16:15:13 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void draw_line(t_game *game, t_player *player, int x, int y, int line_length, in
 	int sy;
 	int e2;
 
-	printf("inside draw line angle = %f\n", player->mv.player_angle);
 	player->mv.dir_y = sin(player->mv.player_angle);
 	player->mv.dir_x = cos(player->mv.player_angle);
 	player->mv.end_x = (int)(x + player->mv.dir_x * line_length);
@@ -106,53 +105,54 @@ void clear_image(t_game *game)
 	}
 }
 
-int	update(int key, t_game *game)
+int update(t_game *game)
 {
 	float	movestep;
+	float	strafe_angle;
 
-	game->player.mv.turndir = 0;
-	game->player.mv.walkdir = 0;
-	printf("key =%d\n", key);
-	if (key == 53)
-		close_window(game);
-	else if (key == 124 ) // ->
+	// Rotation
+	if (game->keys.left)
+		game->player.mv.player_angle -= game->player.mv.rotspeed;
+	if (game->keys.right)
+		game->player.mv.player_angle += game->player.mv.rotspeed;
+
+	// Movement
+	if (game->keys.w)
 	{
-		printf("key=%d\n", key);
-		game->player.mv.turndir = 1;
-		game->player.mv.player_angle += (game->player.mv.turndir * game->player.mv.mov_speed) * (M_PI / 180);
+		movestep = game->player.mv.mov_speed;
+		game->player.player_x += cos(game->player.mv.player_angle) * movestep;
+		game->player.player_y += sin(game->player.mv.player_angle) * movestep;
 	}
-	else if (key == 123) // <-
+	if (game->keys.s)
 	{
-		printf("key=%d\n", key);
-		game->player.mv.turndir = -1;
-		game->player.mv.player_angle += (game->player.mv.turndir * game->player.mv.mov_speed) * (M_PI / 180);
+		movestep = game->player.mv.mov_speed;
+		game->player.player_x += cos(game->player.mv.player_angle) * movestep * -1;
+		game->player.player_y += sin(game->player.mv.player_angle) * movestep * -1;
 	}
-	else if (key == 1) //D
+	if (game->keys.a)
 	{
-		game->player.player_x -= game->player.mv.mov_speed;
+		strafe_angle = game->player.mv.player_angle - M_PI / 2;
+		game->player.player_x += cos(strafe_angle) * game->player.mv.mov_speed;
+		game->player.player_y += sin(strafe_angle) * game->player.mv.mov_speed;
 	}
-	else if (key == 0) // A
+	if (game->keys.d)
 	{
-		game->player.player_x += game->player.mv.mov_speed;
+		strafe_angle = game->player.mv.player_angle + M_PI / 2;
+		game->player.player_x += cos(strafe_angle) * game->player.mv.mov_speed;
+		game->player.player_y += sin(strafe_angle) * game->player.mv.mov_speed;
 	}
-	else if (key == 1) // S
-	{
-		printf("key=%d\n", key);
-		
-	}
-	else if (key == 13) // W
-	{
-		printf("key=%d\n", key);
-		game->player.mv.walkdir = 1;
-		movestep = game->player.mv.walkdir * game->player.mv.mov_speed;
-		game->player.mv.player_angle += (game->player.mv.turndir * game->player.mv.mov_speed) * (M_PI / 180);
-		game->player.player_x += cos(game->player.mv.player_angle) * game->player.mv.mov_speed;
-		game->player.player_y += sin(game->player.mv.player_angle) * game->player.mv.mov_speed;
-	}
+
+	// Normalize angle to [0, 2π)
+	if (game->player.mv.player_angle >= 2 * M_PI)
+		game->player.mv.player_angle -= 2 * M_PI;
+	else if (game->player.mv.player_angle < 0)
+		game->player.mv.player_angle += 2 * M_PI;
+
+	// printf("After update: angle=%f, x=%f, y=%f\n", game->player.mv.player_angle, game->player.player_x, game->player.player_y);
 	clear_image(game);
 	render_map(game, map);
-	draw_player(game, game->player.player_x, game->player.player_y, 6, 0xFF0000);
-	draw_line(game, &game->player ,game->player.player_x, game->player.player_y, 32, 0xFF0000);
+	draw_player(game, (int)game->player.player_x, (int)game->player.player_y, 6, 0xFF0000);
+	draw_line(game, &game->player, (int)game->player.player_x, (int)game->player.player_y, 32, 0xFF0000);
 	mlx_put_image_to_window(game->mlx, game->win, game->img_ptr, 0, 0);
 	return (0);
 }
@@ -164,8 +164,8 @@ void    init_player(t_player *player, t_game *game)
 	player->mv.turndir = 0; // if 1 rotate to right -1 rotating to left 0 not rotating
 	player->mv.walkdir = 0; // 0 not moving 1 moving forward -1 moving backwords
 	player->mv.player_angle = 0; //50 * M_PI / 180;
-	player->mv.mov_speed = 2.5;
-	player->mv.rotspeed = 2 * (M_PI / 180);
-	draw_player(game, player->player_x, player->player_y, 6, 0xFF0000);
-	draw_line(game, player ,player->player_x, player->player_y, 32, 0xFF0000);
+	player->mv.mov_speed = 1;
+	player->mv.rotspeed = 5 * (M_PI / 180);
+	draw_player(game, (int)player->player_x, (int)player->player_y, 6, 0xFF0000);
+	draw_line(game, player ,(int)player->player_x, (int)player->player_y, 32, 0xFF0000);
 }

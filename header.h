@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/04/27 15:19:27 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/04/27 16:17:10 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define RES 4
 # define NUM_RAYS (WINDOW_WIDTH / RES) // nrays = (screen_with / res)
 
+
 typedef struct s_moves
 {
 	float	player_angle;
@@ -47,10 +48,27 @@ typedef struct s_moves
 typedef struct s_player
 {
 	t_moves	mv;
-	int		player_x;
-	int		player_y;
+	float		player_x;
+	float		player_y;
 } 	t_player;
 
+typedef struct s_rays
+{
+	float		ray_angle;
+	t_player	player
+}	t_ray;
+
+
+typedef struct	s_keys
+{
+	int	w;
+	int	s;
+	int	a;
+	int	d;
+	int	left;
+	int	right;
+	int	esc;
+}	t_keys;
 typedef struct s_game
 {
 	void		*mlx;
@@ -58,6 +76,7 @@ typedef struct s_game
 	void		*img_ptr;
 	char		*addr;
 	t_player	player;
+	t_keys		keys;
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
@@ -67,5 +86,5 @@ void	render_map(t_game *game, char **map);
 void	init_player(t_player *player, t_game *game);
 void	put_pixel_in_img(t_game *game, int x, int y, int color);
 int		close_window(t_game *game);
-int		update(int key, t_game *game);
+int		update(t_game *game);
 #endif
