@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/04/27 13:10:22 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/04/27 15:19:27 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ typedef struct s_moves
 	float	player_angle;
 	float	dir_x;
 	float	dir_y;
+	float	turndir;
+	float	walkdir;
+	float	mov_speed;
+	float	rotspeed;
 	int		end_x;
 	int		end_y;
 	int		err;
@@ -45,10 +49,6 @@ typedef struct s_player
 	t_moves	mv;
 	int		player_x;
 	int		player_y;
-	int		turndir;
-	int		walkdir;
-	int		rotang;
-	int		mov_speed;
 } 	t_player;
 
 typedef struct s_game
@@ -63,7 +63,9 @@ typedef struct s_game
 	int			endian;
 } t_game;
 
-void    init_player(t_player *player, t_game *game);
+void	render_map(t_game *game, char **map);
+void	init_player(t_player *player, t_game *game);
 void	put_pixel_in_img(t_game *game, int x, int y, int color);
-
+int		close_window(t_game *game);
+int		update(int key, t_game *game);
 #endif

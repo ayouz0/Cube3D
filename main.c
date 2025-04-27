@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/04/27 12:19:01 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/04/27 15:14:36 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int main()
 	game.addr = mlx_get_data_addr(game.img_ptr, &game.bits_per_pixel, &game.line_length, &game.endian);
 	render_map(&game, map);
 	init_player(&game.player, &game);
-
+	mlx_hook(game.win, 2, 1L<<0, update, &game);
 	mlx_put_image_to_window(game.mlx, game.win, game.img_ptr, 0, 0);
 
 	mlx_hook(game.win, 17, 0, close_window, &game);
