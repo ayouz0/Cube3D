@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/04/27 16:17:10 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/04/27 17:30:48 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,14 @@ typedef struct s_player
 	float		player_y;
 } 	t_player;
 
-typedef struct s_rays
+typedef struct s_ray
 {
-	float		ray_angle;
-	t_player	player
-}	t_ray;
+	float ray_angle;     // angle of the ray
+	float wall_hit_x;     // where the wall was hit (x)
+	float wall_hit_y;     // where the wall was hit (y)
+	float distance;       // distance to wall
+	int   was_hit_vertical; // 1 if vertical wall was hit, 0 if horizontal
+} t_ray;
 
 
 typedef struct	s_keys
@@ -87,4 +90,12 @@ void	init_player(t_player *player, t_game *game);
 void	put_pixel_in_img(t_game *game, int x, int y, int color);
 int		close_window(t_game *game);
 int		update(t_game *game);
+int		key_press(int key, t_game *game);
+int		key_release(int key, t_game *game);
+void	draw_player(t_game *game, int x, int y, int radius, int color);
+void	draw_line(t_game *game, t_player *player, int x, int y, int line_length, int color);
+void	clear_image(t_game *game);
+float	normalize_angle(float angle);
+int		has_wall_at(int x, int y, char **map);
+void	cast_all_rays(t_game *game);
 #endif

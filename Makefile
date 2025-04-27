@@ -4,7 +4,7 @@ FLAGS = -Wall -Werror -Wextra
 
 LINKING = -lmlx -framework OpenGL -framework AppKit 
 
-SRC = main.c player.c
+SRC = main.c player.c input.c map.c raycasting.c settings.c update.c
 
 OBJ = ${SRC:.c=.o}
 
