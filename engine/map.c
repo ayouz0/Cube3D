@@ -6,11 +6,11 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:03:36 by hfhad             #+#    #+#             */
-/*   Updated: 2025/04/27 17:06:19 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/04 17:05:27 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "engine.h"
 
 void draw_square(t_game *game, int x, int y, int color)
 {
@@ -58,10 +58,10 @@ void	render_map(t_game *game, char **map)
 	int	y;
 
 	y = 0;
-	while (y < 9)
+	while (y < ROWS)
 	{
 		x = 0;
-		while (x < 16)
+		while (x < COLS)
 		{
 			if (map[y][x] == '1')
 				draw_square(game, x * TILESIZE, y * TILESIZE, 0x404040);

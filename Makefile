@@ -4,13 +4,16 @@ FLAGS = -Wall -Werror -Wextra
 
 LINKING = -lmlx -framework OpenGL -framework AppKit 
 
-SRC = main.c player.c input.c map.c raycasting.c settings.c update.c
+HEADERS = header.h engine/engine.h parsing/parsing.h
+
+SRC = main.c engine/player.c engine/input.c engine/map.c \
+		engine/raycasting.c engine/settings.c engine/update.c
 
 OBJ = ${SRC:.c=.o}
 
 all: $(NAME)
 
-%.o: %.c header.h
+%.o: %.c $(HEADERS)
 	cc $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)

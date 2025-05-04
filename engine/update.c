@@ -6,11 +6,11 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:05:10 by hfhad             #+#    #+#             */
-/*   Updated: 2025/04/27 17:27:27 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/04 17:15:15 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "engine.h"
 
 char *map[] = {
 	"1111111111111111",
@@ -37,7 +37,7 @@ int update(t_game *game)
 {
 	float	movestep;
 	float	strafe_angle;
-
+	// t_ray	ray;
 	// Rotation
 	if (game->keys.left)
 		game->player.mv.player_angle -= game->player.mv.rotspeed;
@@ -75,10 +75,10 @@ int update(t_game *game)
 
 	// printf("After update: angle=%f, x=%f, y=%f\n", game->player.mv.player_angle, game->player.player_x, game->player.player_y);
 	clear_image(game);
-	cast_all_rays(game);
-	// render_map(game, map);
-	// draw_player(game, (int)game->player.player_x, (int)game->player.player_y, 6, 0xFF0000);
-	// draw_line(game, &game->player, (int)game->player.player_x, (int)game->player.player_y, 32, 0xFF0000);
+	// cast_all_rays(game, &ray);
+	render_map(game, map);
+	draw_player(game, (int)game->player.player_x, (int)game->player.player_y, 6, 0xFF0000);
+	draw_line(game, &game->player, (int)game->player.player_x, (int)game->player.player_y, 42, 0xFF0000);
 	mlx_put_image_to_window(game->mlx, game->win, game->img_ptr, 0, 0);
 	return (0);
 }

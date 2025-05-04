@@ -6,11 +6,12 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/04/27 17:26:12 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/04 16:47:48 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "engine.h"
+
 char *map1[] = {
         "1111111111111111",
         "1000000000000001",
@@ -142,7 +143,7 @@ void cast_single_ray(t_game *game, t_ray *ray)
     }
 }
 
-void cast_all_rays(t_game *game)
+void cast_all_rays(t_game *game, t_ray *ray)
 {
     float ray_angle;
     int ray_id;
@@ -151,14 +152,13 @@ void cast_all_rays(t_game *game)
     ray_id = 0;
     while (ray_id < NUM_RAYS)
     {
-        t_ray ray;
-        ray.ray_angle = ray_angle;
+        ray->ray_angle = ray_angle;
 
         // Cast one ray
-        cast_single_ray(game, &ray);
+        cast_single_ray(game, ray);
 
         // Correct the fish-eye effect
-        float corrected_distance = ray.distance * cos(ray.ray_angle - game->player.mv.player_angle);
+        float corrected_distance = ray->distance * cos(ray->ray_angle - game->player.mv.player_angle);
 
         // Calculate wall height based on corrected distance
         float distance_to_proj_plane = (WINDOW_WIDTH / 2) / tan(FOV / 2);
@@ -177,7 +177,7 @@ void cast_all_rays(t_game *game)
         int x = ray_id * RES;
         int i = 0;
         while (i < RES)
-        {
+        {  
             int y = wall_top_pixel;
             while (y < wall_bottom_pixel)
             {

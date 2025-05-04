@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/04/27 17:06:14 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/04 16:08:55 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,38 @@ void put_pixel_in_img(t_game *game, int x, int y, int color)
 
 int main()
 {
-    t_game game;
+	t_game game;
 
-    char *map[] = {
-        "1111111111111111",
-        "1000000000000001",
-        "1000111000000001",
-        "1000001000000001",
-        "1000001000111001",
-        "1000001000001001",
-        "1000000000001001",
-        "1000000000000001",
-        "1111111111111111",
-        NULL
-    };
+	char *map[] = {
+		"1111111111111111",
+		"1000000000000001",
+		"1000111000000001",
+		"1000001000000001",
+		"1000001000111001",
+		"1000001000001001",
+		"1000000000001001",
+		"1000000000000001",
+		"1111111111111111",
+		NULL
+	};
 
-    game.mlx = mlx_init();
-    game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cube3d");
-    game.img_ptr = mlx_new_image(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-    game.addr = mlx_get_data_addr(game.img_ptr, &game.bits_per_pixel, &game.line_length, &game.endian);
-    render_map(&game, map);
-    init_player(&game.player, &game);
-    mlx_hook(game.win, 2, 1L<<0, key_press, &game);
-    mlx_hook(game.win, 3, 1L<<1, key_release, &game);
-    mlx_loop_hook(game.mlx, update, &game);
-    mlx_put_image_to_window(game.mlx, game.win, game.img_ptr, 0, 0);
-    mlx_hook(game.win, 17, 0, close_window, &game);
-    mlx_loop(game.mlx);
+	game.mlx = mlx_init();
+	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cube3d");
+	game.img_ptr = mlx_new_image(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	game.addr = mlx_get_data_addr(game.img_ptr, &game.bits_per_pixel, &game.line_length, &game.endian);
+	game.keys.a = 0;
+	game.keys.d = 0;
+	game.keys.s = 0;
+	game.keys.w = 0;
+	game.keys.left = 0;
+	game.keys.right= 0;
+	game.keys.esc = 0;
+	render_map(&game, map);
+	init_player(&game.player, &game);
+	mlx_hook(game.win, 2, 1L<<0, key_press, &game);
+	mlx_hook(game.win, 3, 1L<<1, key_release, &game);
+	mlx_loop_hook(game.mlx, update, &game);
+	mlx_put_image_to_window(game.mlx, game.win, game.img_ptr, 0, 0);
+	mlx_hook(game.win, 17, 0, close_window, &game);
+	mlx_loop(game.mlx);
 }
