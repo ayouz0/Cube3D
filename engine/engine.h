@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/04 17:13:21 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/06 12:01:40 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../header.h"
 
 # define TILESIZE  80
 # define ROWS 9
@@ -30,7 +29,7 @@
 # define WINDOW_HEIGHT (ROWS * TILESIZE)
 # define RES 4
 # define NUM_RAYS (WINDOW_WIDTH / RES) // nrays = (screen_with / res)
-
+# define PLAYER_RADIUS 10.0f
 
 typedef struct s_moves
 {
@@ -87,6 +86,11 @@ typedef struct s_game
 	int			endian;
 } t_game;
 
+
+
+unsigned int shade_color(unsigned int color, float distance);
+void	draw_floor(t_game *game);
+void	draw_sky(t_game *game);
 void	render_map(t_game *game, char **map);
 void	init_player(t_player *player, t_game *game);
 void	put_pixel_in_img(t_game *game, int x, int y, int color);

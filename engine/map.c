@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:03:36 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/04 17:05:27 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/06 12:03:42 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,53 @@ void draw_square(t_game *game, int x, int y, int color)
 	int i, j;
 
 	i = 0;
-	while (i < TILESIZE- 1)
+	while (i < TILESIZE)
 	{
 		j = 0;
-		while (j < TILESIZE - 1)
+		while (j < TILESIZE)
 		{
 			put_pixel_in_img(game, x + j, y + i, color);
 			j++;
 		}
 		i++;
+	}
+}
+
+void	draw_sky(t_game *game)
+{
+
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < ROWS / 2)
+	{
+		x = 0;
+		while (x < COLS)
+		{
+			draw_square(game, x * TILESIZE, y * TILESIZE, 0x4dbeff);
+			x++;
+		}
+		y++;
+	}
+}
+
+void	draw_floor(t_game *game)
+{
+
+	int	x;
+	int	y;
+
+	y = ROWS / 2;
+	while (y < ROWS)
+	{
+		x = 0;
+		while (x < COLS)
+		{
+			draw_square(game, x * TILESIZE, y * TILESIZE, 0x613c00);
+			x++;
+		}
+		y++;
 	}
 }
 
