@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/06 12:01:37 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/07 12:23:39 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,6 @@ void cast_all_rays(t_game *game, t_ray *ray)
 			}
 			i++;
 		}
-
 		ray_angle += FOV / NUM_RAYS; // Rotate slightly for next ray
 		ray_id++;
 	}

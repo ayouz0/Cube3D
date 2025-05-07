@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:03:36 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/06 12:03:42 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/07 12:25:47 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,41 +29,60 @@ void draw_square(t_game *game, int x, int y, int color)
 	}
 }
 
+void draw_minisquare(t_game *game, int x, int y, int color, int size)
+{
+	int i, j;
+
+	i = 0;
+	while (i < size)
+	{
+		j = 0;
+		while (j < size)
+		{
+			put_pixel_in_img(game, x + j, y + i, color);
+			j++;
+		}
+		i++;
+	}
+}
+
 void	draw_sky(t_game *game)
 {
-
-	int	x;
-	int	y;
+	int x, y;
+	int mini_size = TILESIZE / 16;
+	int max_height = (ROWS * TILESIZE) / 2;
 
 	y = 0;
-	while (y < ROWS / 2)
+	while (y < max_height)
 	{
 		x = 0;
-		while (x < COLS)
+		while (x < COLS * TILESIZE)
 		{
-			draw_square(game, x * TILESIZE, y * TILESIZE, 0x4dbeff);
-			x++;
+			int shaded = shade_color(0x003082, y / 4); // smooth shading
+			draw_minisquare(game, x, y, shaded, mini_size);
+			x += mini_size;
 		}
-		y++;
+		y += mini_size;
 	}
 }
 
 void	draw_floor(t_game *game)
 {
+	int x, y;
+	int mini_size = TILESIZE / 16;
+	int start_y = (ROWS * TILESIZE) / 2;
+	int end_y = ROWS * TILESIZE;
 
-	int	x;
-	int	y;
-
-	y = ROWS / 2;
-	while (y < ROWS)
+	y = start_y;
+	while (y < end_y)
 	{
 		x = 0;
-		while (x < COLS)
+		while (x < COLS * TILESIZE)
 		{
-			draw_square(game, x * TILESIZE, y * TILESIZE, 0x613c00);
-			x++;
+			draw_minisquare(game, x, y, shade_color(0x613c00, (end_y - y) / 2), mini_size);
+			x += mini_size;
 		}
-		y++;
+		y += mini_size;
 	}
 }
 
