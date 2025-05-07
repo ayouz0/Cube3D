@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   header.h                                           :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/05 17:07:22 by aaitabde         ###   ########.fr       */
+/*   Created: 2024/10/22 12:27:45 by aaitabde          #+#    #+#             */
+/*   Updated: 2024/11/11 18:35:42 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEADER_H
-# define HEADER_H
+#include "libft.h"
 
-#include <mlx.h>
-#include <math.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include "engine/engine.h"
-#include "libft/libft.h"
-#include "parsing/parsing.h"
+int	ft_isalnum(int c)
+{
+	unsigned char	i;
 
-#endif
+	i = (unsigned char) c;
+	if (((i <= 90 && i >= 65) || (i <= 122 && i >= 97))
+		|| (i <= '9' && i >= '0'))
+		return (1);
+	return (0);
+}

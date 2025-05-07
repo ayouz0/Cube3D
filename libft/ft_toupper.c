@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   header.h                                           :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/05 17:07:22 by aaitabde         ###   ########.fr       */
+/*   Created: 2024/10/22 10:03:58 by aaitabde          #+#    #+#             */
+/*   Updated: 2024/10/25 13:13:14 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEADER_H
-# define HEADER_H
+#include "libft.h"
 
-#include <mlx.h>
-#include <math.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include "engine/engine.h"
-#include "libft/libft.h"
-#include "parsing/parsing.h"
-
-#endif
+int	ft_toupper(int c)
+{
+	if ((unsigned char)c >= 'a' && (unsigned char)c <= 'z')
+	{
+		c -= 32;
+	}
+	return (c);
+}

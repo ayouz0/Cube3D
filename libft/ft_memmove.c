@@ -1,26 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   header.h                                           :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/05 17:07:22 by aaitabde         ###   ########.fr       */
+/*   Created: 2024/10/26 18:00:03 by aaitabde          #+#    #+#             */
+/*   Updated: 2024/11/15 20:27:31 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEADER_H
-# define HEADER_H
+#include "libft.h"
 
-#include <mlx.h>
-#include <math.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include "engine/engine.h"
-#include "libft/libft.h"
-#include "parsing/parsing.h"
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	const char	*s;
+	char		*d;
+	size_t		i;
 
-#endif
+	if (len == 0)
+		return (dst);
+	if (dst == NULL && src == NULL)
+		return (NULL);
+	s = (const char *) src;
+	d = (char *) dst;
+	i = 0;
+	if (s > d)
+	{
+		while (i < len)
+		{
+			d[i] = s[i];
+			i++;
+		}
+	}
+	else
+	{
+		while (len-- > 0)
+			d[len] = s[len];
+	}
+	return (dst);
+}
