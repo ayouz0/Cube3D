@@ -6,9 +6,10 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/06 15:27:13 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/07 12:32:55 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef ENGINE_H
 # define ENGINE_H
@@ -20,6 +21,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+// #include "../parsing/parsing.h"
+// #include "../header.h"
 
 # define TILESIZE  80
 # define ROWS 9
@@ -30,6 +33,25 @@
 # define RES 4
 # define NUM_RAYS (WINDOW_WIDTH / RES) // nrays = (screen_with / res)
 # define PLAYER_RADIUS 10.0f
+
+typedef struct s_cardinals
+{
+	void	*ptr;
+	int		h;
+	int		w;
+}	t_cardinals;
+
+typedef struct s_parser
+{
+	char		**map;
+	int			fd;
+	t_cardinals	NO;
+	t_cardinals	SO;
+	t_cardinals	WE;
+	t_cardinals	EA;
+	int			f;
+	int			c;
+} t_parser;
 
 typedef struct s_moves
 {
@@ -81,9 +103,12 @@ typedef struct s_game
 	char		*addr;
 	t_player	player;
 	t_keys		keys;
+	t_parser	parse_data;
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
+	char		**map;
+	char		*error_msg;
 } t_game;
 
 

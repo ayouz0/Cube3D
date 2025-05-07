@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   header.h                                           :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/05 17:07:22 by aaitabde         ###   ########.fr       */
+/*   Created: 2024/10/27 16:01:13 by aaitabde          #+#    #+#             */
+/*   Updated: 2024/11/14 17:17:26 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEADER_H
-# define HEADER_H
+#include "libft.h"
 
-#include <mlx.h>
-#include <math.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include "engine/engine.h"
-#include "libft/libft.h"
-#include "parsing/parsing.h"
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+{
+	size_t	dlen;
+	size_t	i;
 
-#endif
+	i = 0;
+	if (dstsize <= 0 && !dst)
+		return (ft_strlen(src));
+	dlen = ft_strlen(dst);
+	if (dstsize <= dlen)
+		return (ft_strlen(src) + dstsize);
+	while (src[i] != '\0' && i < dstsize - dlen - 1)
+	{
+		dst[dlen + i] = src[i];
+		i++;
+	}
+	dst[dlen + i] = '\0';
+	return (dlen + ft_strlen(src));
+}
