@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:46:53 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/07 14:36:24 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:56:15 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,9 +174,6 @@ int	load_cardinals_and_colors(t_game *game, char **av)
 		{
 			if (all_have_been_loaded(game))
 			{
-				printf("condition : %d\n", (game->parse_data.NO.ptr && game->parse_data.SO.ptr \
-				&& game->parse_data.EA.ptr && game->parse_data.WE.ptr \
-				&& game->parse_data.c != -1 && game->parse_data.f != -1));
 				free(line);
 				break;
 			}

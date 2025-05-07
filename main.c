@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/07 12:45:17 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:57:13 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,21 @@ void put_pixel_in_img(t_game *game, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+void	leaks(){
+	system("leaks -c cub3d");
+}
+
 int main(int ac, char **av)
 {
 	t_game game;
 	(void)av;
 	(void)ac;
+	atexit(leaks);
 	game.mlx = mlx_init();
 	if (parsing(ac, av, &game) != 0)
 		return (1);
 	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cube3d");
-	
+	exit(1);
 	// int	x;
 	// int	y;
 	// void *img = mlx_xpm_file_to_image(game.mlx, "textures/test.xpm", &x, &y);
