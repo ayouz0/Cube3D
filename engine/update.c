@@ -6,24 +6,11 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:05:10 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/06 15:27:08 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/07 13:44:34 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
-
-char *map[] = {
-	"1111111111111111",
-	"1000000000000001",
-	"1000111000000001",
-	"1000001000000001",
-	"1000001000111001",
-	"1000001000001001",
-	"1000000000001001",
-	"1000000000000001",
-	"1111111111111111",
-	NULL
-};
 
 float	normalize_angle(float angle)
 {
@@ -80,7 +67,7 @@ int update(t_game *game)
 		movestep = game->player.mv.mov_speed;
 		new_x = game->player.player_x + cos(game->player.mv.player_angle) * movestep;
 		new_y = game->player.player_y + sin(game->player.mv.player_angle) * movestep;
-		if (!iswall(new_x, new_y, map))
+		if (!iswall(new_x, new_y, game->map))
 		{
 			game->player.player_x = new_x;
 			game->player.player_y = new_y;
@@ -91,7 +78,7 @@ int update(t_game *game)
 		movestep = game->player.mv.mov_speed;
 		new_x = game->player.player_x + cos(game->player.mv.player_angle) * movestep * -1;
 		new_y = game->player.player_y + sin(game->player.mv.player_angle) * movestep * -1;
-		if (!iswall(new_x, new_y, map))
+		if (!iswall(new_x, new_y, game->map))
 		{
 			game->player.player_x = new_x;
 			game->player.player_y = new_y;
@@ -102,7 +89,7 @@ int update(t_game *game)
 		strafe_angle = game->player.mv.player_angle - M_PI / 2;
 		new_x = game->player.player_x + cos(strafe_angle) * game->player.mv.mov_speed;
 		new_y = game->player.player_y + sin(strafe_angle) * game->player.mv.mov_speed;
-		if (!iswall(new_x, new_y, map))
+		if (!iswall(new_x, new_y, game->map))
 		{
 			game->player.player_x = new_x;
 			game->player.player_y = new_y;
@@ -113,7 +100,7 @@ int update(t_game *game)
 		strafe_angle = game->player.mv.player_angle + M_PI / 2;
 		new_x = game->player.player_x + cos(strafe_angle) * game->player.mv.mov_speed;
 		new_y = game->player.player_y + sin(strafe_angle) * game->player.mv.mov_speed;
-		if (!iswall(new_x, new_y, map))
+		if (!iswall(new_x, new_y, game->map))
 		{
 			game->player.player_x = new_x;
 			game->player.player_y = new_y;
@@ -128,7 +115,7 @@ int update(t_game *game)
 	draw_sky(game);
 	draw_floor(game);
 	cast_all_rays(game, &ray);
-	// render_map(game, map);
+	// render_map(game, game->map);
 	// draw_player(game, (int)game->player.player_x, (int)game->player.player_y, 6, 0xFF0000);
 	// draw_line(game, &game->player, (int)game->player.player_x, (int)game->player.player_y, 42, 0xFF0000);
 	mlx_put_image_to_window(game->mlx, game->win, game->img_ptr, 0, 0);

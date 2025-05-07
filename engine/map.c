@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:03:36 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/07 12:25:47 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/07 13:29:09 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,10 @@ void	render_map(t_game *game, char **map)
 		{
 			if (map[y][x] == '1')
 				draw_square(game, x * TILESIZE, y * TILESIZE, 0x404040);
-			else
+			else if (map[y][x] == '0')
 				draw_square(game, x * TILESIZE, y * TILESIZE, 0xFFFFFF);
+			else
+				draw_square(game, x * TILESIZE, y * TILESIZE, 0x000000);
 			x++;
 		}
 		y++;

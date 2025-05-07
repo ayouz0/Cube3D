@@ -6,24 +6,12 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/07 12:23:39 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/07 13:50:12 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 
-char *map1[] = {
-		"1111111111111111",
-		"1000000000000001",
-		"1000111000000001",
-		"1000001000000001",
-		"1000001000111001",
-		"1000001000001001",
-		"1000000000001001",
-		"1000000000000001",
-		"1111111111111111",
-		NULL
-	};
 float distance_between_points(float x1, float y1, float x2, float y2)
 {
 	return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
@@ -67,7 +55,7 @@ void cast_single_ray(t_game *game, t_ray *ray)
 	while (next_horz_x >= 0 && next_horz_x <= WINDOW_WIDTH && next_horz_y >= 0 && next_horz_y <= WINDOW_HEIGHT)
 	{
 		int check_y = facing_up ? next_horz_y - 1 : next_horz_y;
-		if (has_wall_at(next_horz_x, check_y, map1))
+		if (has_wall_at(next_horz_x, check_y, game->map))
 		{
 			found_horz_wall_hit = 1;
 			horz_wall_hit_x = next_horz_x;
@@ -104,7 +92,7 @@ void cast_single_ray(t_game *game, t_ray *ray)
 	while (next_vert_x >= 0 && next_vert_x <= WINDOW_WIDTH && next_vert_y >= 0 && next_vert_y <= WINDOW_HEIGHT)
 	{
 		int check_x = facing_left ? next_vert_x - 1 : next_vert_x;
-		if (has_wall_at(check_x, next_vert_y, map1))
+		if (has_wall_at(check_x, next_vert_y, game->map))
 		{
 			found_vert_wall_hit = 1;
 			vert_wall_hit_x = next_vert_x;

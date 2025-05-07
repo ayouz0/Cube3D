@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/07 10:48:37 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/07 13:44:05 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 void put_pixel_in_img(t_game *game, int x, int y, int color)
 {
-	char *dst;
+	if (x < 0 || x >= WINDOW_WIDTH || y < 0 || y >= WINDOW_HEIGHT)
+		return;
 
-	dst = game->addr + (y * game->line_length + x * (game->bits_per_pixel / 8));
+	char *dst = game->addr + (y * game->line_length + x * (game->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
+
 
 int main(int ac, char **av)
 {
@@ -29,26 +31,6 @@ int main(int ac, char **av)
 	if (parsing(ac, av, &game) != 0)
 		return (1);
 	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cube3d");
-
-	// int	x;
-	// int	y;
-	// void *img = mlx_xpm_file_to_image(game.mlx, "textures/test.xpm", &x, &y);
-	// if (!img)
-	// 	printf("why?\n");
-// char *map[] = {
-//         "1111111111111111",
-//         "1000000000000001",
-//         "1000111000000001",
-//         "1000001000000001",
-//         "1000001000111001",
-//         "1000001000001001",
-//         "1000000000001001",
-//         "1000000000000001",
-//         "1111111111111111",
-//         NULL
-//     };
-exit(1337);
-
 	game.img_ptr = mlx_new_image(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	game.addr = mlx_get_data_addr(game.img_ptr, &game.bits_per_pixel, &game.line_length, &game.endian);
 	game.keys.a = 0;
