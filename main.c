@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/07 10:48:37 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/07 12:45:17 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int main(int ac, char **av)
 	if (parsing(ac, av, &game) != 0)
 		return (1);
 	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cube3d");
-
+	
 	// int	x;
 	// int	y;
 	// void *img = mlx_xpm_file_to_image(game.mlx, "textures/test.xpm", &x, &y);

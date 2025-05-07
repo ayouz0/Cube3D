@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:46:53 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/07 11:15:46 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:36:24 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_color(char *line)
 }
 
 /*only one expression would be true for the string comparisons
-makes "found" a bool*/
+witch makes "found" a bool*/
 int	is_cardinal(char *line)
 {
 	int found;
@@ -133,6 +133,12 @@ int	load_data(t_game *game, char *line)
 	return (0);
 }
 
+int	all_have_been_loaded(t_game *game)
+{
+	return ((game->parse_data.NO.ptr && game->parse_data.SO.ptr \
+		&& game->parse_data.EA.ptr && game->parse_data.WE.ptr \
+		&& game->parse_data.c != -1 && game->parse_data.f != -1));
+}
 
 int	load_cardinals_and_colors(t_game *game, char **av)
 {
@@ -155,8 +161,9 @@ int	load_cardinals_and_colors(t_game *game, char **av)
 		}
 		if (!line)
 			return (printf("Error: couldn't load all cardinals/colors\n"), 1);
-		if (is_cardinal(line) == 0 || is_color(line) == 0)
+		if ((is_cardinal(line) == 0 || is_color(line) == 0))
 		{
+				
 			if (load_data(game, line) != 0)
 				return (1);
 			counter++;
@@ -165,8 +172,16 @@ int	load_cardinals_and_colors(t_game *game, char **av)
 			return (printf("Error: invalid line while parsing cardinals/colors:\n%s\n", line), free(line), 1);
 		if (counter == 6)
 		{
-			free(line);
-			break;
+			if (all_have_been_loaded(game))
+			{
+				printf("condition : %d\n", (game->parse_data.NO.ptr && game->parse_data.SO.ptr \
+				&& game->parse_data.EA.ptr && game->parse_data.WE.ptr \
+				&& game->parse_data.c != -1 && game->parse_data.f != -1));
+				free(line);
+				break;
+			}
+			else
+				return (printf("Error: found duplicate config info\n"), 1);
 		}
 		line = get_next_line(game->parse_data.fd);
 	}
@@ -280,14 +295,13 @@ int	load_map(t_game *game)
 	if (num_lines <= 0)
 		return (printf("Error: map couldn't be read or is empty\n"), 1);
 	game->map = pad_map_lines(lines, num_lines, max_len);
-	for (int i = 0; game->map[i]; i++)
-		printf("|%s|\n", game->map[i]);
 	free_map(lines, num_lines);
 	if (!game->map)
 		return (printf("Error: failed to allocate map memory\n"), 1);
 	// if (validate_map(game, game->map, num_lines, max_len))
 	// 	return (printf("Error: %s\n", game->error_msg), free_map(game->map, num_lines), 1);
-
+	game->parse_data.height = num_lines;
+	game->parse_data.width = max_len;
 	return (0);
 }
 int	parsing(int ac, char **av, t_game *game)
@@ -297,6 +311,12 @@ int	parsing(int ac, char **av, t_game *game)
 		return (printf("Error: usage: ./cub3d <filename>.cub\n"), 1);
 	if (ft_strlen(av[1]) < 4 || ft_strncmp(av[1] + ft_strlen(av[1]) - 4, ".cub", 4) != 0)
 		return (printf("Error: bad file extention\n"), 1);
+	game->parse_data.c = -1;
+	game->parse_data.f = -1;
+	game->parse_data.NO.ptr = 0x0;
+	game->parse_data.SO.ptr = 0x0;
+	game->parse_data.WE.ptr = 0x0;
+	game->parse_data.EA.ptr = 0x0;
 	if (load_cardinals_and_colors(game, av) != 0)
 		return (1);
 	if (load_map(game))

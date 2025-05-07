@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/07 10:52:51 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:35:30 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ typedef struct s_parser
 	t_cardinals	SO;
 	t_cardinals	WE;
 	t_cardinals	EA;
+	int			width;
+	int			height;
 	int			f;
 	int			c;
 } t_parser;
