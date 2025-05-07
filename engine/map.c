@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:03:36 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/07 13:29:09 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/07 15:02:03 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,15 @@ void	draw_floor(t_game *game)
 	}
 }
 
-int	has_wall_at(int x, int y, char **map)
+int	has_wall_at(int x, int y, t_game *game)
 {
-	return (map[(int)(y / TILESIZE)][(int)(x / TILESIZE)] == '1');
+	int map_x = (int)(x / TILESIZE);
+	int map_y = (int)(y / TILESIZE);
+
+	if (map_x < 0 || map_x >= game->parse_data.width || map_y < 0 || map_y >= game->parse_data.height)
+		return (1); // Treat out-of-bounds as wall
+
+	return (game->map[map_y][map_x] == '1');
 }
 
 void clear_image(t_game *game)
@@ -122,7 +128,7 @@ void	render_map(t_game *game, char **map)
 		{
 			if (map[y][x] == '1')
 				draw_square(game, x * TILESIZE, y * TILESIZE, 0x404040);
-			else if (map[y][x] == '0')
+			else if (map[y][x] == '0' || map[y][x] == 'N')
 				draw_square(game, x * TILESIZE, y * TILESIZE, 0xFFFFFF);
 			else
 				draw_square(game, x * TILESIZE, y * TILESIZE, 0x000000);

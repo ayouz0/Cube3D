@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/07 14:38:41 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/07 15:01:16 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	draw_player(t_game *game, int x, int y, int radius, int color);
 void	draw_line(t_game *game, t_player *player, int x, int y, int line_length, int color);
 void	clear_image(t_game *game);
 float	normalize_angle(float angle);
-int		has_wall_at(int x, int y, char **map);
+int		has_wall_at(int x, int y, t_game *game);
 void	cast_all_rays(t_game *game, t_ray *ray);
 
 #endif

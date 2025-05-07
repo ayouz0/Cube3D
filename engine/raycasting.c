@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/07 14:46:16 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/07 15:02:16 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void cast_single_ray(t_game *game, t_ray *ray)
 
 	{
 		int check_y = facing_up ? next_horz_y - 1 : next_horz_y;
-		if (has_wall_at(next_horz_x, check_y, game->map))
+		if (has_wall_at(next_horz_x, check_y, game))
 		{
 			found_horz_wall_hit = 1;
 			horz_wall_hit_x = next_horz_x;
@@ -96,7 +96,7 @@ void cast_single_ray(t_game *game, t_ray *ray)
 
 	{
 		int check_x = facing_left ? next_vert_x - 1 : next_vert_x;
-		if (has_wall_at(check_x, next_vert_y, game->map))
+		if (has_wall_at(check_x, next_vert_y, game))
 		{
 			found_vert_wall_hit = 1;
 			vert_wall_hit_x = next_vert_x;
