@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/07 13:50:12 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/07 14:46:16 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ void cast_single_ray(t_game *game, t_ray *ray)
 	float next_horz_x = x_intercept;
 	float next_horz_y = y_intercept;
 
-	while (next_horz_x >= 0 && next_horz_x <= WINDOW_WIDTH && next_horz_y >= 0 && next_horz_y <= WINDOW_HEIGHT)
+	while (next_horz_x >= 0 && next_horz_x <= game->parse_data.width * TILESIZE &&
+	   next_horz_y >= 0 && next_horz_y <= game->parse_data.height * TILESIZE)
+
 	{
 		int check_y = facing_up ? next_horz_y - 1 : next_horz_y;
 		if (has_wall_at(next_horz_x, check_y, game->map))
@@ -89,7 +91,9 @@ void cast_single_ray(t_game *game, t_ray *ray)
 	float next_vert_x = x_intercept;
 	float next_vert_y = y_intercept;
 
-	while (next_vert_x >= 0 && next_vert_x <= WINDOW_WIDTH && next_vert_y >= 0 && next_vert_y <= WINDOW_HEIGHT)
+	while (next_vert_x >= 0 && next_vert_x <= game->parse_data.width * TILESIZE &&
+	   next_vert_y >= 0 && next_vert_y <= game->parse_data.height * TILESIZE)
+
 	{
 		int check_x = facing_left ? next_vert_x - 1 : next_vert_x;
 		if (has_wall_at(check_x, next_vert_y, game->map))

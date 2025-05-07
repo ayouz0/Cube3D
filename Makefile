@@ -2,7 +2,7 @@ NAME = cube
 
 FLAGS = -Wall -Werror -Wextra
 
-LINKING = -lmlx -framework OpenGL -framework AppKit -fsanitize=address
+LINKING = -lmlx -framework OpenGL -framework AppKit -fsanitize=address -g
 
 LIBFT = libft/libft.a
 

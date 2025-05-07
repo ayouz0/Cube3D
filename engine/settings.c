@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:04:27 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/07 13:40:56 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/07 14:47:28 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,9 @@ void	set_player_start_position(t_player *player, t_game *game)
 void    init_player(t_player *player, t_game *game)
 {
 	set_player_start_position(player, game);
-	// player->player_x = WINDOW_WIDTH / 4;
-	// player->player_y = WINDOW_HEIGHT / 4;
-	player->mv.turndir = 0; // if 1 rotate to right -1 rotating to left 0 not rotating
-	player->mv.walkdir = 0; // 0 not moving 1 moving forward -1 moving backwords
-	// player->mv.player_angle = M_PI / 2; //50 * M_PI / 180;
-	player->mv.mov_speed = 8.5;
+	player->mv.turndir = 0;
+	player->mv.walkdir = 0;
+	player->mv.mov_speed = 2.5;
 	player->mv.rotspeed = 5 * (M_PI / 180);
 	draw_player(game, (int)player->player_x, (int)player->player_y, 6, 0xFF0000);
 	draw_line(game, player ,(int)player->player_x, (int)player->player_y, 32, 0xFF0000);

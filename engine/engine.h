@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/07 12:39:04 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/07 14:38:41 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct s_parser
 	t_cardinals	SO;
 	t_cardinals	WE;
 	t_cardinals	EA;
+	int			width;
+	int			height;
 	int			f;
 	int			c;
 } t_parser;
