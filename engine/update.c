@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:05:10 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/07 13:44:34 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/07 17:36:41 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,6 @@ int update(t_game *game)
 	// draw_player(game, (int)game->player.player_x, (int)game->player.player_y, 6, 0xFF0000);
 	// draw_line(game, &game->player, (int)game->player.player_x, (int)game->player.player_y, 42, 0xFF0000);
 	mlx_put_image_to_window(game->mlx, game->win, game->img_ptr, 0, 0);
+	
 	return (0);
 }
