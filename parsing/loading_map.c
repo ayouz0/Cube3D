@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:49:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/08 15:52:13 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:41:13 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,12 @@ static char **pad_map_lines(char **lines, int count, int max_len)
     return (map);
 }
 
+// int	validate_map(t_game *game, char **map, int num_lines, int max_len)
+// {
+// 	if (validate_single_line() != 0)
+// 		return (free_2d(map), free_parse_data(game), 1);
+// }
+
 int	load_map(t_game *game)
 {
 	char	**lines;
@@ -112,9 +118,9 @@ int	load_map(t_game *game)
 	game->map = pad_map_lines(lines, num_lines, max_len);
 	free_map(lines, num_lines);
 	if (!game->map)
-		return (printf("Error: failed to allocate map memory\n"), 1);
+		return (printf("Error: failed to allocate map memory\n"), free_parse_data(game), 1);
 	// if (validate_map(game, game->map, num_lines, max_len))
-	// 	return (printf("Error: %s\n", game->error_msg), free_map(game->map, num_lines), 1);
+	// 	return (printf("Error: %s\n", game->error_msg), free_map(game->map, num_lines), free_parse_data(game), 1);
 	game->parse_data.height = num_lines;
 	game->parse_data.width = max_len;
 	return (0);
