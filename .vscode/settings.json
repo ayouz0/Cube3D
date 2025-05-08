@@ -1,12 +1,6 @@
 {
     "files.associations": {
-<<<<<<< HEAD
-        "__node_handle": "c",
-        "ios": "c",
-        "complex": "c"
-=======
         "parsing.h": "c",
         "engine.h": "c"
->>>>>>> origin/parsing
     }
 }

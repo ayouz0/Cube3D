@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/07 19:54:20 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:25:07 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define FOV (60 * M_PI /180) // degre to radian
 # define WINDOW_WIDTH (COLS * TILESIZE)
 # define WINDOW_HEIGHT (ROWS * TILESIZE)
-# define RES 1
+# define RES 2
 # define NUM_RAYS (WINDOW_WIDTH / RES) // nrays = (screen_with / res)
 # define PLAYER_RADIUS 1.0f
 
