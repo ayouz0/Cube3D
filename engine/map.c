@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:03:36 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/07 15:02:03 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/08 16:38:57 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	draw_sky(t_game *game)
 		x = 0;
 		while (x < COLS * TILESIZE)
 		{
-			int shaded = shade_color(0x003082, y / 4); // smooth shading
+			int shaded = shade_color(game->parse_data.c, y / 4); // smooth shading
 			draw_minisquare(game, x, y, shaded, mini_size);
 			x += mini_size;
 		}
@@ -79,7 +79,7 @@ void	draw_floor(t_game *game)
 		x = 0;
 		while (x < COLS * TILESIZE)
 		{
-			draw_minisquare(game, x, y, shade_color(0x613c00, (end_y - y) / 2), mini_size);
+			draw_minisquare(game, x, y, shade_color(game->parse_data.f, (end_y - y) / 2), mini_size);
 			x += mini_size;
 		}
 		y += mini_size;

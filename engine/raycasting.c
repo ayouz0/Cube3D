@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/07 15:02:16 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/08 16:37:45 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void cast_single_ray(t_game *game, t_ray *ray)
 	y_step = TILESIZE;
 	y_step *= facing_up ? -1 : 1;
 
-	x_step = TILESIZE / tan(ray->ray_angle);
+	x_step = TILESIZE / tan(ray->ray_angle); // cus tan(angle) = oppesite / adjacent
 	if ((facing_left && x_step > 0) || (facing_right && x_step < 0))
 		x_step *= -1;
 
