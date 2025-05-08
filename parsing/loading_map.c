@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:49:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/08 22:01:56 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/08 23:37:18 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,17 @@ static int	count_map_lines_and_maxlen(int fd, int *max_len, char ***lines)
 	i = 0;
 	count = 0;
 	line = get_next_line(fd);
+	while (line && line[0] == '\n')
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
 	while (line)
 	{
 		if (line[0] == '\n')
 		{
-			free(line);
-			line = get_next_line(fd);
-			continue;
+			printf("Error: found new_line while parsing the map\n");
+			return (free(line), free_map(*lines, count), -1);
 		}
 		len = ft_strlen(line);
 		if (line[len - 1] == '\n')
@@ -107,7 +111,11 @@ int	load_map(t_game *game)
 	lines = NULL;
 	num_lines = count_map_lines_and_maxlen(game->parse_data.fd, &max_len, &lines);
 	if (num_lines <= 0)
-		return (printf("Error: map couldn't be read or is empty\n"), 1);
+	{
+		if (num_lines == 0)
+			printf("Error: map couldn't be read or is empty\n");
+		return (1);
+	}
 	game->map = pad_map_lines(lines, num_lines, max_len);
 	free_map(lines, num_lines);
 	if (!game->map)

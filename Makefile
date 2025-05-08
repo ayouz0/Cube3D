@@ -2,7 +2,7 @@ NAME = cub3D
 
 FLAGS = -Wall -Werror -Wextra
 
-LINKING = -lmlx -framework OpenGL -framework AppKit #-fsanitize=address
+LINKING = -lmlx -framework OpenGL -framework AppKit -fsanitize=address
 
 LIBFT = libft/libft.a
 

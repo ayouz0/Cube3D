@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:46:53 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/08 22:06:23 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/08 23:33:51 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	check_space_tile(char **map, int y, int x, int rows, int cols)
 	return (0);
 }
 
-static int	check_map_interior(char **map, int rows, int cols, int *player_count)
+static int	check_map_interior(char **map, int rows, int cols, long long *player_count)
 {
 	int	y;
 	int	x;
@@ -85,7 +85,7 @@ static int	check_map_interior(char **map, int rows, int cols, int *player_count)
 			if (IS_WALKABLE(map[y][x]))
 			{
 				if (IS_PLAYER(map[y][x]))
-					player_count++;
+					(*player_count)++;
 				if (check_walkable_tile(map, y, x, rows, cols))
 					return (1);
 			}
@@ -101,9 +101,10 @@ static int	check_map_interior(char **map, int rows, int cols, int *player_count)
 	return (0);
 }
 
+
 int	validate_map(char **map, int rows, int cols)
 {
-	int	player_count;
+	long long	player_count;
 
 	player_count = 0;
 	if (check_top_bottom(map, cols, 0))
@@ -116,8 +117,8 @@ int	validate_map(char **map, int rows, int cols)
 		return (1);
 	if (player_count == 0)
 		return (printf("Error: No player spawn found\n"), 1);
-	if (player_count > 1)
-		return (printf("Error: Multiple player spawns found (%d)\n", player_count), 1);
+	if (player_count != 1)
+		return (printf("Error: Multiple player spawns found (%lld)\n", player_count), 1);
 	return (0);
 }
 
