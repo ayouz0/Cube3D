@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:03:36 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/04 17:05:27 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/07 15:02:03 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void draw_square(t_game *game, int x, int y, int color)
 	int i, j;
 
 	i = 0;
-	while (i < TILESIZE- 1)
+	while (i < TILESIZE)
 	{
 		j = 0;
-		while (j < TILESIZE - 1)
+		while (j < TILESIZE)
 		{
 			put_pixel_in_img(game, x + j, y + i, color);
 			j++;
@@ -29,9 +29,72 @@ void draw_square(t_game *game, int x, int y, int color)
 	}
 }
 
-int	has_wall_at(int x, int y, char **map)
+void draw_minisquare(t_game *game, int x, int y, int color, int size)
 {
-	return (map[(int)(y / TILESIZE)][(int)(x / TILESIZE)] == '1');
+	int i, j;
+
+	i = 0;
+	while (i < size)
+	{
+		j = 0;
+		while (j < size)
+		{
+			put_pixel_in_img(game, x + j, y + i, color);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	draw_sky(t_game *game)
+{
+	int x, y;
+	int mini_size = TILESIZE / 16;
+	int max_height = (ROWS * TILESIZE) / 2;
+
+	y = 0;
+	while (y < max_height)
+	{
+		x = 0;
+		while (x < COLS * TILESIZE)
+		{
+			int shaded = shade_color(0x003082, y / 4); // smooth shading
+			draw_minisquare(game, x, y, shaded, mini_size);
+			x += mini_size;
+		}
+		y += mini_size;
+	}
+}
+
+void	draw_floor(t_game *game)
+{
+	int x, y;
+	int mini_size = TILESIZE / 16;
+	int start_y = (ROWS * TILESIZE) / 2;
+	int end_y = ROWS * TILESIZE;
+
+	y = start_y;
+	while (y < end_y)
+	{
+		x = 0;
+		while (x < COLS * TILESIZE)
+		{
+			draw_minisquare(game, x, y, shade_color(0x613c00, (end_y - y) / 2), mini_size);
+			x += mini_size;
+		}
+		y += mini_size;
+	}
+}
+
+int	has_wall_at(int x, int y, t_game *game)
+{
+	int map_x = (int)(x / TILESIZE);
+	int map_y = (int)(y / TILESIZE);
+
+	if (map_x < 0 || map_x >= game->parse_data.width || map_y < 0 || map_y >= game->parse_data.height)
+		return (1); // Treat out-of-bounds as wall
+
+	return (game->map[map_y][map_x] == '1');
 }
 
 void clear_image(t_game *game)
@@ -65,8 +128,10 @@ void	render_map(t_game *game, char **map)
 		{
 			if (map[y][x] == '1')
 				draw_square(game, x * TILESIZE, y * TILESIZE, 0x404040);
-			else
+			else if (map[y][x] == '0' || map[y][x] == 'N')
 				draw_square(game, x * TILESIZE, y * TILESIZE, 0xFFFFFF);
+			else
+				draw_square(game, x * TILESIZE, y * TILESIZE, 0x000000);
 			x++;
 		}
 		y++;

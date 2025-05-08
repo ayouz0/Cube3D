@@ -6,9 +6,10 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/07 14:35:30 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/07 19:54:20 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef ENGINE_H
 # define ENGINE_H
@@ -29,8 +30,9 @@
 # define FOV (60 * M_PI /180) // degre to radian
 # define WINDOW_WIDTH (COLS * TILESIZE)
 # define WINDOW_HEIGHT (ROWS * TILESIZE)
-# define RES 4
+# define RES 1
 # define NUM_RAYS (WINDOW_WIDTH / RES) // nrays = (screen_with / res)
+# define PLAYER_RADIUS 1.0f
 
 typedef struct s_cardinals
 {
@@ -111,6 +113,11 @@ typedef struct s_game
 	char		*error_msg;
 } t_game;
 
+
+
+unsigned int shade_color(unsigned int color, float distance);
+void	draw_floor(t_game *game);
+void	draw_sky(t_game *game);
 void	render_map(t_game *game, char **map);
 void	init_player(t_player *player, t_game *game);
 void	put_pixel_in_img(t_game *game, int x, int y, int color);
@@ -122,7 +129,7 @@ void	draw_player(t_game *game, int x, int y, int radius, int color);
 void	draw_line(t_game *game, t_player *player, int x, int y, int line_length, int color);
 void	clear_image(t_game *game);
 float	normalize_angle(float angle);
-int		has_wall_at(int x, int y, char **map);
+int		has_wall_at(int x, int y, t_game *game);
 void	cast_all_rays(t_game *game, t_ray *ray);
 
 #endif

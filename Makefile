@@ -10,7 +10,9 @@ HEADERS = header.h engine/engine.h parsing/parsing.h
 
 SRC = main.c engine/player.c engine/input.c engine/map.c \
 		engine/raycasting.c engine/settings.c engine/update.c \
-		parsing/parser.c
+		parsing/parser.c parsing/loading_cardinals.c \
+		parsing/loading_map_utils.c parsing/loading_map.c \
+		parsing/parsing_cardinals_and_colors.c
 
 OBJ = ${SRC:.c=.o}
 
