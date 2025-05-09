@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 11:59:48 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/04 16:47:43 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/08 20:17:08 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void draw_player(t_game *game, int x, int y, int radius, int color)
 	}
 }
 
-void draw_line(t_game *game, t_player *player, int x, int y, int line_length, int color)
+void draw_line(t_game *game, t_player *player, int x, int y, float line_length, int color)
 {
 	int dx;
 	int dy;

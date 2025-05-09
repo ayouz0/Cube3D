@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:46:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/08 16:18:03 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:58:58 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,7 @@ int	load_cardinals_and_colors(t_game *game, char **av)
 		if (counter == 6)
 		{
 			if (all_have_been_loaded(game))
-			{
-				close(game->parse_data.fd);
 				break;
-			}
 			else
 				return (printf("Error: found duplicate config info\n"), free(line), close(game->parse_data.fd), 1);
 		}
@@ -113,6 +110,5 @@ int	load_cardinals_and_colors(t_game *game, char **av)
 		line = get_next_line(game->parse_data.fd);
 	}
 	free(line);
-	close(game->parse_data.fd);
 	return (0);
 }

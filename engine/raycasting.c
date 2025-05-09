@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/08 16:37:45 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/09 16:01:05 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void cast_single_ray(t_game *game, t_ray *ray)
 	int found_horz_wall_hit = 0;
 	float horz_wall_hit_x = 0;
 	float horz_wall_hit_y = 0;
-
 	y_intercept = floor(game->player.player_y / TILESIZE) * TILESIZE;
 	y_intercept += facing_down ? TILESIZE : 0;
 
@@ -167,7 +166,6 @@ void cast_all_rays(t_game *game, t_ray *ray)
 
 		// Correct the fish-eye effect
 		float corrected_distance = ray->distance * cos(ray->ray_angle - game->player.mv.player_angle);
-
 		// Calculate wall height based on corrected distance
 		float distance_to_proj_plane = (WINDOW_WIDTH / 2) / tan(FOV / 2);
 		int wall_strip_height = (TILESIZE / corrected_distance) * distance_to_proj_plane;
