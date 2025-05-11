@@ -3,49 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:05:10 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/08 16:24:50 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/11 11:31:38 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
-
-float	normalize_angle(float angle)
-{
-	angle = fmod(angle, 2 * M_PI);
-	if (angle < 0)
-		angle += 2 * M_PI;
-	return (angle);
-}
-
-int iswall(float x, float y, char **map)
-{
-	int map_x, map_y;
-
-	// Top-left
-	map_x = (int)((x - PLAYER_RADIUS) / TILESIZE);
-	map_y = (int)((y - PLAYER_RADIUS) / TILESIZE);
-	if (map[map_y][map_x] == '1') return 1;
-
-	// Top-right
-	map_x = (int)((x + PLAYER_RADIUS) / TILESIZE);
-	map_y = (int)((y - PLAYER_RADIUS) / TILESIZE);
-	if (map[map_y][map_x] == '1') return 1;
-
-	// Bottom-left
-	map_x = (int)((x - PLAYER_RADIUS) / TILESIZE);
-	map_y = (int)((y + PLAYER_RADIUS) / TILESIZE);
-	if (map[map_y][map_x] == '1') return 1;
-
-	// Bottom-right
-	map_x = (int)((x + PLAYER_RADIUS) / TILESIZE);
-	map_y = (int)((y + PLAYER_RADIUS) / TILESIZE);
-	if (map[map_y][map_x] == '1') return 1;
-
-	return 0;
-}
 
 int update(t_game *game)
 {
@@ -115,9 +80,6 @@ int update(t_game *game)
 	draw_sky(game);
 	draw_floor(game);
 	cast_all_rays(game, &ray);
-	// render_map(game, game->map);
-	// draw_player(game, (int)game->player.player_x, (int)game->player.player_y, 6, 0xFF0000);
-	// draw_line(game, &game->player, (int)game->player.player_x, (int)game->player.player_y, 42, 0xFF0000);
 	mlx_put_image_to_window(game->mlx, game->win, game->img_ptr, 0, 0);
 	
 	return (0);

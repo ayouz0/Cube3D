@@ -3,35 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/10 19:14:38 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/11 11:56:31 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef ENGINE_H
 # define ENGINE_H
 
-
-#include <mlx.h>
-#include <math.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-// #include "../parsing/parsing.h"
-// #include "../header.h"
-
+# include <mlx.h>
+# include <math.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <string.h>
 # define TILESIZE  80
 # define ROWS 9
 # define COLS 16
-# define FOV (60 * M_PI /180) // degre to radian
+# define FOV (60 * M_PI /180)
 # define WINDOW_WIDTH (COLS * TILESIZE)
 # define WINDOW_HEIGHT (ROWS * TILESIZE)
 # define RES 2
-# define NUM_RAYS (WINDOW_WIDTH / RES) // nrays = (screen_with / res)
+# define NUM_RAYS (WINDOW_WIDTH / RES)
 # define PLAYER_RADIUS 1.0f
 
 typedef struct s_cardinals
@@ -57,7 +52,7 @@ typedef struct s_parser
 	int			height;
 	int			f;
 	int			c;
-} t_parser;
+}	t_parser;
 
 typedef struct s_moves
 {
@@ -76,21 +71,20 @@ typedef struct s_moves
 typedef struct s_player
 {
 	t_moves	mv;
-	float		player_x;
-	float		player_y;
-} 	t_player;
+	float	player_x;
+	float	player_y;
+}	t_player;
 
 typedef struct s_ray
 {
-	float ray_angle;     // angle of the ray
-	float wall_hit_x;     // where the wall was hit (x)
-	float wall_hit_y;     // where the wall was hit (y)
-	float distance;       // distance to wall
-	int   was_hit_vertical; // 1 if vertical wall was hit, 0 if horizontal
-} t_ray;
+	float	ray_angle;
+	float	wall_hit_x;
+	float	wall_hit_y;
+	float	distance;
+	int		was_hit_vertical;
+}	t_ray;
 
-
-typedef struct	s_keys
+typedef struct s_keys
 {
 	int	w;
 	int	s;
@@ -107,6 +101,7 @@ typedef struct s_game
 	void		*win;
 	void		*img_ptr;
 	char		*addr;
+	float		fov;
 	t_player	player;
 	t_keys		keys;
 	t_parser	parse_data;
@@ -115,25 +110,20 @@ typedef struct s_game
 	int			endian;
 	char		**map;
 	char		*error_msg;
-} t_game;
+}	t_game;
 
-
-
-unsigned int shade_color(unsigned int color, float distance);
 void	draw_floor(t_game *game);
 void	draw_sky(t_game *game);
-void	render_map(t_game *game, char **map);
 void	init_player(t_player *player, t_game *game);
 void	put_pixel_in_img(t_game *game, int x, int y, int color);
 int		close_window(t_game *game);
 int		update(t_game *game);
 int		key_press(int key, t_game *game);
 int		key_release(int key, t_game *game);
-void	draw_player(t_game *game, int x, int y, int radius, int color);
-void	draw_line(t_game *game, t_player *player, int x, int y, int line_length, int color);
 void	clear_image(t_game *game);
 float	normalize_angle(float angle);
 int		has_wall_at(int x, int y, t_game *game);
 void	cast_all_rays(t_game *game, t_ray *ray);
+int		iswall(float x, float y, char **map);
 
 #endif
