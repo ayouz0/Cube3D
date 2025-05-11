@@ -6,70 +6,51 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 11:59:48 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/08 20:17:08 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/11 12:01:12 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 
-void draw_player(t_game *game, int x, int y, int radius, int color)
+void	set_player_start_position(t_player *player, t_game *game)
 {
-	int i;
-	int	j;
-	int	dx;
-	int	dy;
+	int		row;
+	int		col;
+	char	c;
 
-	i = -radius;
-	while (i <= radius)
+	row = 0;
+	while (game->map[row])
 	{
-		j = -radius;
-		while (j <= radius)
+		col = 0;
+		while (game->map[row][col])
 		{
-			dx = i;
-			dy = j;
-			if (dx * dx + dy * dy <= radius * radius)
-				put_pixel_in_img(game, x + dx, y + dy, color);
-			j++;
+			c = game->map[row][col];
+			if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+			{
+				player->player_x = col * TILESIZE + TILESIZE / 2;
+				player->player_y = row * TILESIZE + TILESIZE / 2;
+				if (c == 'N')
+					player->mv.player_angle = M_PI;
+				else if (c == 'S')
+					player->mv.player_angle = M_PI / 2;
+				else if (c == 'E')
+					player->mv.player_angle = 0;
+				else if (c == 'W')
+					player->mv.player_angle = 3 * M_PI / 2;
+				game->map[row][col] = '0';
+				return ;
+			}
+			col++;
 		}
-		i++;
+		row++;
 	}
 }
 
-void draw_line(t_game *game, t_player *player, int x, int y, float line_length, int color)
+void    init_player(t_player *player, t_game *game)
 {
-	int dx;
-	int dy;
-	int sx;
-	int sy;
-	int e2;
-
-	player->mv.dir_y = sin(player->mv.player_angle);
-	player->mv.dir_x = cos(player->mv.player_angle);
-	player->mv.end_x = (int)(x + player->mv.dir_x * line_length);
-	player->mv.end_y = (int)(y + player->mv.dir_y * line_length);
-	dx = abs(player->mv.end_x - x);
-	dy = abs(player->mv.end_y - y);
-	sx = x < player->mv.end_x ? 1 : -1;
-	sy = y < player->mv.end_y ? 1 : -1;
-	player->mv.err = dx - dy;
-	while (1)
-	{
-		if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT)
-		{
-			put_pixel_in_img(game, x, y, color);
-		}
-		if (x == player->mv.end_x && y == player->mv.end_y)
-			break;
-		e2 = player->mv.err * 2;
-		if (e2 > -dy)
-		{
-			player->mv.err -= dy;
-			x += sx;
-		}
-		if (e2 < dx)
-		{
-			player->mv.err += dx;
-			y += sy;
-		}
-	}
+	set_player_start_position(player, game);
+	player->mv.turndir = 0;
+	player->mv.walkdir = 0;
+	player->mv.mov_speed = 3.5;
+	player->mv.rotspeed = 5 * (M_PI / 180);
 }
