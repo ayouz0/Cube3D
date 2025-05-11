@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/11 18:19:23 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/11 20:09:22 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,16 @@ typedef struct s_game
 	char		*error_msg;
 }	t_game;
 
+typedef struct s_column_params
+{
+	int			x;
+	int			tex_x;
+	int			i;
+	int			top;
+	int			bottom;
+	t_cardinals	*texture;
+}	t_column_params;
+
 void	draw_floor(t_game *game);
 void	draw_sky(t_game *game);
 void	init_player(t_player *player, t_game *game);
@@ -136,5 +146,10 @@ int		has_wall_at(int x, int y, t_game *game);
 void	cast_all_rays(t_game *game, t_ray *ray);
 int		iswall(float x, float y, char **map);
 float	distance_between_points(float x1, float y1, float x2, float y2);
-
+void	set_closest_hit(t_ray *ray, float horz_dist, float vert_dist);
+void	check_vertical_hit(t_game *game, t_ray *ray,
+				int facing_left);
+void	check_horizontal_hit(t_game *game, t_ray *ray,
+				int facing_up);
+void	draw_textured_column(t_game *game, t_ray *ray, int ray_id, int height);
 #endif
