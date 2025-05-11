@@ -6,16 +6,17 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:46:53 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/11 12:08:08 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/11 15:03:26 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static int is_valid_space_neighbor(char c)
+static int	is_valid_space_neighbor(char c)
 {
- return ((c == '1') || (c == ' '));
+	return ((c == '1') || (c == ' '));
 }
+
 static int	check_top_bottom(char **map, int cols, int row)
 {
 	int	x;
@@ -50,27 +51,8 @@ static int	check_side_borders(char **map, int rows, int cols)
 	return (0);
 }
 
-static int	check_walkable_tile(char **map, int y, int x, int rows, int cols)
-{
-	if ((y > 0 && map[y - 1][x] == ' ') ||
-		(y < rows - 1 && map[y + 1][x] == ' ') ||
-		(x > 0 && map[y][x - 1] == ' ') ||
-		(x < cols - 1 && map[y][x + 1] == ' '))
-		return (printf("Error: Map leakage is not allowed\n"), 1);
-	return (0);
-}
-
-static int	check_space_tile(char **map, int y, int x, int rows, int cols)
-{
-	if ((y > 0 && !is_valid_space_neighbor(map[y - 1][x])) ||
-		(y < rows - 1 && !is_valid_space_neighbor(map[y + 1][x])) ||
-		(x > 0 && !is_valid_space_neighbor(map[y][x - 1])) ||
-		(x < cols - 1 && !is_valid_space_neighbor(map[y][x + 1])))
-		return (printf("Error: Space has an invalid neighbor\n"), 1);
-	return (0);
-}
-
-static int	check_map_interior(char **map, int rows, int cols, long long *player_count)
+static int	check_map_interior(char **map, int rows, int cols, \
+long long *player_count)
 {
 	int	y;
 	int	x;
@@ -81,18 +63,24 @@ static int	check_map_interior(char **map, int rows, int cols, long long *player_
 		x = 0;
 		while (x < cols)
 		{
-			if ((map[y][x] == '0' || map[y][x] == 'N' || map[y][x] == 'S' || map[y][x] == 'E' || map[y][x] == 'W'))
+			if ((map[y][x] == '0' || map[y][x] == 'N' || map[y][x] == 'S' || \
+			map[y][x] == 'E' || map[y][x] == 'W'))
 			{
-				if ((map[y][x] == 'N' || map[y][x] == 'S' || map[y][x] == 'E' || map[y][x] == 'W'))
+				if ((map[y][x] == 'N' || map[y][x] == 'S' || \
+				map[y][x] == 'E' || map[y][x] == 'W'))
 					(*player_count)++;
-				if (check_walkable_tile(map, y, x, rows, cols))
-					return (1);
+				if ((y > 0 && map[y - 1][x] == ' ') || \
+					(y < rows - 1 && map[y + 1][x] == ' ') || \
+					(x > 0 && map[y][x - 1] == ' ') || \
+					(x < cols - 1 && map[y][x + 1] == ' '))
+					return (printf("Error: Map leakage is not allowed\n"), 1);
 			}
-			else if (map[y][x] == ' ')
-			{
-				if (check_space_tile(map, y, x, rows, cols))
-					return (1);
-			}
+			else if (map[y][x] == ' ' && ((y > 0 && \
+					!is_valid_space_neighbor(map[y - 1][x])) ||
+					(y < rows - 1 && !is_valid_space_neighbor(map[y + 1][x])) ||
+					(x > 0 && !is_valid_space_neighbor(map[y][x - 1])) ||
+					(x < cols - 1 && !is_valid_space_neighbor(map[y][x + 1]))))
+				return (printf("Error: Space has an invalid neighbor\n"), 1);
 			x++;
 		}
 		y++;
