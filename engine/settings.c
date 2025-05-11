@@ -6,13 +6,13 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:04:27 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/11 12:08:10 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/11 12:23:09 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 
-float	normalize_angle(float angle)
+float	norma_angle(float angle)
 {
 	angle = fmod(angle, 2 * M_PI);
 	if (angle < 0)
