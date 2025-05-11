@@ -6,15 +6,15 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:46:53 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/11 10:24:16 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/11 12:03:44 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static int	is_valid_space_neighbor(char c)
+static int is_valid_space_neighbor(char c)
 {
-	return (IS_WALL(c) || IS_SPACE(c));
+ return ((c == '1') || (c == ' '));
 }
 static int	check_top_bottom(char **map, int cols, int row)
 {
@@ -23,12 +23,11 @@ static int	check_top_bottom(char **map, int cols, int row)
 	x = 0;
 	while (x < cols)
 	{
-		if (!IS_WALL(map[row][x]) && !IS_SPACE(map[row][x]))
+		if (!(map[row][x] == '1') && !(map[row][x] == ' '))
 		{
 			if (row == 0)
 				return (printf("Error: Top border not closed\n"), 1);
-			else
-				return (printf("Error: Bottom border not closed\n"), 1);
+			return (printf("Error: Bottom border not closed\n"), 1);
 		}
 		x++;
 	}
@@ -42,9 +41,9 @@ static int	check_side_borders(char **map, int rows, int cols)
 	y = 0;
 	while (y < rows)
 	{
-		if (!IS_WALL(map[y][0]) && !IS_SPACE(map[y][0]))
+		if (!(map[y][0] == '1') && !(map[y][0] == ' '))
 			return (printf("Error: Left border not closed\n"), 1);
-		if (!IS_WALL(map[y][cols - 1]) && !IS_SPACE(map[y][cols - 1]))
+		if (!(map[y][cols - 1] == '1') && !((map[y][cols - 1]) == ' '))
 			return (printf("Error: Right border not closed\n"), 1);
 		y++;
 	}
@@ -82,9 +81,9 @@ static int	check_map_interior(char **map, int rows, int cols, long long *player_
 		x = 0;
 		while (x < cols)
 		{
-			if (IS_WALKABLE(map[y][x]))
+			if ((map[y][x] == '0' || map[y][x] == 'N' || map[y][x] == 'S' || map[y][x] == 'E' || map[y][x] == 'W'))
 			{
-				if (IS_PLAYER(map[y][x]))
+				if ((map[y][x] == 'N' || map[y][x] == 'S' || map[y][x] == 'E' || map[y][x] == 'W'))
 					(*player_count)++;
 				if (check_walkable_tile(map, y, x, rows, cols))
 					return (1);
@@ -115,7 +114,7 @@ int	check_invalid_characters(char **map)
 			if ((map[i][j] != ' ' && map[i][j] != '1' && map[i][j] != '0') && \
 				(map[i][j] != 'N' && map[i][j] != 'S' && map[i][j] != 'E' && \
 				map[i][j] != 'W'))
-				return(printf("Error: invalid character found while reading map:\n|%c|\n", map[i][j]), 1);
+				return (printf("Error: invalid character found while reading map:\n|%c|\n", map[i][j]), 1);
 			j++;
 		}
 		i++;
