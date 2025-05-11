@@ -6,13 +6,11 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:46:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/08 23:16:39 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/11 10:09:27 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-#include <stdlib.h>
 
 char **split_to_first_char(char *str, char sep)
 {
@@ -29,13 +27,11 @@ char **split_to_first_char(char *str, char sep)
 	return (new);
 }
 
-
 int	load_data(t_game *game, char *line)
 {
 	char	**split;
 	void	*img;
 	int		color;
-	// char	*tmp;
 
 	split = split_to_first_char(line, ' ');
 	if (!split || !split[0] || !split[1])
@@ -47,32 +43,40 @@ int	load_data(t_game *game, char *line)
 	{
 		img = mlx_xpm_file_to_image(game->mlx, split[1], &game->parse_data.NO.w, &game->parse_data.NO.h);
 		game->parse_data.NO.ptr = img;
+		if (img)
+			game->parse_data.NO.addr = mlx_get_data_addr(game->parse_data.NO.ptr, &game->parse_data.NO.bits_per_pixel, &game->parse_data.NO.line_length, &game->parse_data.NO.endian);
 	}
 	else if (ft_strncmp(split[0], "SO", 3) == 0)
 	{
 		img = mlx_xpm_file_to_image(game->mlx, split[1], &game->parse_data.SO.w, &game->parse_data.SO.h);
 		game->parse_data.SO.ptr = img;
+		if (img)
+			game->parse_data.SO.addr = mlx_get_data_addr(game->parse_data.SO.ptr, &game->parse_data.SO.bits_per_pixel, &game->parse_data.SO.line_length, &game->parse_data.SO.endian);
 	}
 	else if (ft_strncmp(split[0], "WE", 3) == 0)
 	{
 		img = mlx_xpm_file_to_image(game->mlx, split[1], &game->parse_data.WE.w, &game->parse_data.WE.h);
 		game->parse_data.WE.ptr = img;
+		if (img)
+			game->parse_data.WE.addr = mlx_get_data_addr(game->parse_data.WE.ptr, &game->parse_data.WE.bits_per_pixel, &game->parse_data.WE.line_length, &game->parse_data.WE.endian);
 	}
 	else if (ft_strncmp(split[0], "EA", 3) == 0)
 	{
 		img = mlx_xpm_file_to_image(game->mlx, split[1], &game->parse_data.EA.w, &game->parse_data.EA.h);
 		game->parse_data.EA.ptr = img;
+		if (img)
+			game->parse_data.EA.addr = mlx_get_data_addr(game->parse_data.EA.ptr, &game->parse_data.EA.bits_per_pixel, &game->parse_data.EA.line_length, &game->parse_data.EA.endian);
 	}
 	else if (ft_strncmp(split[0], "F", 2) == 0)
 	{
 		if (parse_rgb(split[1], &color))
-			return (free_2d(split), printf("Error: Invalid floor color: %s\n", split[1]), 1);
+			return (printf("Error: Invalid floor color: %s\n", split[1]), free_2d(split), 1);
 		game->parse_data.f = color;
 	}
 	else if (ft_strncmp(split[0], "C", 2) == 0)
 	{
 		if (parse_rgb(split[1], &color))
-			return (free_2d(split), printf("Error: Invalid ceiling color: %s\n", split[1]), 1);
+			return (printf("Error: Invalid ceiling color: %s\n", split[1]), free_2d(split), 1);
 		game->parse_data.c = color;
 	}
 	if ((split[0][0] == 'N' || split[0][0] == 'S' || split[0][0] == 'W' || split[0][0] == 'E') && !img)
@@ -99,7 +103,7 @@ int	load_cardinals_and_colors(t_game *game, char **av)
 		return (printf("Error: failed to open the file \"%s\"\n", av[1]), 1);
 	line = get_next_line(game->parse_data.fd);
 	if (!line)
-		return (printf("Error: files mustn't be empty\n"), close(game->parse_data.fd), 1);
+		return (printf("Error: couldn't load all cardinals/colors\n"), close(game->parse_data.fd), 1);
 	while (1)
 	{
 		while (line && line[0] == '\n')
@@ -116,17 +120,15 @@ int	load_cardinals_and_colors(t_game *game, char **av)
 			counter++;
 		}
 		else
-			return (printf("Error: invalid line while parsing cardinals/colors:\n%s\n", line), free(line), 1);
+			return (printf("Error: invalid line while parsing cardinals/colors:\n%s", line), free(line), 1);
 		if (counter == 6)
 		{
 			if (all_have_been_loaded(game))
 				break;
-			else
-				return (printf("Error: found duplicate config info\n"), free(line), close(game->parse_data.fd), 1);
+			return (printf("Error: found duplicate config info\n"), free(line), close(game->parse_data.fd), 1);
 		}
 		free(line);
 		line = get_next_line(game->parse_data.fd);
 	}
-	free(line);
-	return (0);
+	return (free(line), 0);
 }

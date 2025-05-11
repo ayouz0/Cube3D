@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:48:16 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/08 16:41:51 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/11 10:06:01 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,49 @@ int	is_cardinal(char *line)
 	return (!found);
 }
 
+static int	read_component(char *str, int *i, int *value)
+{
+	int	n = 0;
+	int	count = 0;
+
+	while (str[*i] >= '0' && str[*i] <= '9')
+	{
+		n = n * 10 + (str[*i] - '0');
+		(*i)++;
+		count++;
+	}
+	while (str[*i] == ' ')
+		(*i)++;
+	if (count == 0 || n > 255)
+		return (1);
+	*value = n;
+	return (0);
+}
+
 int	parse_rgb(char *str, int *out_color)
 {
-	char	**tmp;
-	int		r;
-	int		g;
-	int		b;
+	int	i;
+	int	r;
+	int	g;
+	int	b;
 
-	tmp = ft_split(str, ',');
-	if (!tmp || !tmp[0] || !tmp[1] || !tmp[2] || tmp[3])
-		return (free_2d(tmp), 1);
-	r = ft_atoi(tmp[0]);
-	g = ft_atoi(tmp[1]);
-	b = ft_atoi(tmp[2]);
-	free_2d(tmp);
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+	i = 0;
+	while (str[i] == ' ')
+		i++;
+	if (read_component(str, &i, &r))
+		return (1);
+	if (str[i++] != ',')
+		return (1);
+	if (read_component(str, &i, &g))
+		return (1);
+	if (str[i] != ',')
+		return (1);
+	i++;
+	if (read_component(str, &i, &b))
+		return (1);
+	while (str[i] == ' ')
+		i++;
+	if (str[i] != '\0')
 		return (1);
 	*out_color = (r << 16) | (g << 8) | b;
 	return (0);
