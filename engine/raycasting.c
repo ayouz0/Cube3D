@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/10 20:39:02 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/11 11:18:56 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,26 +134,11 @@ void cast_single_ray(t_game *game, t_ray *ray)
 	}
 }
 
-unsigned int	shade_color(unsigned int color, float distance)
-{
-	float			shade_factor;
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
-
-	// !ahm ahm
-	//? Light intensity = 1 / (1 + k * distance) Where k is a constant
-	shade_factor = 1.0f / (1.0f + distance * 0.01f);
-	r = ((color >> 16) & 0xFF) * shade_factor;
-	g = ((color >> 8) & 0xFF) * shade_factor;
-	b = (color & 0xFF) * shade_factor;
-	return ((r << 16) | (g << 8) | b);
-}
-
 void cast_all_rays(t_game *game, t_ray *ray)
 {
 	float ray_angle;
 	int ray_id;
+	t_cardinals *texture;
 
 	ray_angle = game->player.mv.player_angle - (FOV / 2); // Start on the left side of the FOV
 	ray_id = 0;
@@ -180,6 +165,16 @@ void cast_all_rays(t_game *game, t_ray *ray)
 			wall_bottom_pixel = WINDOW_HEIGHT;
 
 		// Draw the vertical wall stripe
+		int texture_x;
+
+		if (ray->was_hit_vertical)
+			texture = (ray->ray_angle < M_PI_2 || ray->ray_angle > 3 * M_PI_2) ? &game->parse_data.EA : &game->parse_data.WE;
+		else
+			texture = (ray->ray_angle > 0 && ray->ray_angle < M_PI) ? &game->parse_data.SO : &game->parse_data.NO;
+		if (ray->was_hit_vertical)
+			texture_x = (int)ray->wall_hit_y % TILESIZE;
+		else
+			texture_x = (int)ray->wall_hit_x % TILESIZE;
 		int x = ray_id * RES;
 		int i = 0;
 		while (i < RES)
@@ -187,7 +182,18 @@ void cast_all_rays(t_game *game, t_ray *ray)
 			int y = wall_top_pixel;
 			while (y < wall_bottom_pixel)
 			{
-				put_pixel_in_img(game, x + i, y, shade_color(0xFFFFFF, ray->distance)); // gray wall color
+				int distance_from_top = y + (wall_strip_height / 2) - (WINDOW_HEIGHT / 2);
+				int texture_y = (distance_from_top * texture->h) / wall_strip_height;
+
+				if (texture_y < 0)
+					texture_y = 0;
+				if (texture_y >= texture->h)
+					texture_y = texture->h - 1;
+
+				char *pixel = texture->addr + (texture_y * texture->line_length + texture_x * (texture->bits_per_pixel / 8));
+				int color = *(unsigned int *)pixel;
+
+				put_pixel_in_img(game, x + i, y, color);
 				y++;
 			}
 			i++;

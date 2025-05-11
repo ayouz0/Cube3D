@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/09 20:24:49 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/11 11:21:50 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ typedef struct s_cardinals
 	void	*ptr;
 	int		h;
 	int		w;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
 }	t_cardinals;
 
 typedef struct s_parser
@@ -126,7 +130,6 @@ int		update(t_game *game);
 int		key_press(int key, t_game *game);
 int		key_release(int key, t_game *game);
 void	draw_player(t_game *game, int x, int y, int radius, int color);
-void draw_line(t_game *game, t_player *player, int x, int y, float line_length, int color);
 void	clear_image(t_game *game);
 float	normalize_angle(float angle);
 int		has_wall_at(int x, int y, t_game *game);

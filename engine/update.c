@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:05:10 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/09 16:00:09 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/11 11:21:17 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,6 @@ int update(t_game *game)
 	draw_sky(game);
 	draw_floor(game);
 	cast_all_rays(game, &ray);
-	// render_map(game, game->map);
-	// draw_player(game, (int)game->player.player_x, (int)game->player.player_y, 6, 0xFF0000);
-	// draw_line(game, &game->player, (int)game->player.player_x, (int)game->player.player_y, middle_ray_dist, 0xFF0000);
 	mlx_put_image_to_window(game->mlx, game->win, game->img_ptr, 0, 0);
 	
 	return (0);

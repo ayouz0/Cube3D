@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:46:53 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/10 21:10:21 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/11 10:33:48 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,36 @@ static int	check_map_interior(char **map, int rows, int cols, long long *player_
 	return (0);
 }
 
+int	check_invalid_characters(char **map)
+{
+	int i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (map[i])
+	{
+		while (map[i][j])
+		{
+			if ((map[i][j] != ' ' && map[i][j] != '1' && map[i][j] != '0') && \
+				(map[i][j] != 'N' && map[i][j] != 'S' && map[i][j] != 'E' && \
+				map[i][j] != 'W'))
+				return(printf("Error: invalid character found while reading map:\n|%c|\n", map[i][j]), 1);
+			j++;
+		}
+		i++;
+		j = 0;
+	}
+	return (0);
+}
 
 int	validate_map(char **map, int rows, int cols)
 {
 	long long	player_count;
 
 	player_count = 0;
+	if (check_invalid_characters(map))
+		return (1);
 	if (check_top_bottom(map, cols, 0))
 		return (1);
 	if (check_top_bottom(map, cols, rows - 1))
@@ -124,7 +148,6 @@ int	validate_map(char **map, int rows, int cols)
 
 int	parsing(int ac, char **av, t_game *game)
 {
-	(void)game;
 	if (ac != 2)
 		return (printf("Error: usage: ./cub3d <filename>.cub\n"), 1);
 	if (ft_strlen(av[1]) < 4 || ft_strncmp(av[1] + ft_strlen(av[1]) - 4, ".cub", 4) != 0)
