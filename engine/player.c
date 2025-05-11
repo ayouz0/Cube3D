@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 11:59:48 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/11 12:17:22 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/11 15:35:32 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,13 @@ void	set_direction(t_player *player, char c, int row, int col)
 	player->player_x = col * TILESIZE + TILESIZE / 2;
 	player->player_y = row * TILESIZE + TILESIZE / 2;
 	if (c == 'N')
-		player->mv.player_angle = M_PI;
+		player->mv.player_angle = 3 * M_PI / 2;
 	else if (c == 'S')
 		player->mv.player_angle = M_PI / 2;
 	else if (c == 'E')
 		player->mv.player_angle = 0;
 	else if (c == 'W')
-		player->mv.player_angle = 3 * M_PI / 2;
-	return ;
+		player->mv.player_angle = M_PI;
 }
 
 void	set_player_start_position(t_player *player, t_game *game)
