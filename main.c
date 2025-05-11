@@ -6,19 +6,17 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/11 11:21:08 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/11 11:32:29 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void put_pixel_in_img(t_game *game, int x, int y, int color)
+int close_window(t_game *game)
 {
-	if (x < 0 || x >= WINDOW_WIDTH || y < 0 || y >= WINDOW_HEIGHT)
-		return;
-
-	char *dst = game->addr + (y * game->line_length + x * (game->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+	if (game->win)
+		mlx_destroy_window(game->mlx, game->win);
+	exit(1);
 }
 
 void	leaks(){

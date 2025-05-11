@@ -80,6 +80,23 @@ void draw_player(t_game *game, int x, int y, int radius, int color)
 	}
 }
 
+void draw_square(t_game *game, int x, int y, int color)
+{
+	int i, j;
+
+	i = 0;
+	while (i < TILESIZE)
+	{
+		j = 0;
+		while (j < TILESIZE)
+		{
+			put_pixel_in_img(game, x + j, y + i, color);
+			j++;
+		}
+		i++;
+	}
+}
+
 void draw_line(t_game *game, t_player *player, int x, int y, float line_length, int color)
 {
 	int dx;

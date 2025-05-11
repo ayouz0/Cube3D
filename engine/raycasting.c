@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/11 11:31:52 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/11 12:23:05 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void cast_single_ray(t_game *game, t_ray *ray)
 {
-	ray->ray_angle = normalize_angle(ray->ray_angle);
+	ray->ray_angle = norma_angle(ray->ray_angle);
 
 	int facing_down = (ray->ray_angle > 0 && ray->ray_angle < M_PI);
 	int facing_up = !facing_down;

@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/11 11:56:31 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/11 12:23:00 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,10 @@ int		update(t_game *game);
 int		key_press(int key, t_game *game);
 int		key_release(int key, t_game *game);
 void	clear_image(t_game *game);
-float	normalize_angle(float angle);
+float	norma_angle(float angle);
 int		has_wall_at(int x, int y, t_game *game);
 void	cast_all_rays(t_game *game, t_ray *ray);
 int		iswall(float x, float y, char **map);
+float	distance_between_points(float x1, float y1, float x2, float y2);
 
 #endif
