@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/11 12:23:00 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/11 18:19:23 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,16 @@ typedef struct s_ray
 	float	wall_hit_y;
 	float	distance;
 	int		was_hit_vertical;
+	float	horz_hit_x;
+	float	horz_hit_y;
+	float	vert_hit_x;
+	float	vert_hit_y;
+	int		found_horz_hit;
+	int		found_vert_hit;
+	float	next_horz_x;
+	float	next_horz_y;
+	float	next_vert_x;
+	float	next_vert_y;
 }	t_ray;
 
 typedef struct s_keys
