@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:05:10 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/11 11:31:38 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/11 12:08:39 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,10 @@ int update(t_game *game)
 	float new_y;
 	t_ray ray;
 
-	// Rotation
 	if (game->keys.left)
 		game->player.mv.player_angle -= game->player.mv.rotspeed;
 	if (game->keys.right)
 		game->player.mv.player_angle += game->player.mv.rotspeed;
-
-	// Movement
 	if (game->keys.w)
 	{
 		movestep = game->player.mv.mov_speed;
@@ -71,16 +68,11 @@ int update(t_game *game)
 			game->player.player_y = new_y;
 		}
 	}
-
-	// Normalize angle to [0, 2π)
 	game->player.mv.player_angle = normalize_angle(game->player.mv.player_angle);
-
-	// printf("After update: angle=%f, x=%f, y=%f\n", game->player.mv.player_angle, game->player.player_x, game->player.player_y);
 	clear_image(game);
 	draw_sky(game);
 	draw_floor(game);
 	cast_all_rays(game, &ray);
 	mlx_put_image_to_window(game->mlx, game->win, game->img_ptr, 0, 0);
-	
 	return (0);
 }
