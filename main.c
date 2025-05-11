@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/08 16:22:24 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/10 20:52:01 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main(int ac, char **av)
 	t_game game;
 	(void)av;
 	(void)ac;
-	atexit(leaks);
+	// atexit(leaks);
 	game.mlx = mlx_init();
 	if (parsing(ac, av, &game) != 0)
 		return (1);
@@ -44,7 +44,7 @@ int main(int ac, char **av)
 	game.keys.left = 0;
 	game.keys.right= 0;
 	game.keys.esc = 0;
-	render_map(&game, game.map);
+	// render_map(&game, game.map);
 	init_player(&game.player, &game);
 	mlx_hook(game.win, 2, 1L<<0, key_press, &game);
 	mlx_hook(game.win, 3, 1L<<1, key_release, &game);

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:47:57 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/08 15:58:04 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/08 21:54:21 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define PARSING_H
 
 #define IS_WALKABLE(c) ((c) == '0' || (c) == 'N' || (c) == 'S' || (c) == 'E' || (c) == 'W')
+#define IS_PLAYER(c) ((c) == 'N' || (c) == 'S' || (c) == 'E' || (c) == 'W')
 #define IS_SPACE(c) ((c) == ' ')
 #define IS_WALL(c) ((c) == '1')
 

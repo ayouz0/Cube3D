@@ -6,12 +6,11 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:49:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/08 16:41:13 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/08 23:37:18 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
 
 static int	count_map_lines_and_maxlen(int fd, int *max_len, char ***lines)
 {
@@ -24,13 +23,17 @@ static int	count_map_lines_and_maxlen(int fd, int *max_len, char ***lines)
 	i = 0;
 	count = 0;
 	line = get_next_line(fd);
+	while (line && line[0] == '\n')
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
 	while (line)
 	{
 		if (line[0] == '\n')
 		{
-			free(line);
-			line = get_next_line(fd);
-			continue;
+			printf("Error: found new_line while parsing the map\n");
+			return (free(line), free_map(*lines, count), -1);
 		}
 		len = ft_strlen(line);
 		if (line[len - 1] == '\n')
@@ -98,12 +101,6 @@ static char **pad_map_lines(char **lines, int count, int max_len)
     return (map);
 }
 
-// int	validate_map(t_game *game, char **map, int num_lines, int max_len)
-// {
-// 	if (validate_single_line() != 0)
-// 		return (free_2d(map), free_parse_data(game), 1);
-// }
-
 int	load_map(t_game *game)
 {
 	char	**lines;
@@ -114,13 +111,15 @@ int	load_map(t_game *game)
 	lines = NULL;
 	num_lines = count_map_lines_and_maxlen(game->parse_data.fd, &max_len, &lines);
 	if (num_lines <= 0)
-		return (printf("Error: map couldn't be read or is empty\n"), 1);
+	{
+		if (num_lines == 0)
+			printf("Error: map couldn't be read or is empty\n");
+		return (1);
+	}
 	game->map = pad_map_lines(lines, num_lines, max_len);
 	free_map(lines, num_lines);
 	if (!game->map)
 		return (printf("Error: failed to allocate map memory\n"), free_parse_data(game), 1);
-	// if (validate_map(game, game->map, num_lines, max_len))
-	// 	return (printf("Error: %s\n", game->error_msg), free_map(game->map, num_lines), free_parse_data(game), 1);
 	game->parse_data.height = num_lines;
 	game->parse_data.width = max_len;
 	return (0);

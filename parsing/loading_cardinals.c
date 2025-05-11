@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   loading_cardinals.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:46:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/08 16:58:58 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:24:43 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+#include <stdlib.h>
+
+char **split_to_first_char(char *str, char sep)
+{
+	char	*second_string;
+	char	**new;
+
+	second_string = ft_strchr(str, sep) ;
+	second_string[0] = '\0';
+	second_string++;
+	new = malloc(sizeof(char *) * 3);
+	new[0] = ft_strdup(str);
+	new[1] = ft_strdup(second_string);
+	new[2] = 0x0;
+	return (new);
+}
 
 
 int	load_data(t_game *game, char *line)
@@ -18,8 +35,9 @@ int	load_data(t_game *game, char *line)
 	char	**split;
 	void	*img;
 	int		color;
+	// char	*tmp;
 
-	split = ft_split(line, ' ');
+	split = split_to_first_char(line, ' ');
 	if (!split || !split[0] || !split[1])
 		return (printf("Error: Invalid config line: %s\n", line), free(line), 1);
 	trim_endl(split);

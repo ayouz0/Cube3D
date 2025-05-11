@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/09 16:01:05 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/10 20:39:02 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ void cast_all_rays(t_game *game, t_ray *ray)
 		float corrected_distance = ray->distance * cos(ray->ray_angle - game->player.mv.player_angle);
 		// Calculate wall height based on corrected distance
 		float distance_to_proj_plane = (WINDOW_WIDTH / 2) / tan(FOV / 2);
-		int wall_strip_height = (TILESIZE / corrected_distance) * distance_to_proj_plane;
+		int wall_strip_height = (TILESIZE / corrected_distance) * distance_to_proj_plane; // triangle similarity 
 
 		// Calculate start and end pixel positions for the wall
 		int wall_top_pixel = (WINDOW_HEIGHT / 2) - (wall_strip_height / 2);
