@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/12 16:40:52 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/12 17:02:44 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct s_game
 	t_player	player;
 	t_keys		keys;
 	t_parser	parse_data;
+	t_ray		ray;
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
@@ -152,4 +153,6 @@ void	check_vertical_hit(t_game *game, t_ray *ray,
 void	check_horizontal_hit(t_game *game, t_ray *ray,
 				int facing_up);
 void	draw_textured_column(t_game *game, t_ray *ray, int ray_id, int height);
+unsigned int	shade_color(unsigned int color, float distance);
+
 #endif

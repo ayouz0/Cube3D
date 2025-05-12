@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_draw.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 20:04:18 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/12 14:22:55 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:00:23 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,22 @@ int	get_texture_y(t_cardinals *tex, int height, int y)
 	return (tex_y);
 }
 
+unsigned int	shade_color(unsigned int color, float distance)
+{
+	float			shade_factor;
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+
+	// !ahm ahm
+	//? Light intensity = 1 / (1 + k * distance) Where k is a constant
+	shade_factor = 1.0f / (1.0f + distance * 0.01f);
+	r = ((color >> 16) & 0xFF) * shade_factor;
+	g = ((color >> 8) & 0xFF) * shade_factor;
+	b = (color & 0xFF) * shade_factor;
+	return ((r << 16) | (g << 8) | b);
+}
+
 void	draw_column_strip(t_game *game, t_column_params *p, int height)
 {
 	int		y;
@@ -81,7 +97,7 @@ void	draw_column_strip(t_game *game, t_column_params *p, int height)
 		pix = p->texture->addr + (tex_y * p->texture->line_length + \
 				p->tex_x * (p->texture->bits_per_pixel / 8));
 		color = *(unsigned int *)pix;
-		put_pixel_in_img(game, p->x + p->i, y, color);
+		put_pixel_in_img(game, p->x + p->i, y, shade_color(color, game->ray.distance));
 		y++;
 	}
 }

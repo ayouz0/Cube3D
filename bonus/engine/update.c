@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:05:10 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/11 12:23:31 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/12 17:00:38 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ void	move_player(t_game *game, float angle)
 
 int	update(t_game *game)
 {
-	t_ray	ray;
-
 	if (game->keys.left)
 		game->player.mv.player_angle -= game->player.mv.rotspeed;
 	if (game->keys.right)
@@ -48,7 +46,7 @@ int	update(t_game *game)
 	clear_image(game);
 	draw_sky(game);
 	draw_floor(game);
-	cast_all_rays(game, &ray);
+	cast_all_rays(game, &game->ray);
 	mlx_put_image_to_window(game->mlx, game->win, game->img_ptr, 0, 0);
 	return (0);
 }

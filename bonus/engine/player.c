@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 11:59:48 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/12 15:50:21 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/12 17:12:42 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ void	init_player(t_player *player, t_game *game)
 	set_player_start_position(player, game);
 	player->mv.turndir = 0;
 	player->mv.walkdir = 0;
-	player->mv.mov_speed = 10.5;
-	player->mv.rotspeed = 5 * (M_PI / 180);
+	player->mv.mov_speed = 5.5;
+	player->mv.rotspeed = 3 * (M_PI / 180);
 }

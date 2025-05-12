@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 11:32:07 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/12 16:54:00 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/12 17:11:51 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	draw_floor(t_game *game)
 		x = 0;
 		while (x < COLS * TILESIZE)
 		{
-			draw_minisquare(game, x, y, game->parse_data.f);
+			draw_minisquare(game, x, y, shade_color(game->parse_data.f, (float)(ROWS * TILESIZE - y)));
 			x += mini_size;
 		}
 		y += mini_size;
@@ -99,7 +99,7 @@ void	draw_sky(t_game *game)
 		x = 0;
 		while (x < COLS * TILESIZE)
 		{
-			draw_minisquare(game, x, y, game->parse_data.c);
+			draw_minisquare(game, x, y, shade_color(game->parse_data.c, (float)(y)));
 			x += mini_size;
 		}
 		y += mini_size;
