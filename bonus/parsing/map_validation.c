@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:29:50 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/12 11:33:32 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/12 21:06:01 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	check_invalid_characters(char **map)
 	{
 		while (map[i][j])
 		{
-			if ((map[i][j] != ' ' && map[i][j] != '1' && map[i][j] != '0') && \
+			if ((map[i][j] != ' ' && map[i][j] != '1' && map[i][j] != '0' && map[i][j] != 'P') && \
 				(map[i][j] != 'N' && map[i][j] != 'S' && map[i][j] != 'E' && \
 				map[i][j] != 'W'))
 				return (printf \

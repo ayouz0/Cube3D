@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/12 16:32:34 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/12 20:21:27 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	leaks(){
 
 int main(int ac, char **av)
 {
-	t_game game;
+	t_game	game;
 	(void)av;
 	(void)ac;
 	atexit(leaks);
