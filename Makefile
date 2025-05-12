@@ -7,7 +7,7 @@ LINKING = -lmlx -framework OpenGL -framework AppKit# -fsanitize=address
 UTILS = utils/ft_strchr.c utils/ft_strdup.c utils/ft_strncmp.c utils/ft_strlen.c \
 		utils/get_next_line.c utils/get_next_line_utils.c
 
-HEADERS = header.h engine/engine.h parsing/parsing.h utils/utils.h
+HEADERS = header.h engine/engine.h parsing/parsing.h utils/utils.h utils/get_next_line.h
 
 SRC = main.c engine/player.c engine/input.c engine/map.c \
 		engine/raycasting.c engine/settings.c engine/update.c \
