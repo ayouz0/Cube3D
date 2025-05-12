@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:29:50 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/12 21:06:01 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/12 21:47:33 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,12 @@ int	check_map_interior(char **map, int rows, int cols, long long *player_count)
 	return (0);
 }
 
-int	check_invalid_characters(char **map)
+void	load_portal_cordinates(t_game *game, int x, int y)
+{
+	
+}
+
+int	check_invalid_characters(t_game *game, char **map)
 {
 	int	i;
 	int	j;
@@ -91,7 +96,9 @@ int	check_invalid_characters(char **map)
 				return (printf \
 				("Error: invalid character found while reading map:\n|%c|\n", \
 				map[i][j]), 1);
-			j++;
+			if (map[i][j] == 'P')
+				load_portal_cordinates(game, j, i);
+0			j++;
 		}
 		i++;
 		j = 0;
@@ -99,12 +106,12 @@ int	check_invalid_characters(char **map)
 	return (0);
 }
 
-int	validate_map(char **map, int rows, int cols)
+int	validate_map(char **map, int rows, int cols, t_game *game)
 {
 	long long	player_count;
 
 	player_count = 0;
-	if (check_invalid_characters(map))
+	if (check_invalid_characters(game, map))
 		return (1);
 	if (check_top_bottom(map, cols, 0))
 		return (1);
