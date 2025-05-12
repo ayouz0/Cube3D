@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 20:04:18 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/11 20:05:42 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/12 11:58:35 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,25 @@ t_cardinals	*choose_texture(t_game *game, t_ray *ray)
 
 int	get_texture_x(t_ray *ray)
 {
+	int		tex_x;
+
 	if (ray->was_hit_vertical)
-		return ((int)ray->wall_hit_y % TILESIZE);
-	return ((int)ray->wall_hit_x % TILESIZE);
+	{
+		tex_x = (int)ray->wall_hit_y % TILESIZE;
+		if (ray->ray_angle > M_PI_2 && ray->ray_angle < 3 * M_PI_2)
+			tex_x = TILESIZE - tex_x - 1;
+	}
+	else
+	{
+		tex_x = (int)ray->wall_hit_x % TILESIZE;
+		if (ray->ray_angle > 0 && ray->ray_angle < M_PI)
+			tex_x = TILESIZE - tex_x - 1;
+	}
+	if (tex_x < 0)
+		tex_x = 0;
+	if (tex_x >= TILESIZE)
+		tex_x = TILESIZE - 1;
+	return (tex_x);
 }
 
 int	get_texture_y(t_cardinals *tex, int height, int y)
