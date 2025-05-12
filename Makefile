@@ -1,45 +1,77 @@
 NAME = cub3D
+BONUS_NAME = cub3D_bonus
 
 FLAGS = -Wall -Werror -Wextra
+LINKING = -lmlx -framework OpenGL -framework AppKit
 
-LINKING = -lmlx -framework OpenGL -framework AppKit -fsanitize=address
+UTILS_MANDATORY = mandatory/utils/ft_strchr.c mandatory/utils/ft_strdup.c \
+	mandatory/utils/ft_strncmp.c mandatory/utils/ft_strlen.c \
+	mandatory/utils/get_next_line.c mandatory/utils/get_next_line_utils.c
 
-LIBFT = libft/libft.a
+UTILS_BONUS = bonus/utils/ft_strchr.c bonus/utils/ft_strdup.c \
+	bonus/utils/ft_strncmp.c bonus/utils/ft_strlen.c \
+	bonus/utils/get_next_line.c bonus/utils/get_next_line_utils.c
 
-HEADERS = header.h engine/engine.h parsing/parsing.h
+HEADERS_MANDATORY = mandatory/header.h mandatory/engine/engine.h \
+	mandatory/parsing/parsing.h mandatory/utils/utils.h \
+	mandatory/utils/get_next_line.h
 
-SRC = main.c engine/player.c engine/input.c engine/map.c \
-		engine/raycasting.c engine/settings.c engine/update.c \
-		parsing/parser.c parsing/loading_cardinals.c \
-		parsing/loading_map_utils.c parsing/loading_map.c \
-		parsing/parsing_cardinals_and_colors.c engine/draw.c \
-		engine/ray_hit.c engine/ray_draw.c \
-		parsing/map_validation.c parsing/map_validation_helpers.c \
-		parsing/loading_data_helpers.c \
+HEADERS_BONUS = bonus/header.h bonus/engine/engine.h \
+	bonus/parsing/parsing.h bonus/utils/utils.h \
+	bonus/utils/get_next_line.h
 
-OBJ = ${SRC:.c=.o}
+SRC_MANDATORY = mandatory/main.c mandatory/engine/player.c \
+	mandatory/engine/input.c mandatory/engine/map.c \
+	mandatory/engine/raycasting.c mandatory/engine/settings.c \
+	mandatory/engine/update.c mandatory/parsing/parser.c \
+	mandatory/parsing/loading_cardinals.c \
+	mandatory/parsing/loading_map_utils.c \
+	mandatory/parsing/loading_map.c \
+	mandatory/parsing/parsing_cardinals_and_colors.c \
+	mandatory/engine/draw.c mandatory/engine/ray_hit.c \
+	mandatory/engine/ray_draw.c mandatory/parsing/map_validation.c \
+	mandatory/parsing/map_validation_helpers.c \
+	mandatory/parsing/loading_data_helpers.c \
+	$(UTILS_MANDATORY)
 
-all: libft $(NAME)
+SRC_BONUS = bonus/main.c bonus/engine/player.c \
+	bonus/engine/input.c bonus/engine/map.c \
+	bonus/engine/raycasting.c bonus/engine/settings.c \
+	bonus/engine/update.c bonus/parsing/parser.c \
+	bonus/parsing/loading_cardinals.c \
+	bonus/parsing/loading_map_utils.c \
+	bonus/parsing/loading_map.c \
+	bonus/parsing/parsing_cardinals_and_colors.c \
+	bonus/engine/draw.c bonus/engine/ray_hit.c \
+	bonus/engine/ray_draw.c bonus/parsing/map_validation.c \
+	bonus/parsing/map_validation_helpers.c \
+	bonus/parsing/loading_data_helpers.c \
+	$(UTILS_BONUS)
 
-%.o: %.c $(HEADERS)
+OBJ_MANDATORY = ${SRC_MANDATORY:.c=.o}
+OBJ_BONUS = ${SRC_BONUS:.c=.o}
+
+all: $(NAME)
+
+bonus: $(BONUS_NAME)
+
+$(NAME): $(OBJ_MANDATORY)
+	cc $(FLAGS) $(OBJ_MANDATORY) -o $(NAME) $(LINKING)
+
+$(BONUS_NAME): $(OBJ_BONUS)
+	cc $(FLAGS) $(OBJ_BONUS) -o $(BONUS_NAME) $(LINKING)
+
+%.o: %.c $(HEADERS_MANDATORY)
 	cc $(FLAGS) -c $< -o $@
 
-libft:
-	make -C libft
-
-$(NAME): $(OBJ) 
-	cc $(FLAGS) $(OBJ) -o $(NAME) $(LINKING) $(LIBFT)
-
 clean:
-	make clean -C libft
-	rm -f $(OBJ) $(OBJ_BONUS)
+	rm -f $(OBJ_MANDATORY) $(OBJ_BONUS)
 	@echo "🧹 Object files removed."
 
 fclean: clean
-	make fclean -C libft
 	rm -f $(NAME) $(BONUS_NAME)
 	@echo "🗑️ Executables removed."
 
 re: fclean all
 
-.PHONY: clean libft
+.PHONY: all clean fclean re bonus
