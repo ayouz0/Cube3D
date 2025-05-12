@@ -6,11 +6,20 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:49:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/08 23:37:18 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/12 11:54:06 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+void	move_offset_to_map(char **line, int fd)
+{
+	while (*line && (*line)[0] == '\n')
+	{
+		free(*line);
+		*line = get_next_line(fd);
+	}
+}
 
 static int	count_map_lines_and_maxlen(int fd, int *max_len, char ***lines)
 {
@@ -20,40 +29,22 @@ static int	count_map_lines_and_maxlen(int fd, int *max_len, char ***lines)
 	char	**tmp;
 	int		i;
 
-	i = 0;
-	count = 0;
-	line = get_next_line(fd);
-	while (line && line[0] == '\n')
-	{
-		free(line);
-		line = get_next_line(fd);
-	}
+	(1) && (i = 0, count = 0, line = get_next_line(fd));
+	move_offset_to_map(&line, fd);
 	while (line)
 	{
-		if (line[0] == '\n')
-		{
-			printf("Error: found new_line while parsing the map\n");
-			return (free(line), free_map(*lines, count), -1);
-		}
 		len = ft_strlen(line);
-		if (line[len - 1] == '\n')
-			line[len-- - 1] = '\0';
-		if (len > *max_len)
-			*max_len = len;
+		(line[len - 1] == '\n') && (line[len-- - 1] = '\0');
+		(len > *max_len) && (*max_len = len);
 		tmp = malloc(sizeof(char *) * (count + 2));
 		if (!tmp)
 			return (free(line), free_map(*lines, count), -1);
-		i = 0; 
-		while (i < count)
-		{
+		i = -1; 
+		while (++i < count)
 			tmp[i] = (*lines)[i];
-			i++;
-		}
-		tmp[count] = line;
-		tmp[count + 1] = NULL;
+		(1) && (tmp[count] = line, tmp[count + 1] = NULL);
 		free(*lines);
-		*lines = tmp;
-		line = get_next_line(fd);
+		(1) && (*lines = tmp, line = get_next_line(fd));
 		count++;
 	}
 	return (count);
@@ -61,44 +52,35 @@ static int	count_map_lines_and_maxlen(int fd, int *max_len, char ***lines)
 
 static char **pad_map_lines(char **lines, int count, int max_len)
 {
-    char **map;
-    int i;
-    int j;
+	char **map;
+	int i;
+	int j;
 
 	map = malloc(sizeof(char *) * (count + 1));
 	i = 0;
-    if (!map)
-        return (NULL);
-    while (i < count)
-    {
-        map[i] = malloc(max_len + 1);
-        if (!map[i])
-        {
-        	j = 0;
-            while (j < i)
-            {
-                free(map[j]);
-                j++;
-            }
-            free(map);
-            return NULL;
+	if (!map)
+		return (NULL);
+	while (i < count)
+	{
+		map[i] = malloc(max_len + 1);
+		if (!map[i])
+			return (free_map(map, i), NULL);
+		j = 0;
+		while (lines[i][j])
+		{
+			map[i][j] = lines[i][j];
+			j++;
 		}
-        j = 0;
-        while (lines[i][j])
-        {
-            map[i][j] = lines[i][j];
-            j++;
-        }
-        while (j < max_len)
-        {
-            map[i][j] = ' ';
-            j++;
-        }
-        map[i][j] = '\0';
-        i++;
-    }
-    map[count] = NULL;
-    return (map);
+		while (j < max_len)
+		{
+			map[i][j] = ' ';
+			j++;
+		}
+		map[i][j] = '\0';
+		i++;
+	}
+	map[count] = NULL;
+	return (map);
 }
 
 int	load_map(t_game *game)

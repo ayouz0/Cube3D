@@ -6,18 +6,18 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:46:53 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/11 15:03:26 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/11 17:12:13 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static int	is_valid_space_neighbor(char c)
+int	space_neigh(char c)
 {
 	return ((c == '1') || (c == ' '));
 }
 
-static int	check_top_bottom(char **map, int cols, int row)
+int	check_top_bottom(char **map, int cols, int row)
 {
 	int	x;
 
@@ -35,7 +35,7 @@ static int	check_top_bottom(char **map, int cols, int row)
 	return (0);
 }
 
-static int	check_side_borders(char **map, int rows, int cols)
+int	check_side_borders(char **map, int rows, int cols)
 {
 	int	y;
 
@@ -51,93 +51,19 @@ static int	check_side_borders(char **map, int rows, int cols)
 	return (0);
 }
 
-static int	check_map_interior(char **map, int rows, int cols, \
-long long *player_count)
+void	increment_player_count(char c, long long *player_count)
 {
-	int	y;
-	int	x;
-
-	y = 0;
-	while (y < rows)
-	{
-		x = 0;
-		while (x < cols)
-		{
-			if ((map[y][x] == '0' || map[y][x] == 'N' || map[y][x] == 'S' || \
-			map[y][x] == 'E' || map[y][x] == 'W'))
-			{
-				if ((map[y][x] == 'N' || map[y][x] == 'S' || \
-				map[y][x] == 'E' || map[y][x] == 'W'))
-					(*player_count)++;
-				if ((y > 0 && map[y - 1][x] == ' ') || \
-					(y < rows - 1 && map[y + 1][x] == ' ') || \
-					(x > 0 && map[y][x - 1] == ' ') || \
-					(x < cols - 1 && map[y][x + 1] == ' '))
-					return (printf("Error: Map leakage is not allowed\n"), 1);
-			}
-			else if (map[y][x] == ' ' && ((y > 0 && \
-					!is_valid_space_neighbor(map[y - 1][x])) ||
-					(y < rows - 1 && !is_valid_space_neighbor(map[y + 1][x])) ||
-					(x > 0 && !is_valid_space_neighbor(map[y][x - 1])) ||
-					(x < cols - 1 && !is_valid_space_neighbor(map[y][x + 1]))))
-				return (printf("Error: Space has an invalid neighbor\n"), 1);
-			x++;
-		}
-		y++;
-	}
-	return (0);
-}
-
-int	check_invalid_characters(char **map)
-{
-	int i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (map[i])
-	{
-		while (map[i][j])
-		{
-			if ((map[i][j] != ' ' && map[i][j] != '1' && map[i][j] != '0') && \
-				(map[i][j] != 'N' && map[i][j] != 'S' && map[i][j] != 'E' && \
-				map[i][j] != 'W'))
-				return (printf("Error: invalid character found while reading map:\n|%c|\n", map[i][j]), 1);
-			j++;
-		}
-		i++;
-		j = 0;
-	}
-	return (0);
-}
-
-int	validate_map(char **map, int rows, int cols)
-{
-	long long	player_count;
-
-	player_count = 0;
-	if (check_invalid_characters(map))
-		return (1);
-	if (check_top_bottom(map, cols, 0))
-		return (1);
-	if (check_top_bottom(map, cols, rows - 1))
-		return (1);
-	if (check_side_borders(map, rows, cols))
-		return (1);
-	if (check_map_interior(map, rows, cols, &player_count))
-		return (1);
-	if (player_count == 0)
-		return (printf("Error: No player spawn found\n"), 1);
-	if (player_count != 1)
-		return (printf("Error: Multiple player spawns found (%lld)\n", player_count), 1);
-	return (0);
+	if ((c == 'N' || c == 'S' || \
+		c == 'E' || c == 'W'))
+		(*player_count)++;
 }
 
 int	parsing(int ac, char **av, t_game *game)
 {
 	if (ac != 2)
 		return (printf("Error: usage: ./cub3d <filename>.cub\n"), 1);
-	if (ft_strlen(av[1]) < 4 || ft_strncmp(av[1] + ft_strlen(av[1]) - 4, ".cub", 4) != 0)
+	if (ft_strlen(av[1]) < 4 || ft_strncmp(av[1] + \
+	ft_strlen(av[1]) - 4, ".cub", 4) != 0)
 		return (printf("Error: bad file extention\n"), 1);
 	game->parse_data.c = -1;
 	game->parse_data.f = -1;
@@ -149,7 +75,8 @@ int	parsing(int ac, char **av, t_game *game)
 		return (free_parse_data(game), 1);
 	if (load_map(game))
 		return (1);
-	if (validate_map(game->map, game->parse_data.height, game->parse_data.width))
+	if (validate_map(game->map, game->parse_data.height, \
+	game->parse_data.width))
 		return (free_2d(game->map), 1);
-	return(0);
+	return (0);
 }
