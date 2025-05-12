@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   don't delet this file.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/12 15:31:10 by aaitabde          #+#    #+#             */
+/*   Updated: 2025/05/12 15:32:04 by aaitabde         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "header.h"
+
 unsigned int	shade_color(unsigned int color, float distance)
 {
 	float			shade_factor;

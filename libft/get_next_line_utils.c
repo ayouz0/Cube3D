@@ -6,12 +6,11 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 15:05:32 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/08 16:14:48 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:29:53 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
 
 int	check_new_line(char *buf)
 {

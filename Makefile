@@ -15,6 +15,7 @@ SRC = main.c engine/player.c engine/input.c engine/map.c \
 		parsing/parsing_cardinals_and_colors.c engine/draw.c \
 		engine/ray_hit.c engine/ray_draw.c \
 		parsing/map_validation.c parsing/map_validation_helpers.c \
+		parsing/loading_data_helpers.c \
 
 OBJ = ${SRC:.c=.o}
 
