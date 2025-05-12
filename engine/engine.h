@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/11 20:09:22 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/12 15:52:11 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
-# define TILESIZE  80
+# define TILESIZE 80
 # define ROWS 9
 # define COLS 16
 # define FOV (60 * M_PI /180)
 # define WINDOW_WIDTH (COLS * TILESIZE)
 # define WINDOW_HEIGHT (ROWS * TILESIZE)
-# define RES 2
+# define RES 1
 # define NUM_RAYS (WINDOW_WIDTH / RES)
 # define PLAYER_RADIUS 1.0f
 
@@ -44,10 +44,10 @@ typedef struct s_parser
 {
 	char		**map;
 	int			fd;
-	t_cardinals	NO;
-	t_cardinals	SO;
-	t_cardinals	WE;
-	t_cardinals	EA;
+	t_cardinals	no;
+	t_cardinals	so;
+	t_cardinals	we;
+	t_cardinals	ea;
 	int			width;
 	int			height;
 	int			f;

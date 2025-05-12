@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:51:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/08 15:52:27 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/12 12:40:50 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_2d(char **arr)
 	int	i;
 
 	if (!arr)
-		return;
+		return ;
 	i = 0;
 	while (arr[i])
 	{
@@ -27,14 +27,15 @@ void	free_2d(char **arr)
 	free(arr);
 }
 
-
 void	trim_endl(char **split)
 {
-	int i = 0;
+	int	i;
+	int	len;
 
+	i = 0;
 	while (split[i])
 	{
-		int len = ft_strlen(split[i]);
+		len = ft_strlen(split[i]);
 		if (len > 0 && split[i][len - 1] == '\n')
 			split[i][len - 1] = '\0';
 		i++;
@@ -43,23 +44,23 @@ void	trim_endl(char **split)
 
 void	free_parse_data(t_game *game)
 {
-	if (game->parse_data.NO.ptr)
-		mlx_destroy_image(game->mlx, game->parse_data.NO.ptr);
-	if (game->parse_data.SO.ptr)
-		mlx_destroy_image(game->mlx, game->parse_data.SO.ptr);
-	if (game->parse_data.WE.ptr)
-		mlx_destroy_image(game->mlx, game->parse_data.WE.ptr);
-	if (game->parse_data.EA.ptr)
-		mlx_destroy_image(game->mlx, game->parse_data.EA.ptr);
-	game->parse_data.NO.ptr = NULL;
-	game->parse_data.SO.ptr = NULL;
-	game->parse_data.WE.ptr = NULL;
-	game->parse_data.EA.ptr = NULL;
+	if (game->parse_data.no.ptr)
+		mlx_destroy_image(game->mlx, game->parse_data.no.ptr);
+	if (game->parse_data.so.ptr)
+		mlx_destroy_image(game->mlx, game->parse_data.so.ptr);
+	if (game->parse_data.we.ptr)
+		mlx_destroy_image(game->mlx, game->parse_data.we.ptr);
+	if (game->parse_data.ea.ptr)
+		mlx_destroy_image(game->mlx, game->parse_data.ea.ptr);
+	game->parse_data.no.ptr = NULL;
+	game->parse_data.so.ptr = NULL;
+	game->parse_data.we.ptr = NULL;
+	game->parse_data.ea.ptr = NULL;
 }
 
 void	free_map(char **map, int rows)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < rows)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_draw.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 20:04:18 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/12 11:58:35 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/12 14:22:55 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ t_cardinals	*choose_texture(t_game *game, t_ray *ray)
 	if (ray->was_hit_vertical)
 	{
 		if (ray->ray_angle < M_PI_2 || ray->ray_angle > 3 * M_PI_2)
-			return (&game->parse_data.EA);
+			return (&game->parse_data.ea);
 		else
-			return (&game->parse_data.WE);
+			return (&game->parse_data.we);
 	}
 	else
 	{
 		if (ray->ray_angle > 0 && ray->ray_angle < M_PI)
-			return (&game->parse_data.SO);
+			return (&game->parse_data.so);
 		else
-			return (&game->parse_data.NO);
+			return (&game->parse_data.no);
 	}
 }
 

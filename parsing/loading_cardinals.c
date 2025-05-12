@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   loading_cardinals.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:46:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/11 10:33:44 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/12 15:13:28 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-char **split_to_first_char(char *str, char sep)
+static char	**split_to_first_char(char *str, char sep)
 {
 	char	*second_string;
 	char	**new;
 
-	second_string = ft_strchr(str, sep) ;
+	second_string = ft_strchr(str, sep);
+	if (!second_string)
+		return ((char **)str);
 	second_string[0] = '\0';
 	second_string++;
 	new = malloc(sizeof(char *) * 3);
@@ -27,7 +29,7 @@ char **split_to_first_char(char *str, char sep)
 	return (new);
 }
 
-int	load_data(t_game *game, char *line)
+static int	load_data(t_game *game, char *line)
 {
 	char	**split;
 	void	*img;
@@ -35,61 +37,46 @@ int	load_data(t_game *game, char *line)
 
 	split = split_to_first_char(line, ' ');
 	if (!split || !split[0] || !split[1])
-		return (printf("Error: Invalid config line: %s\n", line), free(line), 1);
-	trim_endl(split);
-	if (split[2] && split[2][0] != '\0')
-		return (printf("Error: Invalid config line :\n%s", line));
-	if (ft_strncmp(split[0], "NO", 3) == 0)
-	{
-		img = mlx_xpm_file_to_image(game->mlx, split[1], &game->parse_data.NO.w, &game->parse_data.NO.h);
-		game->parse_data.NO.ptr = img;
-		if (img)
-			game->parse_data.NO.addr = mlx_get_data_addr(game->parse_data.NO.ptr, &game->parse_data.NO.bits_per_pixel, &game->parse_data.NO.line_length, &game->parse_data.NO.endian);
-	}
-	else if (ft_strncmp(split[0], "SO", 3) == 0)
-	{
-		img = mlx_xpm_file_to_image(game->mlx, split[1], &game->parse_data.SO.w, &game->parse_data.SO.h);
-		game->parse_data.SO.ptr = img;
-		if (img)
-			game->parse_data.SO.addr = mlx_get_data_addr(game->parse_data.SO.ptr, &game->parse_data.SO.bits_per_pixel, &game->parse_data.SO.line_length, &game->parse_data.SO.endian);
-	}
-	else if (ft_strncmp(split[0], "WE", 3) == 0)
-	{
-		img = mlx_xpm_file_to_image(game->mlx, split[1], &game->parse_data.WE.w, &game->parse_data.WE.h);
-		game->parse_data.WE.ptr = img;
-		if (img)
-			game->parse_data.WE.addr = mlx_get_data_addr(game->parse_data.WE.ptr, &game->parse_data.WE.bits_per_pixel, &game->parse_data.WE.line_length, &game->parse_data.WE.endian);
-	}
-	else if (ft_strncmp(split[0], "EA", 3) == 0)
-	{
-		img = mlx_xpm_file_to_image(game->mlx, split[1], &game->parse_data.EA.w, &game->parse_data.EA.h);
-		game->parse_data.EA.ptr = img;
-		if (img)
-			game->parse_data.EA.addr = mlx_get_data_addr(game->parse_data.EA.ptr, &game->parse_data.EA.bits_per_pixel, &game->parse_data.EA.line_length, &game->parse_data.EA.endian);
-	}
-	else if (ft_strncmp(split[0], "F", 2) == 0)
+		return (printf(INVALID_CONFG, line), free(line), free_2d(split), 1);
+	(trim_endl(split), load_images(split, game, &img));
+	if (ft_strncmp(split[0], "F", 2) == 0)
 	{
 		if (parse_rgb(split[1], &color))
-			return (printf("Error: Invalid floor color: %s\n", split[1]), free_2d(split), 1);
+			return (printf(FLOOR, split[1]), free_2d(split), 1);
 		game->parse_data.f = color;
 	}
 	else if (ft_strncmp(split[0], "C", 2) == 0)
 	{
 		if (parse_rgb(split[1], &color))
-			return (printf("Error: Invalid ceiling color: %s\n", split[1]), free_2d(split), 1);
+			return (printf(CEILING, split[1]), free_2d(split), 1);
 		game->parse_data.c = color;
 	}
-	if ((split[0][0] == 'N' || split[0][0] == 'S' || split[0][0] == 'W' || split[0][0] == 'E') && !img)
-    	return (free_2d(split), printf("Error: failed to load an image\n"), 1);
-	free_2d(split);
-	return (0);
+	if ((split[0][0] == 'N' || split[0][0] == 'S' || split[0][0] == 'W' || \
+	split[0][0] == 'E') && !img)
+		return (free_2d(split), printf(IMAGE_FAILURE), 1);
+	return (free_2d(split), 0);
 }
 
-int	all_have_been_loaded(t_game *game)
+static int	all_have_been_loaded(t_game *game)
 {
-	return ((game->parse_data.NO.ptr && game->parse_data.SO.ptr \
-		&& game->parse_data.EA.ptr && game->parse_data.WE.ptr \
+	return ((game->parse_data.no.ptr && game->parse_data.so.ptr \
+		&& game->parse_data.ea.ptr && game->parse_data.we.ptr \
 		&& game->parse_data.c != -1 && game->parse_data.f != -1));
+}
+
+static int	evaluate_line(char **line, t_game *game, int *counter)
+{
+	if (!(*line))
+		return (close(game->parse_data.fd), printf(CARDINALS), free(*line), 1);
+	if ((is_cardinal(*line) == 0 || is_color(*line) == 0))
+	{
+		if (load_data(game, *line) != 0)
+			return (free(*line), close(game->parse_data.fd), 1);
+		(*counter)++;
+	}
+	else
+		return (printf(INVALID_LINE, *line), free(*line), 1);
+	return (0);
 }
 
 int	load_cardinals_and_colors(t_game *game, char **av)
@@ -97,35 +84,23 @@ int	load_cardinals_and_colors(t_game *game, char **av)
 	char	*line;
 	int		counter;
 
-	counter = 0;
-	game->parse_data.fd = open(av[1], O_RDONLY);
+	(1) && (counter = 0, game->parse_data.fd = open(av[1], O_RDONLY));
 	if (game->parse_data.fd == -1)
-		return (printf("Error: failed to open the file \"%s\"\n", av[1]), 1);
+		return (printf(OPEN_FAILURE, av[1]), 1);
 	line = get_next_line(game->parse_data.fd);
 	if (!line)
-		return (printf("Error: couldn't load all cardinals/colors\n"), close(game->parse_data.fd), 1);
+		return (printf(CARDIN_COL), close(game->parse_data.fd), 1);
 	while (1)
 	{
-		while (line && line[0] == '\n')
-		{
-			free(line);
-			line = get_next_line(game->parse_data.fd);
-		}
-		if (!line)
-			return (close(game->parse_data.fd), printf("Error: couldn't load all cardinals/colors\n"), free(line), 1);
-		if ((is_cardinal(line) == 0 || is_color(line) == 0))
-		{
-			if (load_data(game, line) != 0)
-				return (free(line), close(game->parse_data.fd), 1);
-			counter++;
-		}
-		else
-			return (printf("Error: invalid line while parsing cardinals/colors:\n%s", line), free(line), 1);
+		move_offset_to_map(&line, game->parse_data.fd);
+		if (evaluate_line(&line, game, &counter) != 0)
+			return (1);
 		if (counter == 6)
 		{
 			if (all_have_been_loaded(game))
-				break;
-			return (printf("Error: found duplicate config info\n"), free(line), close(game->parse_data.fd), 1);
+				break ;
+			return (printf(DUPLICATE), free(line), \
+			close(game->parse_data.fd), 1);
 		}
 		free(line);
 		line = get_next_line(game->parse_data.fd);

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:48:16 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/11 10:06:01 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/11 14:47:42 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 int	is_color(char *line)
 {
 	if (!line)
-		return(1);
+		return (1);
 	if (ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0)
 		return (0);
-	return(1);
+	return (1);
 }
 
 /*only one expression would be true for the string comparisons
 witch makes "found" a bool*/
 int	is_cardinal(char *line)
 {
-	int found;
+	int	found;
 
 	found = 0;
 	if (!line)
-		return(1);
+		return (1);
 	found += (!ft_strncmp(line, "NO ", 3)) + (!ft_strncmp(line, "SO ", 3)) \
 	+ (!ft_strncmp(line, "EA ", 3)) + (!ft_strncmp(line, "WE ", 3));
 	return (!found);
@@ -37,9 +37,11 @@ int	is_cardinal(char *line)
 
 static int	read_component(char *str, int *i, int *value)
 {
-	int	n = 0;
-	int	count = 0;
+	int	n;
+	int	count;
 
+	n = 0;
+	count = 0;
 	while (str[*i] >= '0' && str[*i] <= '9')
 	{
 		n = n * 10 + (str[*i] - '0');
