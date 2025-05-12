@@ -4,9 +4,10 @@ FLAGS = -Wall -Werror -Wextra
 
 LINKING = -lmlx -framework OpenGL -framework AppKit -fsanitize=address
 
-LIBFT = libft/libft.a
+UTILS = utils/ft_strchr.c utils/ft_strdup.c utils/ft_strncmp.c utils/ft_strlen.c \
+		utils/get_next_line.c utils/get_next_line_utils.c
 
-HEADERS = header.h engine/engine.h parsing/parsing.h
+HEADERS = header.h engine/engine.h parsing/parsing.h utils/utils.h
 
 SRC = main.c engine/player.c engine/input.c engine/map.c \
 		engine/raycasting.c engine/settings.c engine/update.c \
@@ -15,31 +16,26 @@ SRC = main.c engine/player.c engine/input.c engine/map.c \
 		parsing/parsing_cardinals_and_colors.c engine/draw.c \
 		engine/ray_hit.c engine/ray_draw.c \
 		parsing/map_validation.c parsing/map_validation_helpers.c \
-		parsing/loading_data_helpers.c \
+		parsing/loading_data_helpers.c $(UTILS)
 
 OBJ = ${SRC:.c=.o}
 
-all: libft $(NAME)
+all: $(NAME)
 
 %.o: %.c $(HEADERS)
 	cc $(FLAGS) -c $< -o $@
 
-libft:
-	make -C libft
-
 $(NAME): $(OBJ) 
-	cc $(FLAGS) $(OBJ) -o $(NAME) $(LINKING) $(LIBFT)
+	cc $(FLAGS) $(OBJ) -o $(NAME) $(LINKING)
 
 clean:
-	make clean -C libft
 	rm -f $(OBJ) $(OBJ_BONUS)
 	@echo "🧹 Object files removed."
 
 fclean: clean
-	make fclean -C libft
 	rm -f $(NAME) $(BONUS_NAME)
 	@echo "🗑️ Executables removed."
 
 re: fclean all
 
-.PHONY: clean libft
+.PHONY: clean

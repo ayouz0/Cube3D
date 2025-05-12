@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 12:27:45 by aaitabde          #+#    #+#             */
-/*   Updated: 2024/11/11 18:35:42 by aaitabde         ###   ########.fr       */
+/*   Created: 2024/10/27 21:46:41 by aaitabde          #+#    #+#             */
+/*   Updated: 2025/05/12 15:40:52 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "utils.h"
 
-int	ft_isalnum(int c)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	unsigned char	i;
+	size_t	i;
 
-	i = (unsigned char) c;
-	if (((i <= 90 && i >= 65) || (i <= 122 && i >= 97))
-		|| (i <= '9' && i >= '0'))
-		return (1);
+	i = 0;
+	if (n == 0)
+		return (0);
+	while ((s1[i] != '\0' || s2[i] != '\0') && i < n)
+	{
+		if ((unsigned char)s1[i] != (unsigned char)s2[i])
+		{
+			if ((unsigned char)s1[i] > (unsigned char)s2[i])
+				return (1);
+			else
+				return (-1);
+		}
+		i++;
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:47:57 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/12 15:23:33 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:53:00 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <fcntl.h>
 # include "../engine/engine.h"
-# include "../libft/libft.h"
+# include "../utils/utils.h"
 
 typedef struct s_map_ctx
 {
