@@ -2,7 +2,7 @@ NAME = cub3D
 
 FLAGS = -Wall -Werror -Wextra
 
-LINKING = -lmlx -framework OpenGL -framework AppKit -fsanitize=address
+LINKING = -lmlx -framework OpenGL -framework AppKit# -fsanitize=address
 
 UTILS = utils/ft_strchr.c utils/ft_strdup.c utils/ft_strncmp.c utils/ft_strlen.c \
 		utils/get_next_line.c utils/get_next_line_utils.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/11 11:32:29 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/12 16:25:50 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@ int main(int ac, char **av)
 	t_game game;
 	(void)av;
 	(void)ac;
-	// atexit(leaks);
-	game.mlx = mlx_init();
+	atexit(leaks);
+	game.parse_data.no.ptr = NULL;
+	game.parse_data.so.ptr = NULL;
+	game.parse_data.we.ptr = NULL;
+	game.parse_data.ea.ptr = NULL;
 	if (parsing(ac, av, &game) != 0)
-		return (1);
+		return (free_parse_data(&game), 1);
 	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cube3d");
 	game.img_ptr = mlx_new_image(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	game.addr = mlx_get_data_addr(game.img_ptr, &game.bits_per_pixel, &game.line_length, &game.endian);
