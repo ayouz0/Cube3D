@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:51:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/12 11:36:53 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/12 12:40:50 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,18 @@ void	trim_endl(char **split)
 
 void	free_parse_data(t_game *game)
 {
-	if (game->parse_data.NO.ptr)
-		mlx_destroy_image(game->mlx, game->parse_data.NO.ptr);
-	if (game->parse_data.SO.ptr)
-		mlx_destroy_image(game->mlx, game->parse_data.SO.ptr);
-	if (game->parse_data.WE.ptr)
-		mlx_destroy_image(game->mlx, game->parse_data.WE.ptr);
-	if (game->parse_data.EA.ptr)
-		mlx_destroy_image(game->mlx, game->parse_data.EA.ptr);
-	game->parse_data.NO.ptr = NULL;
-	game->parse_data.SO.ptr = NULL;
-	game->parse_data.WE.ptr = NULL;
-	game->parse_data.EA.ptr = NULL;
+	if (game->parse_data.no.ptr)
+		mlx_destroy_image(game->mlx, game->parse_data.no.ptr);
+	if (game->parse_data.so.ptr)
+		mlx_destroy_image(game->mlx, game->parse_data.so.ptr);
+	if (game->parse_data.we.ptr)
+		mlx_destroy_image(game->mlx, game->parse_data.we.ptr);
+	if (game->parse_data.ea.ptr)
+		mlx_destroy_image(game->mlx, game->parse_data.ea.ptr);
+	game->parse_data.no.ptr = NULL;
+	game->parse_data.so.ptr = NULL;
+	game->parse_data.we.ptr = NULL;
+	game->parse_data.ea.ptr = NULL;
 }
 
 void	free_map(char **map, int rows)

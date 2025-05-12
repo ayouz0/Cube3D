@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:46:53 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/11 17:12:13 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/12 12:25:13 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ int	parsing(int ac, char **av, t_game *game)
 		return (printf("Error: bad file extention\n"), 1);
 	game->parse_data.c = -1;
 	game->parse_data.f = -1;
-	game->parse_data.NO.ptr = 0x0;
-	game->parse_data.SO.ptr = 0x0;
-	game->parse_data.WE.ptr = 0x0;
-	game->parse_data.EA.ptr = 0x0;
+	game->parse_data.no.ptr = 0x0;
+	game->parse_data.so.ptr = 0x0;
+	game->parse_data.we.ptr = 0x0;
+	game->parse_data.ea.ptr = 0x0;
 	if (load_cardinals_and_colors(game, av) != 0)
 		return (free_parse_data(game), 1);
 	if (load_map(game))

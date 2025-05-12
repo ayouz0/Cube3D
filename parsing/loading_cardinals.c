@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   loading_cardinals.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:46:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/11 10:33:44 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/12 14:08:15 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-char **split_to_first_char(char *str, char sep)
+char	**split_to_first_char(char *str, char sep)
 {
 	char	*second_string;
 	char	**new;
 
-	second_string = ft_strchr(str, sep) ;
+	second_string = ft_strchr(str, sep);
+	if (!second_string)
+		return ((char **)str);
 	second_string[0] = '\0';
 	second_string++;
 	new = malloc(sizeof(char *) * 3);
@@ -25,6 +27,30 @@ char **split_to_first_char(char *str, char sep)
 	new[1] = ft_strdup(second_string);
 	new[2] = 0x0;
 	return (new);
+}
+
+void	load_image_and_address(void	**img, t_game *game, \
+char *filename, t_cardinals *cardinal)
+{
+	*img = mlx_xpm_file_to_image(game->mlx, filename, &cardinal->w, \
+	&cardinal->h);
+	cardinal->ptr = *img;
+	if (*img)
+		cardinal->addr = mlx_get_data_addr(cardinal->ptr, \
+		&cardinal->bits_per_pixel, &cardinal->line_length, \
+		&cardinal->endian);
+}
+
+void	load_images(char **split, t_game *game, void **img)
+{
+	if (ft_strncmp(split[0], "NO", 3) == 0)
+		load_image_and_address(img, game, split[1], &game->parse_data.no);
+	else if (ft_strncmp(split[0], "SO", 3) == 0)
+		load_image_and_address(img, game, split[1], &game->parse_data.so);
+	else if (ft_strncmp(split[0], "WE", 3) == 0)
+		load_image_and_address(img, game, split[1], &game->parse_data.we);
+	else if (ft_strncmp(split[0], "EA", 3) == 0)
+		load_image_and_address(img, game, split[1], &game->parse_data.ea);
 }
 
 int	load_data(t_game *game, char *line)
@@ -35,60 +61,33 @@ int	load_data(t_game *game, char *line)
 
 	split = split_to_first_char(line, ' ');
 	if (!split || !split[0] || !split[1])
-		return (printf("Error: Invalid config line: %s\n", line), free(line), 1);
-	trim_endl(split);
-	if (split[2] && split[2][0] != '\0')
-		return (printf("Error: Invalid config line :\n%s", line));
-	if (ft_strncmp(split[0], "NO", 3) == 0)
-	{
-		img = mlx_xpm_file_to_image(game->mlx, split[1], &game->parse_data.NO.w, &game->parse_data.NO.h);
-		game->parse_data.NO.ptr = img;
-		if (img)
-			game->parse_data.NO.addr = mlx_get_data_addr(game->parse_data.NO.ptr, &game->parse_data.NO.bits_per_pixel, &game->parse_data.NO.line_length, &game->parse_data.NO.endian);
-	}
-	else if (ft_strncmp(split[0], "SO", 3) == 0)
-	{
-		img = mlx_xpm_file_to_image(game->mlx, split[1], &game->parse_data.SO.w, &game->parse_data.SO.h);
-		game->parse_data.SO.ptr = img;
-		if (img)
-			game->parse_data.SO.addr = mlx_get_data_addr(game->parse_data.SO.ptr, &game->parse_data.SO.bits_per_pixel, &game->parse_data.SO.line_length, &game->parse_data.SO.endian);
-	}
-	else if (ft_strncmp(split[0], "WE", 3) == 0)
-	{
-		img = mlx_xpm_file_to_image(game->mlx, split[1], &game->parse_data.WE.w, &game->parse_data.WE.h);
-		game->parse_data.WE.ptr = img;
-		if (img)
-			game->parse_data.WE.addr = mlx_get_data_addr(game->parse_data.WE.ptr, &game->parse_data.WE.bits_per_pixel, &game->parse_data.WE.line_length, &game->parse_data.WE.endian);
-	}
-	else if (ft_strncmp(split[0], "EA", 3) == 0)
-	{
-		img = mlx_xpm_file_to_image(game->mlx, split[1], &game->parse_data.EA.w, &game->parse_data.EA.h);
-		game->parse_data.EA.ptr = img;
-		if (img)
-			game->parse_data.EA.addr = mlx_get_data_addr(game->parse_data.EA.ptr, &game->parse_data.EA.bits_per_pixel, &game->parse_data.EA.line_length, &game->parse_data.EA.endian);
-	}
-	else if (ft_strncmp(split[0], "F", 2) == 0)
+		return (printf("Error: Invalid config line: %s\n", line), \
+		free(line), free_2d(split), 1);
+	(trim_endl(split), load_images(split, game, &img));
+	if (ft_strncmp(split[0], "F", 2) == 0)
 	{
 		if (parse_rgb(split[1], &color))
-			return (printf("Error: Invalid floor color: %s\n", split[1]), free_2d(split), 1);
+			return (printf("Error: Invalid floor color: %s\n", \
+			split[1]), free_2d(split), 1);
 		game->parse_data.f = color;
 	}
 	else if (ft_strncmp(split[0], "C", 2) == 0)
 	{
 		if (parse_rgb(split[1], &color))
-			return (printf("Error: Invalid ceiling color: %s\n", split[1]), free_2d(split), 1);
+			return (printf("Error: Invalid ceiling color: %s\n", split[1]), \
+			free_2d(split), 1);
 		game->parse_data.c = color;
 	}
-	if ((split[0][0] == 'N' || split[0][0] == 'S' || split[0][0] == 'W' || split[0][0] == 'E') && !img)
-    	return (free_2d(split), printf("Error: failed to load an image\n"), 1);
-	free_2d(split);
-	return (0);
+	if ((split[0][0] == 'N' || split[0][0] == 'S' || split[0][0] == 'W' || \
+	split[0][0] == 'E') && !img)
+		return (free_2d(split), printf("Error: failed to load an image\n"), 1);
+	return (free_2d(split), 0);
 }
 
 int	all_have_been_loaded(t_game *game)
 {
-	return ((game->parse_data.NO.ptr && game->parse_data.SO.ptr \
-		&& game->parse_data.EA.ptr && game->parse_data.WE.ptr \
+	return ((game->parse_data.no.ptr && game->parse_data.so.ptr \
+		&& game->parse_data.ea.ptr && game->parse_data.we.ptr \
 		&& game->parse_data.c != -1 && game->parse_data.f != -1));
 }
 

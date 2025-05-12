@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:49:07 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/12 11:54:06 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/12 12:22:06 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	count_map_lines_and_maxlen(int fd, int *max_len, char ***lines)
 		tmp = malloc(sizeof(char *) * (count + 2));
 		if (!tmp)
 			return (free(line), free_map(*lines, count), -1);
-		i = -1; 
+		i = -1;
 		while (++i < count)
 			tmp[i] = (*lines)[i];
 		(1) && (tmp[count] = line, tmp[count + 1] = NULL);
@@ -50,11 +50,20 @@ static int	count_map_lines_and_maxlen(int fd, int *max_len, char ***lines)
 	return (count);
 }
 
-static char **pad_map_lines(char **lines, int count, int max_len)
+void	pad_up(char ***map, int max_len, int *i, int *j)
 {
-	char **map;
-	int i;
-	int j;
+	while (*j < max_len)
+	{
+		(*map)[*i][*j] = ' ';
+		(*j)++;
+	}
+}
+
+static char	**pad_map_lines(char **lines, int count, int max_len)
+{
+	char	**map;
+	int		i;
+	int		j;
 
 	map = malloc(sizeof(char *) * (count + 1));
 	i = 0;
@@ -71,11 +80,7 @@ static char **pad_map_lines(char **lines, int count, int max_len)
 			map[i][j] = lines[i][j];
 			j++;
 		}
-		while (j < max_len)
-		{
-			map[i][j] = ' ';
-			j++;
-		}
+		pad_up(&map, max_len, &i, &j);
 		map[i][j] = '\0';
 		i++;
 	}
@@ -91,7 +96,8 @@ int	load_map(t_game *game)
 
 	max_len = 0;
 	lines = NULL;
-	num_lines = count_map_lines_and_maxlen(game->parse_data.fd, &max_len, &lines);
+	num_lines = count_map_lines_and_maxlen(game->parse_data.fd, \
+	&max_len, &lines);
 	if (num_lines <= 0)
 	{
 		if (num_lines == 0)
@@ -101,7 +107,8 @@ int	load_map(t_game *game)
 	game->map = pad_map_lines(lines, num_lines, max_len);
 	free_map(lines, num_lines);
 	if (!game->map)
-		return (printf("Error: failed to allocate map memory\n"), free_parse_data(game), 1);
+		return (printf("Error: failed to allocate map memory\n"), \
+		free_parse_data(game), 1);
 	game->parse_data.height = num_lines;
 	game->parse_data.width = max_len;
 	return (0);
