@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:04:09 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/11 11:57:44 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/12 19:56:25 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,14 @@ int	key_press(int key, t_game *game)
 		game->keys.left = 1;
 	else if (key == 124)
 		game->keys.right = 1;
+	else if (key == 257)
+		game->player.mv.mov_speed = 8;
 	return (0);
 }
 
 int	key_release(int key, t_game *game)
 {
+	printf("key=%d\n", key); // 257
 	if (key == 13)
 		game->keys.w = 0;
 	else if (key == 1)
@@ -45,5 +48,7 @@ int	key_release(int key, t_game *game)
 		game->keys.left = 0;
 	else if (key == 124)
 		game->keys.right = 0;
+	else if (key == 257)
+		game->player.mv.mov_speed = 3.5;
 	return (0);
 }
