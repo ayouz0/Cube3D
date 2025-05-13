@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/13 14:24:31 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:49:21 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int close_window(t_game *game)
 }
 
 void	leaks(){
-	system("leaks -q cub3D");
+	system("leaks -q cub3D_bonus");
 }
 
 int combined_update(t_game *game)
