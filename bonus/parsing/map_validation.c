@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:29:50 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/13 15:40:15 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/13 16:12:39 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	check_map_interior(char **map, int rows, int cols, long long *player_count)
 	return (0);
 }
 
-int	check_invalid_characters(t_game *game, char **map)
+int	check_invalid_characters(char **map)
 {
 	int	i;
 	int	j;
@@ -99,12 +99,12 @@ int	check_invalid_characters(t_game *game, char **map)
 	return (0);
 }
 
-int	validate_map(char **map, int rows, int cols, t_game *game)
+int	validate_map(char **map, int rows, int cols)
 {
 	long long	player_count;
 
 	player_count = 0;
-	if (check_invalid_characters(game, map))
+	if (check_invalid_characters(map))
 		return (1);
 	if (check_top_bottom(map, cols, 0))
 		return (1);
