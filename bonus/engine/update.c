@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:05:10 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/12 17:00:38 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/13 17:19:30 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	update(t_game *game)
 	draw_sky(game);
 	draw_floor(game);
 	cast_all_rays(game, &game->ray);
+	if (game->light  % 2 == 0)
+		animate_sprite(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img_ptr, 0, 0);
 	return (0);
 }

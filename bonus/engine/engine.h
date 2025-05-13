@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/13 16:17:35 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/13 17:19:54 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
+# include <sys/time.h>
 # define TILESIZE 80
 # define ROWS 9
 # define COLS 16
@@ -137,6 +138,7 @@ typedef struct s_game
 	int			endian;
 	char		**map;
 	int			light;
+	t_cardinals	light_img[5];
 	t_minimap	minimap;
 }	t_game;
 
@@ -171,5 +173,6 @@ void	check_horizontal_hit(t_game *game, t_ray *ray,
 				int facing_up);
 void	draw_textured_column(t_game *game, t_ray *ray, int ray_id, int height);
 unsigned int	shade_color(unsigned int color, float distance, t_game *game);
+void	animate_sprite(t_game *game);
 
 #endif

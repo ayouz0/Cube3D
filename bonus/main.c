@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/13 16:17:19 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/13 17:18:40 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,89 @@ void	leaks(){
 	system("leaks -q cub3D");
 }
 
+long	get_current_time_ms(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+}
+
+void	draw_light_sprite(t_game *game, t_cardinals *sprite, int dest_x, int dest_y)
+{
+	int		x, y;
+	int		color;
+	char	*dst;
+	int		dst_offset;
+	int		src_offset;
+
+	y = 0;
+	while (y < sprite->h)
+	{
+		x = 0;
+		while (x < sprite->w)
+		{
+			src_offset = y * sprite->line_length + x * (sprite->bits_per_pixel / 8);
+			color = *(int *)(sprite->addr + src_offset);
+
+			// Optional: skip transparent pixels (e.g., black background)
+			if ((color & 0x00FFFFFF) != 0x000000)
+			{
+				int draw_x = dest_x + x;
+				int draw_y = dest_y + y;
+				if (draw_x >= 0 && draw_x < WINDOW_WIDTH && draw_y >= 0 && draw_y < WINDOW_HEIGHT)
+				{
+					dst_offset = draw_y * game->line_length + draw_x * (game->bits_per_pixel / 8);
+					dst = game->addr + dst_offset;
+					*(int *)dst = color;
+				}
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+void	animate_sprite(t_game *game)
+{
+	static long	last_update = 0;
+	static int	anim_frame = 0;
+	long		current_time;
+
+	if (!game->light)
+		return;
+
+	current_time = get_current_time_ms();
+	if (current_time - last_update >= 500) // smoother animation
+	{
+		anim_frame = (anim_frame + 1) % 5;
+		last_update = current_time;
+	}
+	draw_light_sprite(game, &game->light_img[anim_frame], 10 * 48, 10 * 48); // Adjust coordinates
+}
+
 int combined_update(t_game *game)
 {
 	update(game);
 	render_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->minimap.minimap_img, 
 							game->minimap.pos_x, game->minimap.pos_y);
+	return (0);
+}
+
+int	init_light(t_game *game)
+{
+	game->light = 1;
+	load_image_and_address(&game->light_img[0].ptr, game, "bonus/textures/light_0.xpm", &game->light_img[0]);
+	load_image_and_address(&game->light_img[1].ptr, game, "bonus/textures/light_1.xpm", &game->light_img[1]);
+	load_image_and_address(&game->light_img[2].ptr, game, "bonus/textures/light_2.xpm", &game->light_img[2]);
+	load_image_and_address(&game->light_img[3].ptr, game, "bonus/textures/light_3.xpm", &game->light_img[3]);
+	load_image_and_address(&game->light_img[4].ptr, game, "bonus/textures/light_4.xpm", &game->light_img[4]);
+	// game->light_img[0].ptr = mlx_xpm_file_to_image(game->mlx, "bonus/textures/light_1.xpm", &x, &y);
+	// game->light_img[1].ptr = mlx_xpm_file_to_image(game->mlx, "bonus/textures/light_2.xpm", &x, &y);
+	// game->light_img[2].ptr = mlx_xpm_file_to_image(game->mlx, "bonus/textures/light_3.xpm", &x, &y);
+	// game->light_img[3].ptr = mlx_xpm_file_to_image(game->mlx, "bonus/textures/light_4.xpm", &x, &y);
+	// game->light_img[4].ptr = mlx_xpm_file_to_image(game->mlx, "bonus/textures/light_5.xpm", &x, &y);
 	return (0);
 }
 
@@ -50,7 +127,6 @@ int main(int ac, char **av)
 	game.img_ptr = mlx_new_image(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	game.addr = mlx_get_data_addr(game.img_ptr, &game.bits_per_pixel, &game.line_length, &game.endian);
 	game.keys.a = 0;
-	game.light = 1;
 	game.keys.d = 0;
 	game.keys.s = 0;
 	game.keys.w = 0;
@@ -59,6 +135,7 @@ int main(int ac, char **av)
 	game.keys.esc = 0;
 	init_player(&game.player, &game);
 	init_minimap(&game);
+	init_light(&game);
 	mlx_hook(game.win, 2, 1L<<0, key_press, &game);
 	mlx_hook(game.win, 3, 1L<<1, key_release, &game);
 	mlx_loop_hook(game.mlx, combined_update, &game);
