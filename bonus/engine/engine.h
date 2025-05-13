@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/13 15:38:22 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:40:32 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@
 # define RES 1
 # define NUM_RAYS (WINDOW_WIDTH / RES)
 # define PLAYER_RADIUS 1.0f
-# define MAX_PORTAL 100
-// 
+
 typedef struct s_cardinals
 {
 	void	*ptr;
@@ -55,11 +54,6 @@ typedef struct s_parser
 	int			c;
 }	t_parser;
 
-typedef struct s_portal
-{
-	float	x;
-	float	y;
-}	t_portal;
 
 typedef struct s_moves
 {

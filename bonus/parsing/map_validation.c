@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:29:50 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/13 15:38:12 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/13 15:40:15 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	check_invalid_characters(t_game *game, char **map)
 {
 	int	i;
 	int	j;
-	int	count = 0;
 
 	i = 0;
 	j = 0;
@@ -92,18 +91,11 @@ int	check_invalid_characters(t_game *game, char **map)
 				return (printf \
 				("Error: invalid character found while reading map:\n|%c|\n", \
 				map[i][j]), 1);
-			if (map[i][j] == 'P')
-			{
-				portal[count].y = i;
-				portal[count].x = j;
-				count++;
-			}
 			j++;
 		}
 		i++;
 		j = 0;
 	}
-	(count > 0) && load_portals(game, portal, count);
 	return (0);
 }
 
