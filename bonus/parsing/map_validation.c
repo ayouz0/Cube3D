@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:29:50 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/13 12:17:23 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:56:32 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ void	print_portals(t_portal *portals)
 	while(portals[i].x != -1)
 	{
 		printf("#####portal <%d>######\n", i);
-		printf("#### x = %f ###\n", portals[i].x);
-		printf("#### y = %f ###\n", portals[i].y);
+		printf("####   x = %f ###\n", portals[i].x);
+		printf("####   y = %f ###\n", portals[i].y);
 		printf("################\n");
 		i++;
 	}
@@ -136,7 +136,6 @@ int	check_invalid_characters(t_game *game, char **map)
 		j = 0;
 	}
 	(count > 0) && load_portals(game, portal, count);
-	print_portals(game->portals);
 	return (0);
 }
 

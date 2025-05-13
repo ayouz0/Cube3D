@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/13 12:25:14 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/13 14:24:31 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,15 @@ int close_window(t_game *game)
 
 void	leaks(){
 	system("leaks -q cub3D");
+}
+
+int combined_update(t_game *game)
+{
+	update(game);
+	render_minimap(game);
+	mlx_put_image_to_window(game->mlx, game->win, game->minimap.minimap_img, 
+							game->minimap.pos_x, game->minimap.pos_y);
+	return (0);
 }
 
 int main(int ac, char **av)
@@ -48,10 +57,10 @@ int main(int ac, char **av)
 	game.keys.right= 0;
 	game.keys.esc = 0;
 	init_player(&game.player, &game);
+	init_minimap(&game);
 	mlx_hook(game.win, 2, 1L<<0, key_press, &game);
 	mlx_hook(game.win, 3, 1L<<1, key_release, &game);
-	mlx_loop_hook(game.mlx, update, &game);
-	mlx_put_image_to_window(game.mlx, game.win, game.img_ptr, 0, 0);
+	mlx_loop_hook(game.mlx, combined_update, &game);
 	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_loop(game.mlx);
 }

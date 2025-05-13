@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/13 12:06:20 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/13 13:21:40 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,21 @@ typedef struct s_keys
 	int	esc;
 }	t_keys;
 
+typedef struct s_minimap
+{
+	void	*minimap_img;
+	char	*addr;
+	int		bits_per_pixel;
+    int		line_length;
+    int		endian;
+	int		width;
+	int		height;
+	int		cell_size;
+	int		pos_x;
+	int		pos_y;
+	int		view_range;
+} t_minimap;
+
 typedef struct s_game
 {
 	void		*mlx;
@@ -129,6 +144,7 @@ typedef struct s_game
 	char		**map;
 	char		*error_msg;
 	t_portal	*portals;
+	t_minimap	minimap;
 }	t_game;
 
 typedef struct s_column_params

@@ -18,7 +18,7 @@ HEADERS_MANDATORY = mandatory/header.h mandatory/engine/engine.h \
 
 HEADERS_BONUS = bonus/header.h bonus/engine/engine.h \
 	bonus/parsing/parsing.h bonus/utils/utils.h \
-	bonus/utils/get_next_line.h
+	bonus/utils/get_next_line.h bonus/minimap_bonus/minimap_bonus.h
 
 SRC_MANDATORY = mandatory/main.c mandatory/engine/player.c \
 	mandatory/engine/input.c mandatory/engine/map.c \
@@ -46,6 +46,8 @@ SRC_BONUS = bonus/main.c bonus/engine/player.c \
 	bonus/engine/ray_draw.c bonus/parsing/map_validation.c \
 	bonus/parsing/map_validation_helpers.c \
 	bonus/parsing/loading_data_helpers.c \
+	bonus/minimap_bonus/minimap_bonus.c \
+	bonus/minimap_bonus/minimap_init_bonus.c \
 	$(UTILS_BONUS)
 
 OBJ_MANDATORY = ${SRC_MANDATORY:.c=.o}

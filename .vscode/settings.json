@@ -2,6 +2,9 @@
 	"files.associations": {
 		"engine.h": "c",
 		"parsing.h": "c",
-		"utils.h": "c"
+		"utils.h": "c",
+		"unistd.h": "c",
+		"minimap_bonus.h": "c",
+		"header.h": "c"
 	}
 }

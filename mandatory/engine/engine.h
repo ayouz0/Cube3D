@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/13 11:57:18 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/13 13:08:39 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ typedef struct s_game
 	int			endian;
 	char		**map;
 	char		*error_msg;
-	t_portal	*portals;
 }	t_game;
 
 typedef struct s_column_params
