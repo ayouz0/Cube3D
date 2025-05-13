@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:46:53 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/12 16:27:35 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:24:42 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	parsing(int ac, char **av, t_game *game)
 	if (load_map(game))
 		return (1);
 	if (validate_map(game->map, game->parse_data.height, \
-	game->parse_data.width))
-		return (free_2d(game->map), close(game->parse_data.fd), 1);
+	game->parse_data.width, game))
+		return (free_2d(game->map), 1);
 	return (0);
 }

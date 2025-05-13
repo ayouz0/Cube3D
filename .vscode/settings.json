@@ -1,0 +1,7 @@
+{
+	"files.associations": {
+		"engine.h": "c",
+		"parsing.h": "c",
+		"utils.h": "c"
+	}
+}

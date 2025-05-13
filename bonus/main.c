@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/12 20:21:27 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:25:14 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,9 @@ int main(int ac, char **av)
 	game.parse_data.so.ptr = NULL;
 	game.parse_data.we.ptr = NULL;
 	game.parse_data.ea.ptr = NULL;
+	game.parse_data.fd = -1;
 	if (parsing(ac, av, &game) != 0)
-	{
-		free_parse_data(&game);
-		exit(1);
-	}
+		return (free_parse_data(&game), 1);
 	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cube3d");
 	game.img_ptr = mlx_new_image(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	game.addr = mlx_get_data_addr(game.img_ptr, &game.bits_per_pixel, &game.line_length, &game.endian);

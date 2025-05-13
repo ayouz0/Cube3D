@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:29:50 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/12 21:47:33 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:17:23 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,43 @@ int	check_map_interior(char **map, int rows, int cols, long long *player_count)
 	return (0);
 }
 
-void	load_portal_cordinates(t_game *game, int x, int y)
+int	load_portals(t_game *game, t_portal *portals, int portal_count)
 {
-	
+	int	i;
+
+	i = 0;
+	game->portals = malloc(sizeof(t_portal) * (portal_count + 1));
+	while (i < portal_count)
+	{
+		game->portals[i].x = portals[i].x;
+		game->portals[i].y = portals[i].y;
+		i++;
+	}
+	game->portals[i].x = -1;
+	game->portals[i].y = -1;
+	return (0);
+}
+
+void	print_portals(t_portal *portals)
+{
+	int	i = 0;
+
+	while(portals[i].x != -1)
+	{
+		printf("#####portal <%d>######\n", i);
+		printf("#### x = %f ###\n", portals[i].x);
+		printf("#### y = %f ###\n", portals[i].y);
+		printf("################\n");
+		i++;
+	}
 }
 
 int	check_invalid_characters(t_game *game, char **map)
 {
 	int	i;
 	int	j;
+	int	count = 0;
+	t_portal portal[MAX_PORTAL];
 
 	i = 0;
 	j = 0;
@@ -97,12 +125,18 @@ int	check_invalid_characters(t_game *game, char **map)
 				("Error: invalid character found while reading map:\n|%c|\n", \
 				map[i][j]), 1);
 			if (map[i][j] == 'P')
-				load_portal_cordinates(game, j, i);
-0			j++;
+			{
+				portal[count].y = i;
+				portal[count].x = j;
+				count++;
+			}
+			j++;
 		}
 		i++;
 		j = 0;
 	}
+	(count > 0) && load_portals(game, portal, count);
+	print_portals(game->portals);
 	return (0);
 }
 

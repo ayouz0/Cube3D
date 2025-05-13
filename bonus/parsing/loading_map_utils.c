@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:51:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/12 16:26:20 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:24:53 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	free_parse_data(t_game *game)
 	game->parse_data.so.ptr = NULL;
 	game->parse_data.we.ptr = NULL;
 	game->parse_data.ea.ptr = NULL;
+	close(game->parse_data.fd);
+	exit(1);
 }
 
 void	free_map(char **map, int rows)

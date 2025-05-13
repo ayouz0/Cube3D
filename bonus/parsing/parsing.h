@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:47:57 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/12 16:34:29 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:21:46 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	free_2d(char **arr);
 int		is_cardinal(char *line);
 int		is_color(char *line);
 void	free_map(char **map, int rows);
-int		check_invalid_characters(char **map);
-int		validate_map(char **map, int rows, int cols);
+int		check_invalid_characters(t_game *game, char **map);
+int		validate_map(char **map, int rows, int cols, t_game *game);
 int		space_neigh(char c);
 void	increment_player_count(char c, long long *player_count);
 int		check_top_bottom(char **map, int cols, int row);
