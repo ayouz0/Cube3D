@@ -5,6 +5,10 @@
 		"utils.h": "c",
 		"unistd.h": "c",
 		"minimap_bonus.h": "c",
-		"header.h": "c"
+		"header.h": "c",
+		"math.h": "c",
+		"stdio.h": "c",
+		"stdlib.h": "c",
+		"string.h": "c"
 	}
 }
