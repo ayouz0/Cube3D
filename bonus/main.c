@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/13 17:18:40 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/14 11:01:13 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,24 @@ void	animate_sprite(t_game *game)
 {
 	static long	last_update = 0;
 	static int	anim_frame = 0;
+	static int	direction = 1; // 1 = forward, -1 = backward
 	long		current_time;
 
 	if (!game->light)
 		return;
 
 	current_time = get_current_time_ms();
-	if (current_time - last_update >= 500) // smoother animation
+	if (current_time - last_update >= 100)
 	{
-		anim_frame = (anim_frame + 1) % 5;
+		anim_frame += direction;
+
+		if (anim_frame == 7 || anim_frame == 0)
+			direction *= -1; // Reverse direction
+
 		last_update = current_time;
 	}
-	draw_light_sprite(game, &game->light_img[anim_frame], 10 * 48, 10 * 48); // Adjust coordinates
+
+	draw_light_sprite(game, &game->light_img[anim_frame], 14 * 48, 8 * 48);
 }
 
 int combined_update(t_game *game)
@@ -96,16 +102,14 @@ int combined_update(t_game *game)
 int	init_light(t_game *game)
 {
 	game->light = 1;
-	load_image_and_address(&game->light_img[0].ptr, game, "bonus/textures/light_0.xpm", &game->light_img[0]);
-	load_image_and_address(&game->light_img[1].ptr, game, "bonus/textures/light_1.xpm", &game->light_img[1]);
-	load_image_and_address(&game->light_img[2].ptr, game, "bonus/textures/light_2.xpm", &game->light_img[2]);
-	load_image_and_address(&game->light_img[3].ptr, game, "bonus/textures/light_3.xpm", &game->light_img[3]);
-	load_image_and_address(&game->light_img[4].ptr, game, "bonus/textures/light_4.xpm", &game->light_img[4]);
-	// game->light_img[0].ptr = mlx_xpm_file_to_image(game->mlx, "bonus/textures/light_1.xpm", &x, &y);
-	// game->light_img[1].ptr = mlx_xpm_file_to_image(game->mlx, "bonus/textures/light_2.xpm", &x, &y);
-	// game->light_img[2].ptr = mlx_xpm_file_to_image(game->mlx, "bonus/textures/light_3.xpm", &x, &y);
-	// game->light_img[3].ptr = mlx_xpm_file_to_image(game->mlx, "bonus/textures/light_4.xpm", &x, &y);
-	// game->light_img[4].ptr = mlx_xpm_file_to_image(game->mlx, "bonus/textures/light_5.xpm", &x, &y);
+	load_image_and_address(&game->light_img[0].ptr, game, "bonus/textures/fire_1.xpm", &game->light_img[0]);
+	load_image_and_address(&game->light_img[1].ptr, game, "bonus/textures/fire_2.xpm", &game->light_img[1]);
+	load_image_and_address(&game->light_img[2].ptr, game, "bonus/textures/fire_3.xpm", &game->light_img[2]);
+	load_image_and_address(&game->light_img[3].ptr, game, "bonus/textures/fire_4.xpm", &game->light_img[3]);
+	load_image_and_address(&game->light_img[4].ptr, game, "bonus/textures/fire_5.xpm", &game->light_img[4]);
+	load_image_and_address(&game->light_img[5].ptr, game, "bonus/textures/fire_6.xpm", &game->light_img[5]);
+	load_image_and_address(&game->light_img[6].ptr, game, "bonus/textures/fire_7.xpm", &game->light_img[6]);
+	load_image_and_address(&game->light_img[7].ptr, game, "bonus/textures/fire_8.xpm", &game->light_img[7]);
 	return (0);
 }
 

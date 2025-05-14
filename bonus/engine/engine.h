@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/13 17:19:54 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/14 10:54:46 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ typedef struct s_game
 	int			endian;
 	char		**map;
 	int			light;
-	t_cardinals	light_img[5];
+	t_cardinals	light_img[8];
 	t_minimap	minimap;
 }	t_game;
 
