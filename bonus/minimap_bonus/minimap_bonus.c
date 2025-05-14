@@ -42,24 +42,6 @@ void clear_minimap_background(t_minimap *minimap)
 	}
 }
 
-/*  start_map_x  end_map_x  start_map_y end_map_y z
-		 0			 1			  2			3	  */
-void	calculate_visible_map_range(t_game *game, int *ranges)
-{
-	ranges[0] = game->player.player_x - game->minimap.view_range;
-	ranges[1] = game->player.player_x + game->minimap.view_range;
-	ranges[2] = game->player.player_y - game->minimap.view_range;
-	ranges[3] = game->player.player_y + game->minimap.view_range;
-	if (ranges[0] < 0)
-		ranges[0] = 0;
-	if (ranges[1] > game->parse_data.width)
-		ranges[1] = game->parse_data.width - 1;
-	if (ranges[2] < 0)
-		ranges[2] = 0;
-	if (ranges[3] > game->parse_data.height)
-		ranges[3] = game->parse_data.height - 1;
-}
-
 // this is a circle equation, it checks if the point (i, j) is inside the circle
 // with center (0, 0) and radius size. If the point is inside the circle, it draws
 void draw_player_marker(t_game *game)
@@ -101,14 +83,16 @@ void draw_visible_map_cells(t_game *game)
 	y = 0;
 	while ( x < game->minimap.width)
 	{
-	
 		real_x = game->player.player_x - TILESIZE * game->minimap.view_range + (x * TILESIZE) / game->minimap.cell_size;
 		y = 0;
 		while (y < game->minimap.height)
 		{
 			real_y = game->player.player_y - TILESIZE * game->minimap.view_range + (y * TILESIZE) / game->minimap.cell_size;
-			if (game->map[real_y / TILESIZE][real_x / TILESIZE] == '1')
-				minimap_pixel_put(&game->minimap, x, y, 0xFF00FF);
+			if (real_y / TILESIZE < 0 || real_y / TILESIZE >= game->parse_data.height \
+				|| real_x / TILESIZE < 0 || real_x / TILESIZE >= game->parse_data.width)
+				minimap_pixel_put(&game->minimap, x, y, 0xFFFF00);
+			else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == '1' || game->map[real_y / TILESIZE][real_x / TILESIZE] == ' ')
+				minimap_pixel_put(&game->minimap, x, y, 0xC0C0C0);
 			y++;
 		}
 		x++;
@@ -117,12 +101,11 @@ void draw_visible_map_cells(t_game *game)
 int render_minimap(void *game_)
 {
 	t_game	*game;
-	int		ranges[4];
 
 	game = game_;
 	clear_minimap_background(&game->minimap);
 	
-	calculate_visible_map_range(game, ranges);
+	// calculate_visible_map_range(game);
 
 	draw_player_marker(game);
 	

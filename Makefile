@@ -63,7 +63,7 @@ $(NAME): $(OBJ_MANDATORY)
 $(BONUS_NAME): $(OBJ_BONUS)
 	cc $(FLAGS) $(OBJ_BONUS) -o $(BONUS_NAME) $(LINKING)
 
-%.o: %.c $(HEADERS_MANDATORY)
+%.o: %.c $(HEADERS_MANDATORY) $(HEADERS_BONUS)
 	cc $(FLAGS) -c $< -o $@
 
 clean:
