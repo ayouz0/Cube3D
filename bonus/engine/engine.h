@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/14 12:42:03 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/14 21:49:21 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,16 @@ typedef struct s_keys
 	int	right;
 	int	esc;
 }	t_keys;
+
+typedef struct	s_minimap_ctx
+{
+	int	screen_x;
+	int	screen_y;
+	int	center_x;
+	int	center_y;
+	int	map_x;
+	int	map_y;	
+}	t_minimap_ctx;
 
 typedef struct s_minimap
 {

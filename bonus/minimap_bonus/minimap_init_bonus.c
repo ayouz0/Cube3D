@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:10:14 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/13 15:32:05 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/14 20:59:57 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	init_minimap(t_game *game)
 {
 	game->minimap.cell_size = 10;
 	game->minimap.view_range = 8;
-	game->minimap.width = game->minimap.view_range * 2 * game->minimap.cell_size + 100;
+	game->minimap.width = game->minimap.view_range * 2 * game->minimap.cell_size;
 	game->minimap.height = game->minimap.view_range * 2 * game->minimap.cell_size;
 	game->minimap.pos_x = WINDOW_WIDTH - game->minimap.width - MINIMAP_PAD;
 	game->minimap.pos_y = MINIMAP_PAD;
@@ -28,4 +28,3 @@ void	init_minimap(t_game *game)
 										  &game->minimap.line_length, 
 										  &game->minimap.endian);
 }
-
