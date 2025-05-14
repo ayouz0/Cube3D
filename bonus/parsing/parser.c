@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:46:53 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/13 16:13:00 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/14 12:45:44 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	parsing(int ac, char **av, t_game *game)
 	if (load_map(game))
 		return (1);
 	if (validate_map(game->map, game->parse_data.height, \
-	game->parse_data.width))
-		return (free_2d(game->map), 1);
+	game->parse_data.width, game))
+		return (free_2d(game->map), free(game->doors), 1);
 	return (0);
 }

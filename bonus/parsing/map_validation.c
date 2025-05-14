@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:29:50 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/13 16:12:39 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/14 12:45:10 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,37 +74,71 @@ int	check_map_interior(char **map, int rows, int cols, long long *player_count)
 	return (0);
 }
 
-int	check_invalid_characters(char **map)
+void	load_door(t_game *game, int door_count)
+{
+	int		y;
+	int		x;
+	char	**map;
+	int		i;
+
+	i = 0;
+	y = 0;
+	x = 0;
+	map = game->map;
+	game->doors = malloc(sizeof(t_door) * door_count);
+	while (map[y])
+	{
+		while (map[y][x])
+		{
+			if (map[y][x] != 'D')
+			{
+				game->doors[i].x = x;
+				game->doors[i].y = y;
+				i++;
+			}
+			x++;
+		}
+		y++;
+		x = 0;
+	}
+}
+
+int	check_invalid_characters(char **map, t_game *game)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
+	game->door_count = 0;
 	while (map[i])
 	{
 		while (map[i][j])
 		{
-			if ((map[i][j] != ' ' && map[i][j] != '1' && map[i][j] != '0' && map[i][j] != 'P') && \
+			if ((map[i][j] != ' ' && map[i][j] != '1' && map[i][j] != '0' && map[i][j] != 'D') && \
 				(map[i][j] != 'N' && map[i][j] != 'S' && map[i][j] != 'E' && \
 				map[i][j] != 'W'))
 				return (printf \
 				("Error: invalid character found while reading map:\n|%c|\n", \
 				map[i][j]), 1);
+			if (map[i][j] != 'D')
+				game->door_count++;
 			j++;
 		}
 		i++;
 		j = 0;
 	}
+	if (game->door_count > 0)
+		load_door(game, game->door_count);
 	return (0);
 }
 
-int	validate_map(char **map, int rows, int cols)
+int	validate_map(char **map, int rows, int cols, t_game *game)
 {
 	long long	player_count;
 
 	player_count = 0;
-	if (check_invalid_characters(map))
+	if (check_invalid_characters(map, game))
 		return (1);
 	if (check_top_bottom(map, cols, 0))
 		return (1);

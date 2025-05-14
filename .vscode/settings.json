@@ -9,6 +9,7 @@
 		"math.h": "c",
 		"stdio.h": "c",
 		"stdlib.h": "c",
-		"string.h": "c"
+		"string.h": "c",
+		"fcntl.h": "c"
 	}
 }
