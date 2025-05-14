@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 11:32:07 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/12 17:11:51 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/13 16:19:58 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,29 @@ void	draw_floor(t_game *game)
 		x = 0;
 		while (x < COLS * TILESIZE)
 		{
-			draw_minisquare(game, x, y, shade_color(game->parse_data.f, (float)(ROWS * TILESIZE - y)));
+			draw_minisquare(game, x, y, shade_color(game->parse_data.f, (float)(ROWS * TILESIZE - y), game));
 			x += mini_size;
 		}
 		y += mini_size;
 	}
+}
+
+unsigned int	shade_sky(unsigned int color, float distance)
+{
+	float			shade_factor;
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+
+	// !ahm ahm
+	//? Light intensity = 1 / (1 + k * distance) Where k is a constant
+
+	shade_factor = 1.0f / (1.0f + distance * 0.005f);
+	
+	r = ((color >> 16) & 0xFF) * shade_factor;
+	g = ((color >> 8) & 0xFF) * shade_factor;
+	b = (color & 0xFF) * shade_factor;
+	return ((r << 16) | (g << 8) | b);
 }
 
 void	draw_sky(t_game *game)
@@ -99,7 +117,7 @@ void	draw_sky(t_game *game)
 		x = 0;
 		while (x < COLS * TILESIZE)
 		{
-			draw_minisquare(game, x, y, shade_color(game->parse_data.c, (float)(y)));
+			draw_minisquare(game, x, y, shade_sky(game->parse_data.c, (float)(y)));
 			x += mini_size;
 		}
 		y += mini_size;
