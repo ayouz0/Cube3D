@@ -1,7 +1,7 @@
 NAME = cub3D
 BONUS_NAME = cub3D_bonus
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra #-fsanitize=address
 LINKING = -lmlx -framework OpenGL -framework AppKit
 
 UTILS_MANDATORY = mandatory/utils/ft_strchr.c mandatory/utils/ft_strdup.c \

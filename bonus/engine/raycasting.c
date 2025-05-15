@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/15 13:51:12 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/15 17:17:15 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,50 @@ void	cast_single_ray(t_game *game, t_ray *ray)
 	choose_closest_hit(game, ray);
 }
 
+int	get_door_texture_y(t_cardinals *tex, int height, int y)
+{
+	int	offset;
+	int	tex_y;
+
+	offset = y + (height / 2) - (WINDOW_HEIGHT / 2);
+	tex_y = (offset * tex->h) / height;
+	if (tex_y < 0)
+		tex_y = 0;
+	if (tex_y >= tex->h)
+		tex_y = tex->h - 1;
+	return (tex_y);
+}
+
+int	get_door_texture_x(t_ray *ray) 
+{
+	int		tex_x;
+
+	if (ray->was_hit_vertical) 
+	{
+		tex_x = (int)ray->door.y % TILESIZE;
+		if (ray->ray_angle > M_PI_2 && ray->ray_angle < 3 * M_PI_2)
+			tex_x = TILESIZE - tex_x - 1;
+	} 
+	else 
+	{
+		tex_x = (int)ray->door.x % TILESIZE;
+		if (ray->ray_angle > 0 && ray->ray_angle < M_PI)
+			tex_x = TILESIZE - tex_x - 1;
+	}
+	if (tex_x < 0)
+		tex_x = 0;
+	if (tex_x >= TILESIZE)
+		tex_x = TILESIZE - 1;
+	return (tex_x);
+}
+
+
 void draw_door_column(t_game *game, t_ray *ray, int ray_id, int height)
 {
 	t_column_params params;
 	// Check if this ray hit a door - THIS IS THE CRUCIAL PART YOU MIS
 	params.x = ray_id * RES;
-	params.tex_x = get_texture_x(ray);
+	params.tex_x = get_door_texture_x(ray);
 	// Choose texture based on whether this is a door
 	params.texture = &game->door_tex;
 	params.top = (WINDOW_HEIGHT / 2) - (height / 2);
@@ -126,9 +164,11 @@ void	cast_all_rays(t_game *game, t_ray *ray)
 	while (ray_id < NUM_RAYS)
 	{
 		ray->ray_angle = ray_angle;
+		ray->door.door_num = 0;
+        ray->vert_hit_is_door = 0;
+        ray->horz_hit_is_door = 0;
 		cast_single_ray(game, ray);
 		render_wall_slice(game, ray, ray_id);
-		ray->door.door_num = 0;
 		ray_angle += FOV / NUM_RAYS;
 		ray_id++;
 	
