@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/15 20:38:01 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/15 21:26:07 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,8 @@ typedef struct s_game
 	char		**map;
 	int			light;
 	t_door		*doors;
+	int			stamina;
+	int			is_healed;
 	int			door_count;
 	t_cardinals	door_tex;
 	t_cardinals	light_img[8];

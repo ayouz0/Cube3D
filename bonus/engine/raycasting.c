@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/15 21:00:55 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/15 21:05:48 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,6 @@ void	render_wall_slice(t_game *game, t_ray *ray, int ray_id)
 	proj_plane_dist = (WINDOW_WIDTH / 2) / tan(FOV / 2);
 	wall_height = (TILESIZE / corrected_dist) * proj_plane_dist;
 	draw_textured_column(game, ray, ray_id, wall_height);
-			printf("%d  \n", ray->door.door_num);
-			
 	// printf("point     %d  %d  %d  %d\n", ray->door.y, ray->door.x, ray->door.dx , ray->door.dy);
 	while (ray->door.door_num > 0)
 	{
