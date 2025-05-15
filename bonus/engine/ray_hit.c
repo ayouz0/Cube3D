@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 20:03:04 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/15 16:57:29 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/15 20:16:21 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	check_horizontal_hit(t_game *game, t_ray *ray,
 		if (hit_type == 2)
 		{
 			// printf("first     %d  %d  %d  %d\n", ray->door.y, ray->door.x, x_step , y_step);
+			ray->horz_hit_is_door = 2;
 			ray->door.door_num++;
 		}
 		if (hit_type == 1)

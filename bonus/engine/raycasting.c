@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/15 17:17:15 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/15 20:22:04 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,25 +78,16 @@ int	get_door_texture_y(t_cardinals *tex, int height, int y)
 
 int	get_door_texture_x(t_ray *ray) 
 {
-	int		tex_x;
+	int tex_x;
 
-	if (ray->was_hit_vertical) 
-	{
-		tex_x = (int)ray->door.y % TILESIZE;
-		if (ray->ray_angle > M_PI_2 && ray->ray_angle < 3 * M_PI_2)
-			tex_x = TILESIZE - tex_x - 1;
-	} 
-	else 
-	{
-		tex_x = (int)ray->door.x % TILESIZE;
-		if (ray->ray_angle > 0 && ray->ray_angle < M_PI)
-			tex_x = TILESIZE - tex_x - 1;
-	}
-	if (tex_x < 0)
-		tex_x = 0;
-	if (tex_x >= TILESIZE)
-		tex_x = TILESIZE - 1;
-	return (tex_x);
+	tex_x = (int)ray->door.x % TILESIZE;
+    if (ray->ray_angle > 0 && ray->ray_angle < M_PI)  // Facing down
+        tex_x = TILESIZE - tex_x - 1;
+    if (tex_x < 0)
+        tex_x = 0;
+    if (tex_x >= TILESIZE)
+        tex_x = TILESIZE - 1;
+    return tex_x;
 }
 
 
