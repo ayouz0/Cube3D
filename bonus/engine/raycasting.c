@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/15 20:59:04 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/15 21:00:55 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	render_wall_slice(t_game *game, t_ray *ray, int ray_id)
 			cos(ray->ray_angle - game->player.mv.player_angle);
 			proj_plane_dist = (WINDOW_WIDTH / 2) / tan(FOV / 2);
 			wall_height = (TILESIZE / corrected_dist) * proj_plane_dist;
-			draw_door_column(game, ray, ray_id, wall_height, actual_dist);
+			draw_door_column(game, ray, ray_id, wall_height, corrected_dist);
 			ray->door.door_num--;
 		}
 		ray->door.y += ray->door.dy;
