@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/15 13:49:44 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/15 20:38:01 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define RES 1
 # define NUM_RAYS (WINDOW_WIDTH / RES)
 # define PLAYER_RADIUS 1.0f
+
 
 typedef struct s_cardinals
 {
@@ -175,15 +176,16 @@ typedef struct s_game
 	t_minimap	minimap;
 }	t_game;
 
-typedef struct s_column_params
-{
-	int			x;
-	int			tex_x;
-	int			i;
-	int			top;
-	int			bottom;
-	t_cardinals	*texture;
-}	t_column_params;
+typedef struct s_column_params {
+    int x;                // X position on screen
+    int tex_x;            // Texture x coordinate
+    t_cardinals *texture; // Texture pointer
+    int top;              // Clipped top y position
+    int bottom;           // Clipped bottom y position
+    int i;                // Sub-pixel offset within ray resolution
+    int unclipped_top;    // Unclipped top y position (new)
+    float distance;       // Distance for shading (new)
+} t_column_params;
 
 void	draw_floor(t_game *game);
 void	draw_sky(t_game *game);
