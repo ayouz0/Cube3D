@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:10:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/14 23:14:25 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/15 13:21:34 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,3 +16,4 @@ void	init_minimap(t_game *game);
 int		render_minimap(void *game_);
 
 #define MINIMAP_PAD 6
+#define BORDER_THICKNESS 4

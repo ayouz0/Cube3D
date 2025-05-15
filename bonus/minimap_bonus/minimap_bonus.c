@@ -77,41 +77,70 @@ void draw_visible_map_cells(t_game *game)
 	int	y;
 	(void)game;
 
-	real_x = 0;
-	real_y = 0;
-	x = 0;
-	y = 0;
+	(1) && (real_x = 0, real_y = 0);
+	(1) && (x = 0, y = 0);
 	while ( x < game->minimap.width)
 	{
-		real_x = game->player.player_x - TILESIZE * game->minimap.view_range + (x * TILESIZE) / game->minimap.cell_size;
+		real_x = (int)game->player.player_x - TILESIZE * game->minimap.view_range + (x * TILESIZE) / game->minimap.cell_size;
 		y = 0;
 		while (y < game->minimap.height)
 		{
-			real_y = game->player.player_y - TILESIZE * game->minimap.view_range + (y * TILESIZE) / game->minimap.cell_size;
+			real_y = (int)game->player.player_y - TILESIZE * game->minimap.view_range + (y * TILESIZE) / game->minimap.cell_size;
 			if (real_y / TILESIZE < 0 || real_y / TILESIZE >= game->parse_data.height \
 				|| real_x / TILESIZE < 0 || real_x / TILESIZE >= game->parse_data.width)
 				minimap_pixel_put(&game->minimap, x, y, 0xFFFF00);
-			else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == '1' || game->map[real_y / TILESIZE][real_x / TILESIZE] == ' ')
+			else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == '1')
 				minimap_pixel_put(&game->minimap, x, y, 0xC0C0C0);
+			else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == 'D')
+				minimap_pixel_put(&game->minimap, x, y, 0x00FFFF);
+			else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == ' ')
+				minimap_pixel_put(&game->minimap, x, y, 0x00FFFF);
 			y++;
 		}
 		x++;
 	}
 }
+void draw_minimap_border(t_minimap *minimap)
+{
+	int	y;
+	int	x;
+	int	border;
+
+	(1) && (y = minimap->height - 1, x = minimap->width - 1);
+	while (x >= 0)
+	{
+		border = BORDER_THICKNESS;
+		while (--border >= 0)
+		{
+			minimap_pixel_put(minimap, x, border, 0xFFFFFF);
+			minimap_pixel_put(minimap, x, y - border, 0xFFFFFF);
+		}
+		x--;
+	}
+	while (y >= 0)
+	{
+		border = BORDER_THICKNESS;
+		while (--border >= 0)
+		{
+			minimap_pixel_put(minimap, border, y, 0xFFFFFF);
+			minimap_pixel_put(minimap, minimap->width - 1 - border, y, 0xFFFFFF);
+		}
+		y--;
+	}
+}
+
 int render_minimap(void *game_)
 {
 	t_game	*game;
 
 	game = game_;
 	clear_minimap_background(&game->minimap);
-	
-	// calculate_visible_map_range(game);
 
-	draw_player_marker(game);
-	
 	draw_visible_map_cells(game);
+	
+	draw_player_marker(game);
 	// draw_player_direction(game);
 	
-	// draw_minimap_border(&game->minimap);
+	draw_minimap_border(&game->minimap);
 	return(0);
 }
