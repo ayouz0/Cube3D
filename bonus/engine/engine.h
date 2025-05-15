@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/14 12:42:03 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/14 21:48:59 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct	s_door
 {
 	int			x;
 	int			y;
-	t_cardinals	texture;
 }	t_door;
 
 typedef struct s_parser
@@ -84,6 +83,15 @@ typedef struct s_player
 	float	player_y;
 }	t_player;
 
+typedef struct s_ddoor
+{
+	float	dx;
+	float	dy;
+	int		door_num;
+	int		x;
+	int		y;
+}	t_ddoor;
+
 typedef struct s_ray
 {
 	float	ray_angle;
@@ -93,16 +101,19 @@ typedef struct s_ray
 	int		was_hit_vertical;
 	float	horz_hit_x;
 	float	horz_hit_y;
+	int		horz_hit_is_door;
 	float	vert_hit_x;
 	float	vert_hit_y;
+	int		vert_hit_is_door;
 	int		found_horz_hit;
 	int		found_vert_hit;
 	float	next_horz_x;
 	float	next_horz_y;
 	float	next_vert_x;
 	float	next_vert_y;
+	t_ddoor	door;
 }	t_ray;
-
+ 
 typedef struct s_keys
 {
 	int	w;
@@ -112,6 +123,7 @@ typedef struct s_keys
 	int	left;
 	int	right;
 	int	esc;
+	int	door_key;
 }	t_keys;
 
 typedef struct s_minimap
@@ -147,6 +159,7 @@ typedef struct s_game
 	int			light;
 	t_door		*doors;
 	int			door_count;
+	t_cardinals	door_tex;
 	t_cardinals	light_img[8];
 	t_minimap	minimap;
 }	t_game;
@@ -173,7 +186,7 @@ void	clear_image(t_game *game);
 float	norma_angle(float angle);
 int		has_wall_at(int x, int y, t_game *game);
 void	cast_all_rays(t_game *game, t_ray *ray);
-int		iswall(float x, float y, char **map);
+int		iswall(float x, float y, char **map, int door_key);
 float	distance_between_points(float x1, float y1, float x2, float y2);
 void	set_closest_hit(t_ray *ray, float horz_dist, float vert_dist);
 void	check_vertical_hit(t_game *game, t_ray *ray,

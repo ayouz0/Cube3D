@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/14 11:01:13 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/14 21:51:39 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int	init_light(t_game *game)
 	load_image_and_address(&game->light_img[5].ptr, game, "bonus/textures/fire_6.xpm", &game->light_img[5]);
 	load_image_and_address(&game->light_img[6].ptr, game, "bonus/textures/fire_7.xpm", &game->light_img[6]);
 	load_image_and_address(&game->light_img[7].ptr, game, "bonus/textures/fire_8.xpm", &game->light_img[7]);
+	load_image_and_address(&game->door_tex.ptr, game, "bonus/textures/door.xpm", &game->door_tex);
 	return (0);
 }
 
@@ -134,9 +135,11 @@ int main(int ac, char **av)
 	game.keys.d = 0;
 	game.keys.s = 0;
 	game.keys.w = 0;
+	game.keys.door_key = 1;
 	game.keys.left = 0;
 	game.keys.right= 0;
 	game.keys.esc = 0;
+	game.ray.door.door_num = 0;
 	init_player(&game.player, &game);
 	init_minimap(&game);
 	init_light(&game);

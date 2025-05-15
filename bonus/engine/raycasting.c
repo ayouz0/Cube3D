@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/12 20:00:57 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/14 21:58:42 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,11 @@ void	render_wall_slice(t_game *game, t_ray *ray, int ray_id)
 	proj_plane_dist = (WINDOW_WIDTH / 2) / tan(FOV / 2);
 	wall_height = (TILESIZE / corrected_dist) * proj_plane_dist;
 	draw_textured_column(game, ray, ray_id, wall_height);
+	while (ray->door.door_num > 0)
+	{
+		
+	}
+	
 }
 
 void	cast_all_rays(t_game *game, t_ray *ray)
@@ -87,7 +92,9 @@ void	cast_all_rays(t_game *game, t_ray *ray)
 		ray->ray_angle = ray_angle;
 		cast_single_ray(game, ray);
 		render_wall_slice(game, ray, ray_id);
+		ray->door.door_num = 0;
 		ray_angle += FOV / NUM_RAYS;
 		ray_id++;
+	
 	}
 }

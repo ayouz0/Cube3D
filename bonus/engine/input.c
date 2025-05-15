@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:04:09 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/13 16:26:02 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/14 16:09:53 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	key_press(int key, t_game *game)
 {
 	if (key == 53)
 		close_window(game);
+	else if (key == 49)
+		game->keys.door_key = 1;
 	else if (key == 3)
 		game->light++;
 	else if (key == 13)
@@ -41,6 +43,8 @@ int	key_release(int key, t_game *game)
 		game->keys.w = 0;
 	else if (key == 1)
 		game->keys.s = 0;
+	else if (key == 49)
+		game->keys.door_key = 0;
 	else if (key == 0)
 		game->keys.a = 0;
 	else if (key == 2)

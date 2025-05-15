@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 20:03:04 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/11 20:04:03 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/14 21:55:01 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ void	prepare_horizontal_check(t_game *game, t_ray *ray,
 		*x_step *= -1;
 	ray->next_horz_x = x_intercept;
 	ray->next_horz_y = y_intercept;
+	ray->door.x = x_intercept;
+	ray->door.y = y_intercept;
+	ray->door.dx = x_step;
+	ray->door.dy = y_step;
 }
 
 void	check_horizontal_hit(t_game *game, t_ray *ray,
@@ -42,6 +46,7 @@ void	check_horizontal_hit(t_game *game, t_ray *ray,
 	float	x_step;
 	float	y_step;
 	int		check_y;
+	int		hit_type;
 
 	prepare_horizontal_check(game, ray, &x_step, &y_step);
 	while (ray->next_horz_x >= 0 && \
@@ -53,11 +58,21 @@ void	check_horizontal_hit(t_game *game, t_ray *ray,
 			check_y = ray->next_horz_y - 1;
 		else
 			check_y = ray->next_horz_y;
-		if (has_wall_at(ray->next_horz_x, check_y, game))
+		hit_type = has_wall_at(ray->next_horz_x, check_y, game);
+		if (hit_type == 2)
+		{
+			// ray->found_horz_hit = 1;
+			// ray->horz_hit_x = ray->next_horz_x;
+			// ray->horz_hit_y = ray->next_horz_y;
+			// ray->horz_hit_is_door = (hit_type == 2);
+			ray->door.door_num++;
+		}
+		if (hit_type == 1)
 		{
 			ray->found_horz_hit = 1;
 			ray->horz_hit_x = ray->next_horz_x;
 			ray->horz_hit_y = ray->next_horz_y;
+			ray->horz_hit_is_door = 0;
 			return ;
 		}
 		ray->next_horz_x += x_step;
@@ -93,6 +108,7 @@ void	check_vertical_hit(t_game *game, t_ray *ray,
 	float	x_step;
 	float	y_step;
 	int		check_x;
+	int		hit_type;
 
 	prepare_vertical_check(game, ray, &x_step, &y_step);
 	while (ray->next_vert_x >= 0 && \
@@ -104,11 +120,13 @@ void	check_vertical_hit(t_game *game, t_ray *ray,
 			check_x = ray->next_vert_x - 1;
 		else
 			check_x = ray->next_vert_x;
-		if (has_wall_at(check_x, ray->next_vert_y, game))
+		hit_type = has_wall_at(check_x, ray->next_vert_y, game);
+		if (hit_type == 1)
 		{
 			ray->found_vert_hit = 1;
 			ray->vert_hit_x = ray->next_vert_x;
 			ray->vert_hit_y = ray->next_vert_y;
+			ray->vert_hit_is_door = (hit_type == 2);
 			return ;
 		}
 		ray->next_vert_x += x_step;
