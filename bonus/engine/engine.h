@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/14 21:48:59 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/15 13:49:44 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,9 @@ typedef struct s_ddoor
 	float	dx;
 	float	dy;
 	int		door_num;
-	int		x;
-	int		y;
+	int		facing_up;
+	float	x;
+	float	y;
 }	t_ddoor;
 
 typedef struct s_ray
@@ -125,6 +126,16 @@ typedef struct s_keys
 	int	esc;
 	int	door_key;
 }	t_keys;
+
+typedef struct	s_minimap_ctx
+{
+	int	screen_x;
+	int	screen_y;
+	int	center_x;
+	int	center_y;
+	int	map_x;
+	int	map_y;	
+}	t_minimap_ctx;
 
 typedef struct s_minimap
 {
@@ -196,5 +207,7 @@ void	check_horizontal_hit(t_game *game, t_ray *ray,
 void	draw_textured_column(t_game *game, t_ray *ray, int ray_id, int height);
 unsigned int	shade_color(unsigned int color, float distance, t_game *game);
 void	animate_sprite(t_game *game);
+int	get_texture_x(t_ray *ray);
+void	draw_column_strip(t_game *game, t_column_params *p, int height, int is_door);
 
 #endif

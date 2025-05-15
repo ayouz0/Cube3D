@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 20:04:18 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/14 21:56:36 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/15 12:28:17 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,7 @@ void	draw_column_strip(t_game *game, t_column_params *p, int height, int is_door
 void draw_textured_column(t_game *game, t_ray *ray, int ray_id, int height)
 {
 	t_column_params params;
-	int is_door = 0;
-	
+	int		is_door = 0;
 	// Check if this ray hit a door - THIS IS THE CRUCIAL PART YOU MIS
 	params.x = ray_id * RES;
 	params.tex_x = get_texture_x(ray);

@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:03:36 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/14 20:45:39 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/15 13:50:04 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	has_wall_at(int x, int y, t_game *game)
 {
 	int	map_x = (int)(x / TILESIZE);
 	int	map_y = (int)(y / TILESIZE);
-	int	i = 0;
 	if (map_x < 0 || map_y < 0 ||
 		map_x >= game->parse_data.width || map_y >= game->parse_data.height)
 		return (1); // Out of bounds = wall
@@ -24,17 +23,13 @@ int	has_wall_at(int x, int y, t_game *game)
 	char tile = game->map[map_y][map_x];
 	if (tile == '1')
 		return (1); // Wall
-	else if (tile == 'D')
+	if (game->ray.door.facing_up)
+		map_y++;
+	tile = game->map[map_y][map_x];
+	if (tile == 'D')
 	{
-		// Check door openness
-		while (i < game->door_count)
-		{
-			if (game->doors[i].x == map_x && game->doors[i].y == map_y)
-			{
-					return (2); // Still acts as door
-			}
-			i++;
-		}
+		// printf("fd     %d  %d\n", map_x, map_y);
+		return (2);
 	}
 	return (0);
 }

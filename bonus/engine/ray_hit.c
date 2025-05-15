@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 20:03:04 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/14 21:55:01 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/15 13:50:21 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	prepare_horizontal_check(t_game *game, t_ray *ray,
 	ray->next_horz_y = y_intercept;
 	ray->door.x = x_intercept;
 	ray->door.y = y_intercept;
-	ray->door.dx = x_step;
-	ray->door.dy = y_step;
+	ray->door.dx = *x_step;
+	ray->door.dy = *y_step;
 }
 
 void	check_horizontal_hit(t_game *game, t_ray *ray,
@@ -47,7 +47,8 @@ void	check_horizontal_hit(t_game *game, t_ray *ray,
 	float	y_step;
 	int		check_y;
 	int		hit_type;
-
+	
+	ray->door.facing_up = facing_up;
 	prepare_horizontal_check(game, ray, &x_step, &y_step);
 	while (ray->next_horz_x >= 0 && \
 		ray->next_horz_x <= game->parse_data.width * TILESIZE && \
@@ -61,10 +62,7 @@ void	check_horizontal_hit(t_game *game, t_ray *ray,
 		hit_type = has_wall_at(ray->next_horz_x, check_y, game);
 		if (hit_type == 2)
 		{
-			// ray->found_horz_hit = 1;
-			// ray->horz_hit_x = ray->next_horz_x;
-			// ray->horz_hit_y = ray->next_horz_y;
-			// ray->horz_hit_is_door = (hit_type == 2);
+			// printf("first     %d  %d  %d  %d\n", ray->door.y, ray->door.x, x_step , y_step);
 			ray->door.door_num++;
 		}
 		if (hit_type == 1)
