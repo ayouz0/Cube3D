@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/11 16:29:50 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/14 16:01:14 by aaitabde         ###   ########.fr       */
+/*   Created: 2025/05/15 12:07:26 by hfhad             #+#    #+#             */
+/*   Updated: 2025/05/15 12:07:31 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	load_door(t_game *game, int door_count)
 	{
 		while (map[y][x])
 		{
-			if (map[y][x] != 'D')
+			if (map[y][x] == 'D')
 			{
 				game->doors[i].x = x;
 				game->doors[i].y = y;
@@ -121,7 +121,7 @@ int	check_invalid_characters(char **map, t_game *game)
 				return (printf \
 				("Error: invalid character found while reading map:\n|%c|\n", \
 				map[i][j]), 1);
-			if (map[i][j] != 'D')
+			if (map[i][j] == 'D')
 				game->door_count++;
 			j++;
 		}

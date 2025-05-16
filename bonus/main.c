@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/14 11:01:13 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/15 21:30:58 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,29 @@ void	animate_sprite(t_game *game)
 	draw_light_sprite(game, &game->light_img[anim_frame], 14 * 48, 8 * 48);
 }
 
+void	handle_stamina(t_game *game)
+{
+	long		current_time;
+	current_time = get_current_time_ms();
+	if (game->player.mv.mov_speed == 8 && current_time >= 500 && game->stamina != 0)
+	{
+		game->stamina--;
+		if (game->stamina == 0)
+			game->is_healed = 0;
+	}
+	if ((game->stamina == 0 || game->player.mv.mov_speed == 3.5) && current_time >= 500)
+	{
+		game->stamina++;
+		if (game->stamina == 200)
+			game->is_healed = 1;
+	}
+	if (game->is_healed == 0)
+		game->player.mv.mov_speed = 3.5;
+}
+
 int combined_update(t_game *game)
 {
+	handle_stamina(game);
 	update(game);
 	render_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->minimap.minimap_img, 
@@ -110,6 +131,7 @@ int	init_light(t_game *game)
 	load_image_and_address(&game->light_img[5].ptr, game, "bonus/textures/fire_6.xpm", &game->light_img[5]);
 	load_image_and_address(&game->light_img[6].ptr, game, "bonus/textures/fire_7.xpm", &game->light_img[6]);
 	load_image_and_address(&game->light_img[7].ptr, game, "bonus/textures/fire_8.xpm", &game->light_img[7]);
+	load_image_and_address(&game->door_tex.ptr, game, "bonus/textures/door.xpm", &game->door_tex);
 	return (0);
 }
 
@@ -134,9 +156,13 @@ int main(int ac, char **av)
 	game.keys.d = 0;
 	game.keys.s = 0;
 	game.keys.w = 0;
+	game.is_healed = 1;
+	game.keys.door_key = 1;
 	game.keys.left = 0;
 	game.keys.right= 0;
 	game.keys.esc = 0;
+	game.stamina = 49;
+	game.ray.door.door_num = 0;
 	init_player(&game.player, &game);
 	init_minimap(&game);
 	init_light(&game);

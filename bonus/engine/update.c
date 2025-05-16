@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:05:10 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/14 09:45:40 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/14 20:46:37 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ void	move_player(t_game *game, float angle)
 	movestep = game->player.mv.mov_speed;
 	new_x = game->player.player_x + cos(angle) * movestep;
 	new_y = game->player.player_y + sin(angle) * movestep;
-	if (!iswall(new_x, new_y, game->map))
+	if (!iswall(new_x, new_y, game->map, game->keys.door_key))
 	{
 		game->player.player_x = new_x;
 		game->player.player_y = new_y;
 	}
 }
+
 
 int	update(t_game *game)
 {
