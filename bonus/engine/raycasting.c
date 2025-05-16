@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/15 21:05:48 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 09:47:03 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ void draw_door_column_strip(t_game *game, t_column_params *p, int height, int is
                                         p->tex_x * (p->texture->bits_per_pixel / 8));
         int color = *(unsigned int *)pix;
         // Use p->distance instead of game->ray.distance for shading
-        put_pixel_in_img(game, p->x + p->i, y, shade_color(color, p->distance, game));
+		if ((color & 0x00FFFFFF) != 0x000000)
+       		 put_pixel_in_img(game, p->x + p->i, y, shade_color(color, p->distance, game));
         y++;
     }
 }
