@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:04:09 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/15 21:27:39 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 12:44:13 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ int	key_press(int key, t_game *game)
 		game->keys.right = 1;
 	else if (key == 257 && game->is_healed == 1)
 		game->player.mv.mov_speed = 8;
+	else if (key == 46)
+		game->show_minimap = !game->show_minimap;
+	game->minimap.cell_size += (key == 126) + (- (key == 125));
 	return (0);
 }
 
