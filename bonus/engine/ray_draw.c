@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 20:04:18 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/15 20:33:00 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 18:08:48 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,12 @@ unsigned int	shade_color(unsigned int color, float distance, t_game *game)
 	return ((r << 16) | (g << 8) | b);
 }
 
-void	draw_column_strip(t_game *game, t_column_params *p, int height, int is_door)
+void	draw_column_strip(t_game *game, t_column_params *p, int height)
 {
 	int		y;
 	int		tex_y;
 	char	*pix;
 	int		color;
-	(void) is_door;
 	// if (is_door)
 	// 	y = p->top + game->ray.distance;
 	y = p->top;
@@ -106,7 +105,8 @@ void	draw_column_strip(t_game *game, t_column_params *p, int height, int is_door
 		pix = p->texture->addr + (tex_y * p->texture->line_length + \
 				p->tex_x * (p->texture->bits_per_pixel / 8));
 		color = *(unsigned int *)pix;
-		put_pixel_in_img(game, p->x + p->i, y, shade_color(color, game->ray.distance, game));
+		if ((color & 0x00FFFFFF) != 0x000000)
+			put_pixel_in_img(game, p->x + p->i, y, shade_color(color, game->ray.distance, game));
 		y++;
 	}
 }
@@ -114,17 +114,11 @@ void	draw_column_strip(t_game *game, t_column_params *p, int height, int is_door
 void draw_textured_column(t_game *game, t_ray *ray, int ray_id, int height)
 {
 	t_column_params params;
-	int		is_door = 0;
 	// Check if this ray hit a door - THIS IS THE CRUCIAL PART YOU MIS
 	params.x = ray_id * RES;
 	params.tex_x = get_texture_x(ray);
-	is_door = (ray->was_hit_vertical && ray->vert_hit_is_door) || 
-              (!ray->was_hit_vertical && ray->horz_hit_is_door);
 	// Choose texture based on whether this is a door
-	if (is_door)
-		params.texture = &game->door_tex;
-	else
-		params.texture = choose_texture(game, ray);
+	params.texture = choose_texture(game, ray);
 		
 	params.top = (WINDOW_HEIGHT / 2) - (height / 2);
 	params.bottom = (WINDOW_HEIGHT / 2) + (height / 2);
@@ -136,7 +130,7 @@ void draw_textured_column(t_game *game, t_ray *ray, int ray_id, int height)
 	params.i = 0;
 	while (params.i < RES)
 	{
-		draw_column_strip(game, &params, height, is_door);
+		draw_column_strip(game, &params, height);
 		params.i++;
 	}
 }

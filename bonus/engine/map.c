@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:03:36 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/15 16:53:49 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 17:27:37 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,26 @@ int	has_wall_at(int x, int y, t_game *game)
 	return (0);
 }
 
-int	iswall(float x, float y, char **map, int door_key)
+int	iswall(float x, float y, char **map)
 {
 	int	map_x;
 	int	map_y;
 
 	map_x = (int)((x - PLAYER_RADIUS) / TILESIZE);
 	map_y = (int)((y - PLAYER_RADIUS) / TILESIZE);
-	if (map[map_y][map_x] == '1' || (map[map_y][map_x] == 'D' && door_key == 0))
+	if (map[map_y][map_x] == '1')
 		return (1);
 	map_x = (int)((x + PLAYER_RADIUS) / TILESIZE);
 	map_y = (int)((y - PLAYER_RADIUS) / TILESIZE);
-	if (map[map_y][map_x] == '1' || (map[map_y][map_x] == 'D' && door_key == 0))
+	if (map[map_y][map_x] == '1')
 		return (1);
 	map_x = (int)((x - PLAYER_RADIUS) / TILESIZE);
 	map_y = (int)((y + PLAYER_RADIUS) / TILESIZE);
-	if (map[map_y][map_x] == '1' || (map[map_y][map_x] == 'D' && door_key == 0))
+	if (map[map_y][map_x] == '1')
 		return (1);
 	map_x = (int)((x + PLAYER_RADIUS) / TILESIZE);
 	map_y = (int)((y + PLAYER_RADIUS) / TILESIZE);
-	if (map[map_y][map_x] == '1' || (map[map_y][map_x] == 'D' && door_key == 0))
+	if (map[map_y][map_x] == '1' )
 		return (1);
 	return (0);
 }
