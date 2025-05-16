@@ -11,6 +11,7 @@
 		"stdlib.h": "c",
 		"string.h": "c",
 		"fcntl.h": "c",
-		"time.h": "c"
+		"time.h": "c",
+		"mlx.h": "c"
 	}
 }

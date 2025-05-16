@@ -23,6 +23,7 @@ void minimap_pixel_put(t_minimap *minimap, int x, int y, int color)
 	*(int*)pixel = color;
 }
 
+void draw_line(t_game *game, t_player *player, int x, int y, int color);
 void clear_minimap_background(t_minimap *minimap)
 {
 	int x;
@@ -67,6 +68,7 @@ void draw_player_marker(t_game *game)
 		}
 		i++;
 	}
+	draw_line(game, &game->player, center_x, center_y, 0xFF0000);
 }
 
 void draw_visible_map_cells(t_game *game)
@@ -129,6 +131,46 @@ void draw_minimap_border(t_minimap *minimap)
 	}
 }
 
+
+void draw_line(t_game *game, t_player *player, int x, int y, int color)
+{
+	int dx;
+	int dy;
+	int sx;
+	int sy;
+	int e2;
+
+	player->mv.dir_y = sin(player->mv.player_angle);
+	player->mv.dir_x = cos(player->mv.player_angle);
+	player->mv.end_x = (int)(x + player->mv.dir_x * LINE_LENGHT);
+	player->mv.end_y = (int)(y + player->mv.dir_y * LINE_LENGHT);
+	dx = abs(player->mv.end_x - x);
+	dy = abs(player->mv.end_y - y);
+	sx = x < player->mv.end_x ? 1 : -1;
+	sy = y < player->mv.end_y ? 1 : -1;
+	player->mv.err = dx - dy;
+	while (1)
+	{
+		if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT)
+		{
+			minimap_pixel_put(&game->minimap, x, y, color);
+		}
+		if (x == player->mv.end_x && y == player->mv.end_y)
+			break;
+		e2 = player->mv.err * 2;
+		if (e2 > -dy)
+		{
+			player->mv.err -= dy;
+			x += sx;
+		}
+		if (e2 < dx)
+		{
+			player->mv.err += dx;
+			y += sy;
+		}
+	}
+}
+
 int render_minimap(void *game_)
 {
 	t_game	*game;
@@ -139,7 +181,6 @@ int render_minimap(void *game_)
 	draw_visible_map_cells(game);
 	
 	draw_player_marker(game);
-	// draw_player_direction(game);
 	
 	draw_minimap_border(&game->minimap);
 	return(0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   don't delet this file.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:31:10 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/12 16:55:43 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/15 23:39:13 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,18 +109,18 @@ void draw_square(t_game *game, int x, int y, int color)
 	}
 }
 
-void draw_line(t_game *game, t_player *player, int x, int y, float line_length, int color)
+void draw_line(t_game *game, t_player *player, int x, int y, int color)
 {
-	int dx;
-	int dy;
-	int sx;
-	int sy;
-	int e2;
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	e2;
 
 	player->mv.dir_y = sin(player->mv.player_angle);
 	player->mv.dir_x = cos(player->mv.player_angle);
-	player->mv.end_x = (int)(x + player->mv.dir_x * line_length);
-	player->mv.end_y = (int)(y + player->mv.dir_y * line_length);
+	player->mv.end_x = (int)(x + player->mv.dir_x * LINE_LENGHT);
+	player->mv.end_y = (int)(y + player->mv.dir_y * LINE_LENGHT);
 	dx = abs(player->mv.end_x - x);
 	dy = abs(player->mv.end_y - y);
 	sx = x < player->mv.end_x ? 1 : -1;
