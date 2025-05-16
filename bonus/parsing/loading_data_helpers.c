@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loading_data_utils.c                               :+:      :+:    :+:   */
+/*   loading_data_helpers.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:13:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/12 15:14:14 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/16 18:12:53 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char *filename, t_cardinals *cardinal)
 {
 	*img = mlx_xpm_file_to_image(game->mlx, filename, &cardinal->w, \
 	&cardinal->h);
+	if (!(*img))
+		write(1, "wrong\n", 7);
 	cardinal->ptr = *img;
 	if (*img)
 		cardinal->addr = mlx_get_data_addr(cardinal->ptr, \

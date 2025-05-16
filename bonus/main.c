@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 12:28:03 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/16 18:13:55 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,17 @@ int combined_update(t_game *game)
 	return (0);
 }
 
+int	init_door(t_game *game)
+{	
+	load_image_and_address(&game->door_opening[0].ptr, game, "bonus/textures/doors/d_open0.xpm", &game->door_opening[0]);
+	load_image_and_address(&game->door_opening[1].ptr, game, "bonus/textures/doors/d_open1.xpm", &game->door_opening[1]);
+	load_image_and_address(&game->door_opening[2].ptr, game, "bonus/textures/doors/d_open2.xpm", &game->door_opening[2]);
+	load_image_and_address(&game->door_opening[3].ptr, game, "bonus/textures/doors/d_open3.xpm", &game->door_opening[3]);
+	load_image_and_address(&game->door_opening[4].ptr, game, "bonus/textures/doors/d_open4.xpm", &game->door_opening[4]);
+	load_image_and_address(&game->door_opening[5].ptr, game, "bonus/textures/doors/d_open5.xpm", &game->door_opening[5]);
+	return (0);
+}
+
 int	init_light(t_game *game)
 {
 	game->light = 1;
@@ -156,7 +167,6 @@ int main(int ac, char **av)
 	game.keys.s = 0;
 	game.keys.w = 0;
 	game.is_healed = 1;
-	game.keys.door_key = 1;
 	game.keys.left = 0;
 	game.keys.right= 0;
 	game.keys.esc = 0;
@@ -165,6 +175,7 @@ int main(int ac, char **av)
 	game.show_minimap = 1;
 	init_player(&game.player, &game);
 	init_minimap(&game);
+	init_door(&game);
 	init_light(&game);
 	mlx_hook(game.win, 2, 1L<<0, key_press, &game);
 	mlx_hook(game.win, 3, 1L<<1, key_release, &game);

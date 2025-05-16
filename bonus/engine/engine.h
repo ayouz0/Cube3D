@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 17:14:30 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 18:14:28 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_ddoor
 	float	y;
 }	t_ddoor;
 
+
 typedef struct s_ray
 {
 	float	ray_angle;
@@ -125,7 +126,6 @@ typedef struct s_keys
 	int	left;
 	int	right;
 	int	esc;
-	int	door_key;
 }	t_keys;
 
 typedef struct	s_minimap_ctx
@@ -177,6 +177,8 @@ typedef struct s_game
 	int			show_minimap;
 	t_cardinals	door_tex;
 	t_cardinals	light_img[8];
+	t_cardinals door_opening[6];
+	int			door_close;
 	t_minimap	minimap;
 }	t_game;
 
@@ -203,7 +205,7 @@ void	clear_image(t_game *game);
 float	norma_angle(float angle);
 int		has_wall_at(int x, int y, t_game *game);
 void	cast_all_rays(t_game *game, t_ray *ray);
-int		iswall(float x, float y, char **map, int door_key);
+int		iswall(float x, float y, char **map);
 float	distance_between_points(float x1, float y1, float x2, float y2);
 void	set_closest_hit(t_ray *ray, float horz_dist, float vert_dist);
 void	check_vertical_hit(t_game *game, t_ray *ray,
