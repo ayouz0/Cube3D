@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 16:50:33 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 17:07:39 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,12 @@ void	cast_single_ray(t_game *game, t_ray *ray)
 	choose_closest_hit(game, ray);
 }
 
-int get_door_texture_x(t_ray *ray) 
+int	get_door_texture_x(t_ray *ray) 
 {
-    int tex_x = (int)ray->door.x % TILESIZE;
-    if (ray->door.facing_up)
+	int tex_x;
+
+	tex_x = (int)ray->door.x % TILESIZE;
+    if (ray->ray_angle > 0 && ray->ray_angle < M_PI)  // Facing down
         tex_x = TILESIZE - tex_x - 1;
     if (tex_x < 0)
         tex_x = 0;
@@ -80,66 +82,41 @@ int get_door_texture_x(t_ray *ray)
         tex_x = TILESIZE - 1;
     return tex_x;
 }
-int get_door_texture_y(t_cardinals *tex, int height, int y, int unclipped_top)
+int	get_door_texture_y(t_cardinals *tex, int height, int y)
 {
-    int offset = y - unclipped_top;  // Position relative to the unclipped top
-    int tex_y = (offset * tex->h) / height;
-    if (tex_y < 0)
-        tex_y = 0;
-    if (tex_y >= tex->h)
-        tex_y = tex->h - 1;
-    return tex_y;
+	int	offset;
+	int	tex_y;
+
+	offset = y + (height / 2) - (WINDOW_HEIGHT / 2);
+	tex_y = (offset * tex->h) / height;
+	if (tex_y < 0)
+		tex_y = 0;
+	if (tex_y >= tex->h)
+		tex_y = tex->h - 1;
+	return (tex_y);
 }
 
-void draw_door_column_strip(t_game *game, t_column_params *p, int height, int is_door)
+void draw_door_column(t_game *game, t_ray *ray, int ray_id, int height)
 {
-	(void) is_door;
-    int y = p->top;
-    while (y < p->bottom)
-    {
-        // Update get_texture_y to use unclipped_top
-        int tex_y = get_door_texture_y(p->texture, height, y, p->unclipped_top);
-        char *pix = p->texture->addr + (tex_y * p->texture->line_length + 
-                                        p->tex_x * (p->texture->bits_per_pixel / 8));
-        int color = *(unsigned int *)pix;
-        // Use p->distance instead of game->ray.distance for shading
-		if ((color & 0x00FFFFFF) != 0x000000)
-       		 put_pixel_in_img(game, p->x + p->i, y, shade_color(color, p->distance, game));
-        y++;
-    }
-}
-
-void draw_door_column(t_game *game, t_ray *ray, int ray_id, int height, float door_dist)
-{
-    t_column_params params;
-    params.x = ray_id * RES;
-    params.tex_x = get_door_texture_x(ray);
-    params.texture = &game->door_tex;
-
-    // Adjusted parameters for smoother sliding
-    float max_offset = 800.0f;          // Reduced from 850
-    float threshold_distance = 350.0f;  // Reduced from 350
-    
-    // Calculate offset using ACTUAL distance
-    float offset = max_offset * (1.0f - fminf(door_dist / threshold_distance, 1.0f));
-
-    int center = WINDOW_HEIGHT / 2;
-    int unclipped_top = center - (height / 2) - (int)offset;
-    
-    // Clip to screen bounds
-    params.top = (unclipped_top < 0) ? 0 : unclipped_top;
-    params.bottom = center + (height / 2) - (int)offset;
-    if (params.bottom > WINDOW_HEIGHT) params.bottom = WINDOW_HEIGHT;
-
-    params.unclipped_top = unclipped_top;
-    params.distance = door_dist;
-
-    params.i = 0;
-    while (params.i < RES)
-    {
-        draw_door_column_strip(game, &params, height, 1);
-        params.i++;
-    }
+	t_column_params params;
+	// Check if this ray hit a door - THIS IS THE CRUCIAL PART YOU MIS
+	params.x = ray_id * RES;
+	params.tex_x = get_door_texture_x(ray);
+	// Choose texture based on whether this is a door
+	params.texture = &game->door_tex;
+	params.top = (WINDOW_HEIGHT / 2) - (height / 2);
+	params.bottom = (WINDOW_HEIGHT / 2) + (height / 2);
+	
+	if (params.top < 0)
+		params.top = 0;
+	if (params.bottom > WINDOW_HEIGHT)
+		params.bottom = WINDOW_HEIGHT;
+	params.i = 0;
+	while (params.i < RES)
+	{
+		draw_column_strip(game, &params, height, 1);
+		params.i++;
+	}
 }
 
 void	render_wall_slice(t_game *game, t_ray *ray, int ray_id)
@@ -165,7 +142,8 @@ void	render_wall_slice(t_game *game, t_ray *ray, int ray_id)
 				cos(ray->ray_angle - game->player.mv.player_angle);
 			proj_plane_dist = (WINDOW_WIDTH / 2) / tan(FOV / 2);
 			wall_height = (TILESIZE / corrected_dist) * proj_plane_dist;
-			draw_door_column(game, ray, ray_id, wall_height, corrected_dist);
+			if (actual_dist < wall_dist)
+				draw_door_column(game, ray, ray_id, wall_height);
 			ray->door.door_num--;
 		}
 		ray->door.y += ray->door.dy;

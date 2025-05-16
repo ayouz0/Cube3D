@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 16:49:55 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 16:51:14 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ typedef struct s_minimap
 	int		view_range;
 } t_minimap;
 
+ 
 typedef struct s_game
 {
 	void		*mlx;
@@ -173,6 +174,7 @@ typedef struct s_game
 	int			stamina;
 	int			is_healed;
 	int			door_count;
+	int			show_minimap;
 	t_cardinals	door_tex;
 	t_cardinals	light_img[8];
 	t_minimap	minimap;
@@ -213,5 +215,7 @@ unsigned int	shade_color(unsigned int color, float distance, t_game *game);
 void	animate_sprite(t_game *game);
 int	get_texture_x(t_ray *ray);
 void	draw_column_strip(t_game *game, t_column_params *p, int height, int is_door);
+long	get_current_time_ms(void);
+
 
 #endif

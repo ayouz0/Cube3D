@@ -131,7 +131,6 @@ void draw_minimap_border(t_minimap *minimap)
 	}
 }
 
-
 void draw_line(t_game *game, t_player *player, int x, int y, int color)
 {
 	int dx;
@@ -196,19 +195,50 @@ void	draw_stamina_bar(t_game *game)
 	}
 }
 
+void	draw_cardinals_on_minimap(t_game *game)
+{
+	mlx_string_put(game->mlx, game->win, \
+		game->minimap.pos_x + game->minimap.width - 30, \
+		game->minimap.pos_y + game->minimap.height - 45, game->parse_data.c + 100, "N");
+	mlx_string_put(game->mlx, game->win, \
+		game->minimap.pos_x + game->minimap.width - 30, \
+		game->minimap.pos_y + game->minimap.height - 25, game->parse_data.c + 100, "S");
+	mlx_string_put(game->mlx, game->win, \
+		game->minimap.pos_x + game->minimap.width - 20, \
+		game->minimap.pos_y + game->minimap.height - 35, game->parse_data.c + 100, "E");
+	mlx_string_put(game->mlx, game->win, \
+		game->minimap.pos_x + game->minimap.width - 40, \
+		game->minimap.pos_y + game->minimap.height - 35, game->parse_data.c + 100, "W");
+}
+
 int render_minimap(void *game_)
 {
 	t_game	*game;
 
 	game = game_;
+	if (!game->show_minimap)
+        return 0;
+	if (game->minimap.cell_size < 6 || game->minimap.cell_size > 15)
+		game->minimap.cell_size = 10;
+	game->minimap.width = game->minimap.view_range * 2 * game->minimap.cell_size;
+	game->minimap.height = game->minimap.view_range * 2 * game->minimap.cell_size;
+	game->minimap.pos_x = WINDOW_WIDTH - game->minimap.width - MINIMAP_PAD;
+	mlx_destroy_image(game->mlx, game->minimap.minimap_img);
+	game->minimap.minimap_img = mlx_new_image(game->mlx, 
+										 game->minimap.width, 
+										 game->minimap.height);
+	game->minimap.addr = mlx_get_data_addr(game->minimap.minimap_img, 
+										  &game->minimap.bits_per_pixel, 
+										  &game->minimap.line_length, 
+										  &game->minimap.endian);
 	clear_minimap_background(game);
-
 	draw_visible_map_cells(game);
-	
+
 	draw_player_marker(game);
 	
-	draw_minimap_border(&game->minimap);
-
 	draw_stamina_bar(game);
+
+	mlx_put_image_to_window(game->mlx, game->win, game->minimap.minimap_img, 
+						game->minimap.pos_x, game->minimap.pos_y);
 	return(0);
 }

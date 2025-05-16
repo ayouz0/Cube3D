@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 20:04:18 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 12:28:18 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 17:10:34 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ void	draw_column_strip(t_game *game, t_column_params *p, int height, int is_door
 		pix = p->texture->addr + (tex_y * p->texture->line_length + \
 				p->tex_x * (p->texture->bits_per_pixel / 8));
 		color = *(unsigned int *)pix;
-		put_pixel_in_img(game, p->x + p->i, y, shade_color(color, game->ray.distance, game));
+		if ((color & 0x00FFFFFF) != 0x000000)
+			put_pixel_in_img(game, p->x + p->i, y, shade_color(color, game->ray.distance, game));
 		y++;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 11:21:44 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 12:28:03 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,7 @@ int combined_update(t_game *game)
 	handle_stamina(game);
 	update(game);
 	render_minimap(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->minimap.minimap_img, 
-							game->minimap.pos_x, game->minimap.pos_y);
+	// draw_cardinals_on_minimap(game);
 	return (0);
 }
 
@@ -163,6 +162,7 @@ int main(int ac, char **av)
 	game.keys.esc = 0;
 	game.stamina = 320;
 	game.ray.door.door_num = 0;
+	game.show_minimap = 1;
 	init_player(&game.player, &game);
 	init_minimap(&game);
 	init_light(&game);
