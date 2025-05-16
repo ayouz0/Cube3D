@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 17:07:39 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 17:15:20 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void draw_door_column(t_game *game, t_ray *ray, int ray_id, int height)
 	params.i = 0;
 	while (params.i < RES)
 	{
-		draw_column_strip(game, &params, height, 1);
+		draw_column_strip(game, &params, height);
 		params.i++;
 	}
 }

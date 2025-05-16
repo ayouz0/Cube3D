@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 16:51:14 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 17:14:30 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ void	draw_textured_column(t_game *game, t_ray *ray, int ray_id, int height);
 unsigned int	shade_color(unsigned int color, float distance, t_game *game);
 void	animate_sprite(t_game *game);
 int	get_texture_x(t_ray *ray);
-void	draw_column_strip(t_game *game, t_column_params *p, int height, int is_door);
+void	draw_column_strip(t_game *game, t_column_params *p, int height);
 long	get_current_time_ms(void);
 
 
