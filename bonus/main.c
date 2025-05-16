@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 10:14:13 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 10:35:32 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	handle_stamina(t_game *game)
 	if ((game->stamina == 0 || game->player.mv.mov_speed == 3.5) && current_time >= 500 && game->is_healed != 1)
 	{
 		game->stamina++;
-		if (game->stamina == 200)
+		if (game->stamina == 320)
 			game->is_healed = 1;
 	}
 	if (game->is_healed == 0)
@@ -162,7 +162,7 @@ int main(int ac, char **av)
 	game.keys.left = 0;
 	game.keys.right= 0;
 	game.keys.esc = 0;
-	game.stamina = 49;
+	game.stamina = 320;
 	game.ray.door.door_num = 0;
 	init_player(&game.player, &game);
 	init_minimap(&game);
