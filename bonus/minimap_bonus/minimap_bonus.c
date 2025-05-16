@@ -24,19 +24,19 @@ void minimap_pixel_put(t_minimap *minimap, int x, int y, int color)
 }
 
 void draw_line(t_game *game, t_player *player, int x, int y, int color);
-void clear_minimap_background(t_minimap *minimap)
+void clear_minimap_background(t_game *game)
 {
 	int x;
 	int y;
 
 	x = 0;
 	y = 0;
-	while (y < minimap->height)
+	while (y < game->minimap.height)
 	{
 		x = 0;
-		while (x < minimap->width)
+		while (x < game->minimap.width)
 		{
-			minimap_pixel_put(minimap, x, y, 0x55000000);
+			minimap_pixel_put(&game->minimap, x, y, game->parse_data.f);
 			x++;
 		}
 		y++;
@@ -63,21 +63,20 @@ void draw_player_marker(t_game *game)
 		while (j <= size)
 		{
 			if (i*i + j*j <= size*size)
-				minimap_pixel_put(&game->minimap, center_x + i, center_y + j, 0xFF0000);
+				minimap_pixel_put(&game->minimap, center_x + i, center_y + j,game->parse_data.f + 0xaedb09);
 			j++;
 		}
 		i++;
 	}
-	draw_line(game, &game->player, center_x, center_y, 0xFF0000);
+	draw_line(game, &game->player, center_x, center_y, game->parse_data.f + 0xaedb09);
 }
-
+// ceiling and floor are the same color the wall's color is incremented by 25
 void draw_visible_map_cells(t_game *game)
 {
 	int real_x;
 	int real_y;
 	int	x;
 	int	y;
-	(void)game;
 
 	(1) && (real_x = 0, real_y = 0);
 	(1) && (x = 0, y = 0);
@@ -92,7 +91,8 @@ void draw_visible_map_cells(t_game *game)
 				|| real_x / TILESIZE < 0 || real_x / TILESIZE >= game->parse_data.width)
 				minimap_pixel_put(&game->minimap, x, y, 0xFFFF00);
 			else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == '1')
-				minimap_pixel_put(&game->minimap, x, y, 0xC0C0C0);
+				minimap_pixel_put(&game->minimap, x, y, game->parse_data.c \
+				+ (game->parse_data.c == game->parse_data.f) * 25);
 			else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == 'D')
 				minimap_pixel_put(&game->minimap, x, y, 0x00FFFF);
 			else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == ' ')
@@ -201,7 +201,7 @@ int render_minimap(void *game_)
 	t_game	*game;
 
 	game = game_;
-	clear_minimap_background(&game->minimap);
+	clear_minimap_background(game);
 
 	draw_visible_map_cells(game);
 	
