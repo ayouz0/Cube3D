@@ -142,8 +142,8 @@ void draw_line(t_game *game, t_player *player, int x, int y, int color)
 
 	player->mv.dir_y = sin(player->mv.player_angle);
 	player->mv.dir_x = cos(player->mv.player_angle);
-	player->mv.end_x = (int)(x + player->mv.dir_x * LINE_LENGHT);
-	player->mv.end_y = (int)(y + player->mv.dir_y * LINE_LENGHT);
+	player->mv.end_x = (int)(x + player->mv.dir_x * game->minimap.cell_size);
+	player->mv.end_y = (int)(y + player->mv.dir_y * game->minimap.cell_size);
 	dx = abs(player->mv.end_x - x);
 	dy = abs(player->mv.end_y - y);
 	sx = x < player->mv.end_x ? 1 : -1;
@@ -179,12 +179,17 @@ void	draw_stamina_bar(t_game *game)
 
 	x = 0;
 	y = 0;
-	while (x < game->stamina - 10)
+	while (x <= game->stamina / 2)
 	{
 		thickness = 5;
 		while (thickness > 0)
 		{
-			minimap_pixel_put(&game->minimap, x, game->minimap.height - thickness, 0x008000);
+			if (game->is_healed)
+				minimap_pixel_put(&game->minimap, x, \
+				game->minimap.height - thickness, 0x008000);
+			else
+				minimap_pixel_put(&game->minimap, x, \
+				game->minimap.height - thickness, 0x008000 - game->stamina / 2);
 			thickness--;
 		}
 		x++;
