@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:07:26 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/15 12:07:31 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 20:44:24 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,33 +74,14 @@ int	check_map_interior(char **map, int rows, int cols, long long *player_count)
 	return (0);
 }
 
-void	load_door(t_game *game, int door_count)
+int	is_valid_door(char **map, int y, int x)
 {
-	int		y;
-	int		x;
-	char	**map;
-	int		i;
-
-	i = 0;
-	y = 0;
-	x = 0;
-	map = game->map;
-	game->doors = malloc(sizeof(t_door) * door_count);
-	while (map[y])
-	{
-		while (map[y][x])
-		{
-			if (map[y][x] == 'D')
-			{
-				game->doors[i].x = x;
-				game->doors[i].y = y;
-				i++;
-			}
-			x++;
-		}
-		y++;
-		x = 0;
-	}
+	if (x == 0 || y == 0 || !map[y][x + 1] || !map[y + 1])
+		return (0);
+	if (map[y][x + 1] == '0' && map[y][x - 1] == '0')
+		return (0);
+	printf("Error: please place doors between two 1's on the x axis\nex: 1D1\n");
+	return (1);
 }
 
 int	check_invalid_characters(char **map, t_game *game)
@@ -121,15 +102,13 @@ int	check_invalid_characters(char **map, t_game *game)
 				return (printf \
 				("Error: invalid character found while reading map:\n|%c|\n", \
 				map[i][j]), 1);
-			if (map[i][j] == 'D')
-				game->door_count++;
+				if (map[i][j] == 'D' && is_valid_door(map, i, j))
+					return (1);
 			j++;
 		}
 		i++;
 		j = 0;
 	}
-	if (game->door_count > 0)
-		load_door(game, game->door_count);
 	return (0);
 }
 
