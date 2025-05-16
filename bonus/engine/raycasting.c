@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 11:15:52 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 12:20:20 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void	render_wall_slice(t_game *game, t_ray *ray, int ray_id)
 	float	corrected_dist;
 	float	proj_plane_dist;
 	float	actual_dist;
+	
 	corrected_dist = ray->distance * \
 		cos(ray->ray_angle - game->player.mv.player_angle);
 	proj_plane_dist = (WINDOW_WIDTH / 2) / tan(FOV / 2);
