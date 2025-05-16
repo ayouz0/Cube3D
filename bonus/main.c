@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 10:35:32 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 11:16:07 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ void	handle_stamina(t_game *game)
 	}
 	if (game->is_healed == 0)
 		game->player.mv.mov_speed = 3.5;
-	printf("stamina=%d\n", game->stamina);
 }
 
 int combined_update(t_game *game)
