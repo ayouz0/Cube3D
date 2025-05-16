@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 19:11:04 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:42:31 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ int combined_update(t_game *game)
 
 int	init_door(t_game *game)
 {	
+	game->door_state = 0;
+	game->door_open = 0;
 	load_image_and_address(&game->door_opening[0].ptr, game, "bonus/textures/doors/d_open0.xpm", &game->door_opening[0]);
 	load_image_and_address(&game->door_opening[1].ptr, game, "bonus/textures/doors/d_open1.xpm", &game->door_opening[1]);
 	load_image_and_address(&game->door_opening[2].ptr, game, "bonus/textures/doors/d_open2.xpm", &game->door_opening[2]);

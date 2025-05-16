@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:05:10 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 17:24:29 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 19:48:42 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,19 @@ void	move_player(t_game *game, float angle)
 	movestep = game->player.mv.mov_speed;
 	new_x = game->player.player_x + cos(angle) * movestep;
 	new_y = game->player.player_y + sin(angle) * movestep;
-	if (!iswall(new_x, new_y, game->map))
+	if (!iswall(new_x, new_y, game->map, game))
 	{
 		game->player.player_x = new_x;
 		game->player.player_y = new_y;
 	}
 }
 
+// void	open_door(game)
+// {
+// 	int	door_state;
+
+	
+// }
 
 int	update(t_game *game)
 {
@@ -50,6 +56,8 @@ int	update(t_game *game)
 	cast_all_rays(game, &game->ray);
 	if (game->light  % 2 == 0)
 		animate_sprite(game);
+	// open_door(game);
+	game->door_tex = game->door_opening[2];
 	mlx_put_image_to_window(game->mlx, game->win, game->img_ptr, 0, 0);
 	return (0);
 }

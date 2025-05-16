@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:04:09 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 17:24:18 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 19:42:55 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,25 @@
 
 int	key_press(int key, t_game *game)
 {
+
+	printf("key=%d\n", key);
 	if (key == 53)
 		close_window(game);
+	if (key == 49)
+	{
+		if (game->door_state <= 5 && game->door_state > 0 && game->door_open == 1)
+		{
+			game->door_state--;
+			if (game->door_state == 0)
+				game->door_open = 0;
+		}
+		else if (game->door_open == 0)
+			game->door_state++;
+		if (game->door_state == 5)
+			game->door_open = 1;
+		printf("door state == %d\n", game->door_state);
+		printf("full open == %d\n", game->door_open);
+	}
 	else if (key == 3)
 		game->light++;
 	else if (key == 13)
