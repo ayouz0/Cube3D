@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:07:26 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 20:44:24 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:46:21 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	is_valid_door(char **map, int y, int x)
 {
 	if (x == 0 || y == 0 || !map[y][x + 1] || !map[y + 1])
 		return (0);
-	if (map[y][x + 1] == '0' && map[y][x - 1] == '0')
+	if (map[y][x + 1] == '1' && map[y][x - 1] == '1')
 		return (0);
 	printf("Error: please place doors between two 1's on the x axis\nex: 1D1\n");
 	return (1);
