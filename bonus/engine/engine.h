@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 19:11:15 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:08:58 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define WINDOW_HEIGHT (ROWS * TILESIZE)
 # define RES 1
 # define NUM_RAYS (WINDOW_WIDTH / RES)
-# define PLAYER_RADIUS 10.0f
+# define PLAYER_RADIUS 8.3f
 
 
 typedef struct s_cardinals
@@ -184,11 +184,13 @@ typedef struct s_game
 	int			show_minimap;
 	t_mouse		mouse;
 	t_cardinals	door_tex;
+	int			door_state;
 	t_cardinals	light_img[8];
 	t_cardinals door_opening[6];
-	int			door_close;
+	int			door_open;
 	t_minimap	minimap;
 }	t_game;
+// 06011156422
 
 typedef struct s_column_params {
     int x;                // X position on screen
@@ -213,7 +215,7 @@ void	clear_image(t_game *game);
 float	norma_angle(float angle);
 int		has_wall_at(int x, int y, t_game *game);
 void	cast_all_rays(t_game *game, t_ray *ray);
-int		iswall(float x, float y, char **map);
+int		iswall(float x, float y, char **map, t_game *game);
 float	distance_between_points(float x1, float y1, float x2, float y2);
 void	set_closest_hit(t_ray *ray, float horz_dist, float vert_dist);
 void	check_vertical_hit(t_game *game, t_ray *ray,
