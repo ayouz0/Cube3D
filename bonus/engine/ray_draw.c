@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 20:04:18 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/15 20:33:00 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 12:28:18 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,7 @@ void draw_textured_column(t_game *game, t_ray *ray, int ray_id, int height)
 	is_door = (ray->was_hit_vertical && ray->vert_hit_is_door) || 
               (!ray->was_hit_vertical && ray->horz_hit_is_door);
 	// Choose texture based on whether this is a door
-	if (is_door)
-		params.texture = &game->door_tex;
-	else
-		params.texture = choose_texture(game, ray);
+	params.texture = choose_texture(game, ray);
 		
 	params.top = (WINDOW_HEIGHT / 2) - (height / 2);
 	params.bottom = (WINDOW_HEIGHT / 2) + (height / 2);

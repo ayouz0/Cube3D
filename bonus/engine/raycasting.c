@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 12:20:20 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 16:50:33 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ void	cast_single_ray(t_game *game, t_ray *ray)
 	int	facing_left;
 	int	facing_right;
 
+	ray->door.door_num = 0;
+    ray->door.x = 0;
+    ray->door.y = 0;
+    ray->door.dx = 0;
+    ray->door.dy = 0;
+    ray->vert_hit_is_door = 0;
+    ray->horz_hit_is_door = 0;
 	ray->ray_angle = norma_angle(ray->ray_angle);
 	facing_down = (ray->ray_angle > 0 && ray->ray_angle < M_PI);
 	facing_up = !facing_down;
@@ -65,7 +72,7 @@ void	cast_single_ray(t_game *game, t_ray *ray)
 int get_door_texture_x(t_ray *ray) 
 {
     int tex_x = (int)ray->door.x % TILESIZE;
-    if (ray->door.facing_up)  // Facing up, hitting south side
+    if (ray->door.facing_up)
         tex_x = TILESIZE - tex_x - 1;
     if (tex_x < 0)
         tex_x = 0;
@@ -141,19 +148,21 @@ void	render_wall_slice(t_game *game, t_ray *ray, int ray_id)
 	float	corrected_dist;
 	float	proj_plane_dist;
 	float	actual_dist;
+	float	wall_dist;
 	
 	corrected_dist = ray->distance * \
 		cos(ray->ray_angle - game->player.mv.player_angle);
+	wall_dist = ray->distance;
 	proj_plane_dist = (WINDOW_WIDTH / 2) / tan(FOV / 2);
 	wall_height = (TILESIZE / corrected_dist) * proj_plane_dist;
 	draw_textured_column(game, ray, ray_id, wall_height);
 	while (ray->door.door_num > 0)
 	{
-		if ( ray->door.y / TILESIZE  >= 0 &&  ray->door.x / TILESIZE >=0 && game->map[(int)(ray->door.y / TILESIZE)][(int)(ray->door.x / TILESIZE)] == 'D')
+		if (ray->door.y / TILESIZE  >= 0 &&  ray->door.x / TILESIZE >=0 && game->map[(int)(ray->door.y / TILESIZE)][(int)(ray->door.x / TILESIZE)] == 'D')
 		{
 			actual_dist = distance_between_points(ray->door.x, ray->door.y, game->player.player_x, game->player.player_y);
 			corrected_dist = actual_dist * \
-			cos(ray->ray_angle - game->player.mv.player_angle);
+				cos(ray->ray_angle - game->player.mv.player_angle);
 			proj_plane_dist = (WINDOW_WIDTH / 2) / tan(FOV / 2);
 			wall_height = (TILESIZE / corrected_dist) * proj_plane_dist;
 			draw_door_column(game, ray, ray_id, wall_height, corrected_dist);

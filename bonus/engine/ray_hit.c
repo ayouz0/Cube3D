@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 20:03:04 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 12:19:16 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 12:51:23 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	check_vertical_hit(t_game *game, t_ray *ray,
 			ray->found_vert_hit = 1;
 			ray->vert_hit_x = ray->next_vert_x;
 			ray->vert_hit_y = ray->next_vert_y;
-			ray->vert_hit_is_door = (hit_type == 2);
+			ray->vert_hit_is_door = 0;
 			return ;
 		}
 		ray->next_vert_x += x_step;
