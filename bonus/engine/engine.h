@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 12:49:58 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/16 18:36:10 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,12 @@ typedef struct s_minimap
 	int		view_range;
 } t_minimap;
 
+typedef struct s_mouse
+{
+	int		mouse_down;
+	float	x;
+	float	y;
+}	t_mouse;
  
 typedef struct s_game
 {
@@ -175,6 +181,7 @@ typedef struct s_game
 	int			is_healed;
 	int			door_count;
 	int			show_minimap;
+	t_mouse		mouse;
 	t_cardinals	door_tex;
 	t_cardinals	light_img[8];
 	t_minimap	minimap;

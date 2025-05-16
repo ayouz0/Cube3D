@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minimap_bonus.h                                    :+:      :+:    :+:   */
+/*   mouse_hook_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 13:10:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/16 19:09:05 by aaitabde         ###   ########.fr       */
+/*   Created: 2025/05/16 17:55:20 by aaitabde          #+#    #+#             */
+/*   Updated: 2025/05/16 17:58:52 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIMAP_BONUS_H
-# define MINIMAP_BONUS_H
-#include "../header.h"
+#include "minimap_bonus.h"
 
-void	init_minimap(t_game *game);
-int		render_minimap(void *game_);
-void	draw_cardinals_on_minimap(t_game *game);
-int		mouse_hook(void *game);
+int	mouse_hook(void *game)
 
-# define MINIMAP_PAD 6
-# define BORDER_THICKNESS 4
-# define LINE_LENGHT 20
-# define MOUSE_ANGLE 0.07
-#endif
+{
+	(void)game;
+	return (1);
+}

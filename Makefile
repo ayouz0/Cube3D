@@ -48,6 +48,7 @@ SRC_BONUS = bonus/main.c bonus/engine/player.c \
 	bonus/parsing/loading_data_helpers.c \
 	bonus/minimap_bonus/minimap_bonus.c \
 	bonus/minimap_bonus/minimap_init_bonus.c \
+	bonus/minimap_bonus/mouse_hook_bonus.c \
 	$(UTILS_BONUS)
 
 OBJ_MANDATORY = ${SRC_MANDATORY:.c=.o}

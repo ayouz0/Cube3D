@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 12:28:03 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:10:10 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ int combined_update(t_game *game)
 	handle_stamina(game);
 	update(game);
 	render_minimap(game);
-	// draw_cardinals_on_minimap(game);
 	return (0);
 }
 
@@ -134,6 +133,48 @@ int	init_light(t_game *game)
 	return (0);
 }
 
+int	pressed(int key, int x, int y, void *game_)
+{
+	t_game *game;
+
+	(void)x;
+	(void)y;
+	game = game_;
+	if (key == 1)
+	{
+		game->mouse.mouse_down = 1;
+		game->mouse.x = x;
+	}
+	return (1);
+}
+int	released(int key, int x, int y, void *game_)
+{
+	t_game *game;
+
+	(void)y;
+	(void)key;
+	game = game_;
+	game->mouse.mouse_down = 0;
+	game->mouse.x = x;
+	return (1);
+}
+
+int	mouse_movement_handeling(int x, int y, void *game_)
+{
+	t_game *game;
+
+	(void)y;
+	game = game_;
+	if (!game->mouse.mouse_down)
+		return (1);
+	if (x > game->mouse.x)
+		game->player.mv.player_angle += MOUSE_ANGLE;
+	else if (x < game->mouse.x)
+		game->player.mv.player_angle -= MOUSE_ANGLE;
+	game->mouse.x = x;
+	return(0);
+}
+
 int main(int ac, char **av)
 {
 	t_game	game;
@@ -141,6 +182,8 @@ int main(int ac, char **av)
 	(void)ac;
 	atexit(leaks);
 	game.mlx = mlx_init();
+	if (!game.mlx)
+		return (printf("Error: mlx initialization failed\n"), 1);
 	game.parse_data.no.ptr = NULL;
 	game.parse_data.so.ptr = NULL;
 	game.parse_data.we.ptr = NULL;
@@ -163,6 +206,7 @@ int main(int ac, char **av)
 	game.stamina = 320;
 	game.ray.door.door_num = 0;
 	game.show_minimap = 1;
+	game.mouse.mouse_down = 0;
 	init_player(&game.player, &game);
 	init_minimap(&game);
 	init_light(&game);
@@ -170,5 +214,8 @@ int main(int ac, char **av)
 	mlx_hook(game.win, 3, 1L<<1, key_release, &game);
 	mlx_loop_hook(game.mlx, combined_update, &game);
 	mlx_hook(game.win, 17, 0, close_window, &game);
+	mlx_hook(game.win, 4, 1, pressed, &game);
+	mlx_hook(game.win, 5, 1, released, &game);
+	mlx_hook(game.win, 6, 1, mouse_movement_handeling, &game);
 	mlx_loop(game.mlx);
 }
