@@ -171,6 +171,26 @@ void draw_line(t_game *game, t_player *player, int x, int y, int color)
 	}
 }
 
+void	draw_stamina_bar(t_game *game)
+{
+	int	x;
+	int	y;
+	int	thickness;
+
+	x = 0;
+	y = 0;
+	while (x < game->stamina - 10)
+	{
+		thickness = 5;
+		while (thickness > 0)
+		{
+			minimap_pixel_put(&game->minimap, x, game->minimap.height - thickness, 0x008000);
+			thickness--;
+		}
+		x++;
+	}
+}
+
 int render_minimap(void *game_)
 {
 	t_game	*game;
@@ -183,5 +203,7 @@ int render_minimap(void *game_)
 	draw_player_marker(game);
 	
 	draw_minimap_border(&game->minimap);
+
+	draw_stamina_bar(game);
 	return(0);
 }
