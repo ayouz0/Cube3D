@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:03:36 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 20:19:48 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/16 20:29:22 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	iswall(float x, float y, char **map, t_game *game)
 	map_x = (int)((x - PLAYER_RADIUS) / TILESIZE);
 	map_y = (int)((y - PLAYER_RADIUS) / TILESIZE);
 	map_y_d = map_y;
-	if (game->ray.door.facing_up && has_wall_at(map_x, map_y, game) == 2)
+	if (game->ray.door.facing_up && game->ray.horz_hit_is_door)
 	{
 		write(1, "hello\n", 7);
 		map_y_d = map_y + 1;
@@ -53,7 +53,7 @@ int	iswall(float x, float y, char **map, t_game *game)
 	map_x = (int)((x + PLAYER_RADIUS) / TILESIZE);
 	map_y = (int)((y - PLAYER_RADIUS) / TILESIZE);
 	map_y_d = map_y;
-	if (game->ray.door.facing_up && has_wall_at(map_x, map_y, game) == 2)
+	if (game->ray.door.facing_up && game->ray.horz_hit_is_door)
 	{
 		write(1, "hello\n", 7);
 		map_y_d = map_y + 1;
@@ -63,7 +63,7 @@ int	iswall(float x, float y, char **map, t_game *game)
 	map_x = (int)((x - PLAYER_RADIUS) / TILESIZE);
 	map_y = (int)((y + PLAYER_RADIUS) / TILESIZE);
 	map_y_d = map_y;
-	if (game->ray.door.facing_up && has_wall_at(map_x, map_y, game) == 2)
+	if (game->ray.door.facing_up && game->ray.horz_hit_is_door)
 	{
 		write(1, "hello\n", 7);
 		map_y_d = map_y + 1;
@@ -73,7 +73,7 @@ int	iswall(float x, float y, char **map, t_game *game)
 	map_x = (int)((x + PLAYER_RADIUS) / TILESIZE);
 	map_y = (int)((y + PLAYER_RADIUS) / TILESIZE);
 	map_y_d = map_y;
-	if (game->ray.door.facing_up)
+	if (game->ray.door.facing_up && game->ray.horz_hit_is_door)
 	{
 		write(1, "hello\n", 7);
 		map_y_d = map_y + 1;
