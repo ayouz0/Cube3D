@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 20:04:18 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 18:08:48 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/17 12:55:15 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ unsigned int	shade_color(unsigned int color, float distance, t_game *game)
 	b = (color & 0xFF) * shade_factor;
 	return ((r << 16) | (g << 8) | b);
 }
+
 
 void	draw_column_strip(t_game *game, t_column_params *p, int height)
 {
