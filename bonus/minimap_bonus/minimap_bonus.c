@@ -94,7 +94,8 @@ void draw_visible_map_cells(t_game *game)
 				minimap_pixel_put(&game->minimap, x, y, game->parse_data.c \
 				+ (game->parse_data.c == game->parse_data.f) * 25);
 			else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == 'D')
-				minimap_pixel_put(&game->minimap, x, y, 0x00FFFF);
+				minimap_pixel_put(&game->minimap, x, y, 0x0 + \
+				(game->parse_data.c == game->parse_data.f) * 29);
 			else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == ' ')
 				minimap_pixel_put(&game->minimap, x, y, 0x00FFFF);
 			y++;
