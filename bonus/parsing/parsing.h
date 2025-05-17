@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:47:57 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/14 12:43:07 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/17 18:32:50 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ typedef struct s_map_ctx
 	int		rows;
 	int		cols;
 }	t_map_ctx;
+
+# define DOORS_ERROR "Error: please place doors \
+between two 1's on the x axis\n     0\nex: 1D1\n     0\n"
 
 # define CEILING       "Error: Invalid ceiling color: %s\n"
 # define FLOOR         "Error: Invalid floor color: %s\n"

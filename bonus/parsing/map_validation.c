@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:07:26 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 20:46:21 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/17 18:36:21 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ int	check_map_cell(t_map_ctx *ctx, int y, int x, long long *player_count)
 			(x > 0 && map[y][x - 1] == ' ') ||
 			(x < ctx->cols - 1 && map[y][x + 1] == ' '))
 		{
-			printf("Error: Map leakage is not allowed\n");
-			return (1);
+			return (printf("Error: Map leakage is not allowed\n"), 1);
 		}
 	}
 	else if (map[y][x] == ' ' && !is_space_surrounded(ctx, y, x))
@@ -78,9 +77,10 @@ int	is_valid_door(char **map, int y, int x)
 {
 	if (x == 0 || y == 0 || !map[y][x + 1] || !map[y + 1])
 		return (0);
-	if (map[y][x + 1] == '1' && map[y][x - 1] == '1')
+	if (map[y][x + 1] == '1' && map[y][x - 1] == '1' && map[y + 1][x] == '0' && map[y - 1][x] == '0')
 		return (0);
-	printf("Error: please place doors between two 1's on the x axis\nex: 1D1\n");
+		
+	printf(DOORS_ERROR);
 	return (1);
 }
 
