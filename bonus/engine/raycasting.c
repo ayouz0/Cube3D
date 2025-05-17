@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 14:18:27 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/17 16:01:14 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,8 @@ void	render_wall_slice(t_game *game, t_ray *ray, int ray_id)
 				draw_door_column(game, ray, ray_id, wall_height);
 			ray->door.door_num--;
 		}
-		ray->door.y += ray->door.dy;
-		ray->door.x += ray->door.dx;
+		ray->door.y -= ray->door.dy;
+		ray->door.x -= ray->door.dx;
 	}
 }
 
