@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 13:14:52 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/17 14:18:27 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ void	cast_single_ray(t_game *game, t_ray *ray)
 	int	facing_right;
 
 	ray->door.door_num = 0;
-    ray->door.x = 0;
-    ray->door.y = 0;
-    ray->door.dx = 0;
-    ray->door.dy = 0;
-    ray->vert_hit_is_door = 0;
-    ray->horz_hit_is_door = 0;
+	ray->door.x = 0;
+	ray->door.y = 0;
+	ray->door.dx = 0;
+	ray->door.dy = 0;
+	ray->vert_hit_is_door = 0;
+	ray->horz_hit_is_door = 0;
 	ray->ray_angle = norma_angle(ray->ray_angle);
 	facing_down = (ray->ray_angle > 0 && ray->ray_angle < M_PI);
 	facing_up = !facing_down;
@@ -74,13 +74,13 @@ int	get_door_texture_x(t_ray *ray)
 	int tex_x;
 
 	tex_x = (int)ray->door.x % TILESIZE;
-    if (ray->ray_angle > 0 && ray->ray_angle < M_PI)  // Facing down
-        tex_x = TILESIZE - tex_x - 1;
-    if (tex_x < 0)
-        tex_x = 0;
-    if (tex_x >= TILESIZE)
-        tex_x = TILESIZE - 1;
-    return tex_x;
+	if (ray->ray_angle > 0 && ray->ray_angle < M_PI)  // Facing down
+		tex_x = TILESIZE - tex_x - 1;
+	if (tex_x < 0)
+		tex_x = 0;
+	if (tex_x >= TILESIZE)
+		tex_x = TILESIZE - 1;
+	return tex_x;
 }
 int	get_door_texture_y(t_cardinals *tex, int height, int y)
 {
@@ -161,8 +161,8 @@ void	cast_all_rays(t_game *game, t_ray *ray)
 	{
 		ray->ray_angle = ray_angle;
 		ray->door.door_num = 0;
-        ray->vert_hit_is_door = 0;
-        ray->horz_hit_is_door = 0;
+		ray->vert_hit_is_door = 0;
+		ray->horz_hit_is_door = 0;
 		cast_single_ray(game, ray);
 		render_wall_slice(game, ray, ray_id);
 		ray_angle += FOV / NUM_RAYS;
