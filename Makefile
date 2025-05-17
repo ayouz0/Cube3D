@@ -40,13 +40,13 @@ SRC_BONUS = bonus/main.c bonus/engine/player.c \
 	bonus/engine/update.c bonus/parsing/parser.c \
 	bonus/parsing/loading_cardinals.c \
 	bonus/parsing/loading_map_utils.c \
-	bonus/parsing/loading_map.c \
+	bonus/parsing/loading_map.c bonus/engine/display.c \
 	bonus/parsing/parsing_cardinals_and_colors.c \
 	bonus/engine/draw.c bonus/engine/ray_hit.c \
 	bonus/engine/ray_draw.c bonus/parsing/map_validation.c \
 	bonus/parsing/map_validation_helpers.c \
 	bonus/parsing/loading_data_helpers.c \
-	bonus/minimap_bonus/minimap_bonus.c \
+	bonus/minimap_bonus/minimap_bonus.c bonus/engine/utils.c \
 	bonus/minimap_bonus/minimap_init_bonus.c \
 	bonus/minimap_bonus/mouse_hook_bonus.c \
 	$(UTILS_BONUS)

@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 12:25:17 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/17 21:13:01 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,8 @@ int	get_texture_x(t_ray *ray);
 void	draw_column_strip(t_game *game, t_column_params *p, int height);
 long	get_current_time_ms(void);
 void	draw_light_sprite(t_game *game, t_cardinals *sprite, int dest_x, int dest_y);
+t_cardinals	*choose_texture(t_game *game, t_ray *ray);
+int			get_intercept(t_ray *ray, int hit_type);
 
 
 #endif

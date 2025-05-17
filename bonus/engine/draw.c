@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 11:32:07 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 13:06:02 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/17 20:33:11 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,6 @@ void	put_pixel_in_img(t_game *game, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	clear_image(t_game *game)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < WINDOW_HEIGHT)
-	{
-		x = 0;
-		while (x < WINDOW_WIDTH)
-		{
-			put_pixel_in_img(game, x, y, 0x000000);
-			x++;
-		}
-		y++;
-	}
-}
-
-
 void	draw_floor(t_game *game)
 {
 	int	x;
@@ -78,7 +59,9 @@ void	draw_floor(t_game *game)
 		x = 0;
 		while (x < COLS * TILESIZE)
 		{
-			draw_minisquare(game, x, y, shade_color(game->parse_data.f, (float)(ROWS * TILESIZE - y), game));
+			draw_minisquare(game, x, y, \
+				shade_color(game->parse_data.f, \
+				(float)(ROWS * TILESIZE - y), game));
 			x += mini_size;
 		}
 		y += mini_size;
@@ -114,7 +97,8 @@ void	draw_sky(t_game *game)
 		x = 0;
 		while (x < COLS * TILESIZE)
 		{
-			draw_minisquare(game, x, y, shade_sky(game->parse_data.c, (float)(y)));
+			draw_minisquare(game, x, y, \
+				shade_sky(game->parse_data.c, (float)(y)));
 			x += mini_size;
 		}
 		y += mini_size;

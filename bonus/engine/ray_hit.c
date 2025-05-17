@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 20:03:04 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 16:01:57 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/17 21:14:00 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	check_horizontal_hit(t_game *game, t_ray *ray,
 	float	y_step;
 	int		check_y;
 	int		hit_type;
-	
+
 	ray->door.facing_up = facing_up;
 	prepare_horizontal_check(game, ray, &x_step, &y_step);
 	while (ray->next_horz_x >= 0 && \
@@ -60,21 +60,8 @@ void	check_horizontal_hit(t_game *game, t_ray *ray,
 		else
 			check_y = ray->next_horz_y;
 		hit_type = has_wall_at(ray->next_horz_x, check_y, game);
-		if (hit_type == 2)
-		{
-			ray->horz_hit_is_door = 2;
-			ray->door.y = ray->next_horz_y;
-			ray->door.x = ray->next_horz_x;
-			ray->door.door_num++;
-		}
-		else if (hit_type == 1)
-		{
-			ray->found_horz_hit = 1;
-			ray->horz_hit_x = ray->next_horz_x;
-			ray->horz_hit_y = ray->next_horz_y;
-			ray->horz_hit_is_door = 0;
+		if (get_intercept(ray, hit_type) == 1)
 			return ;
-		}
 		ray->next_horz_x += x_step;
 		ray->next_horz_y += y_step;
 	}
@@ -116,10 +103,7 @@ void	check_vertical_hit(t_game *game, t_ray *ray,
 		ray->next_vert_y >= 0 && \
 		ray->next_vert_y <= game->parse_data.height * TILESIZE)
 	{
-		if (facing_left)
-			check_x = ray->next_vert_x - 1;
-		else
-			check_x = ray->next_vert_x;
+		check_x = ray->next_vert_x - (facing_left > 0);
 		hit_type = has_wall_at(check_x, ray->next_vert_y, game);
 		if (hit_type == 1)
 		{
