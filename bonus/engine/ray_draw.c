@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 20:04:18 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 12:55:15 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/17 13:05:49 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,10 @@ unsigned int	shade_color(unsigned int color, float distance, t_game *game)
 	unsigned char	g;
 	unsigned char	b;
 
-	// !ahm ahm
-	//? Light intensity = 1 / (1 + k * distance) Where k is a constant
 	if (game->light % 2 == 0)
 		shade_factor = 1.0f / (1.0f + distance * 0.001f);
 	else
 		shade_factor = 1.0f / (1.0f + distance * 0.03f);
-	
 	r = ((color >> 16) & 0xFF) * shade_factor;
 	g = ((color >> 8) & 0xFF) * shade_factor;
 	b = (color & 0xFF) * shade_factor;
@@ -97,8 +94,6 @@ void	draw_column_strip(t_game *game, t_column_params *p, int height)
 	int		tex_y;
 	char	*pix;
 	int		color;
-	// if (is_door)
-	// 	y = p->top + game->ray.distance;
 	y = p->top;
 	while (y < p->bottom)
 	{
@@ -114,11 +109,10 @@ void	draw_column_strip(t_game *game, t_column_params *p, int height)
 
 void draw_textured_column(t_game *game, t_ray *ray, int ray_id, int height)
 {
-	t_column_params params;
-	// Check if this ray hit a door - THIS IS THE CRUCIAL PART YOU MIS
+	t_column_params	params;
+
 	params.x = ray_id * RES;
 	params.tex_x = get_texture_x(ray);
-	// Choose texture based on whether this is a door
 	params.texture = choose_texture(game, ray);
 		
 	params.top = (WINDOW_HEIGHT / 2) - (height / 2);

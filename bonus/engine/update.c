@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:05:10 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 12:33:32 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/17 13:11:30 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,8 @@ void	move_player(t_game *game, float angle)
 	}
 }
 
-// void	open_door(game)
-// {
-// 	int	door_state;
-
-	
-// }
-
 void	door_button(t_game *game)
 {
-	// static long	last_update = 0;
-	// static int	anim_frame = 0;
-	// static int	direction = 1; // 1 = forward, -1 = backward
-	// long		current_time;
-
 	if (!game->has_button)
 		return;
 	draw_light_sprite(game, &game->door_button[game->door_state], 0, 2 * 48);

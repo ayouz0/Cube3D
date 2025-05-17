@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 11:32:07 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 12:59:09 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/17 13:06:02 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,7 @@ unsigned int	shade_sky(unsigned int color, float distance)
 	unsigned char	g;
 	unsigned char	b;
 
-	// !ahm ahm
-	//? Light intensity = 1 / (1 + k * distance) Where k is a constant
-
 	shade_factor = 1.0f / (1.0f + distance * 0.005f);
-	
 	r = ((color >> 16) & 0xFF) * shade_factor;
 	g = ((color >> 8) & 0xFF) * shade_factor;
 	b = (color & 0xFF) * shade_factor;
