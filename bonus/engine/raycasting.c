@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 19:41:57 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/17 13:14:52 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,9 @@ int	get_door_texture_y(t_cardinals *tex, int height, int y)
 void draw_door_column(t_game *game, t_ray *ray, int ray_id, int height)
 {
 	t_column_params params;
-	// Check if this ray hit a door - THIS IS THE CRUCIAL PART YOU MIS
+
 	params.x = ray_id * RES;
 	params.tex_x = get_door_texture_x(ray);
-	// Choose texture based on whether this is a door
 	params.texture = &game->door_opening[game->door_state];
 	params.top = (WINDOW_HEIGHT / 2) - (height / 2);
 	params.bottom = (WINDOW_HEIGHT / 2) + (height / 2);

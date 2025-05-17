@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:03:36 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 12:58:07 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/17 13:13:10 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ int	has_wall_at(int x, int y, t_game *game)
 
 	char tile = game->map[map_y][map_x];
 	if (tile == '1')
-		return (1); // Wall
+		return (1);
 	if (game->ray.door.facing_up)
 		map_y++;
 	 if (map_y >= 0 && map_y < game->parse_data.height)
 	 {
         tile = game->map[map_y][map_x];
         if (tile == 'D')
-            return (2); // Door found
+            return (2);
     }
 	return (0);
 }
