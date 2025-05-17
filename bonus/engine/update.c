@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:05:10 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 12:09:17 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/17 12:33:32 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	door_button(t_game *game)
 
 	if (!game->has_button)
 		return;
-	draw_light_sprite(game, &game->door_button[game->door_state], 1 * 48, 2 * 48);
+	draw_light_sprite(game, &game->door_button[game->door_state], 0, 2 * 48);
 }
 
 int	update(t_game *game)

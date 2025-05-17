@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 12:03:27 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/17 12:27:19 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,9 @@ int main(int ac, char **av)
 	game.show_minimap = 1;
 	game.mouse.mouse_down = 0;
 	game.has_button = 0;
+	game.temp_message = NULL;
+    game.message_start_time = 0;
+    game.message_duration = 0;
 	init_player(&game.player, &game);
 	init_minimap(&game);
 	init_door(&game);

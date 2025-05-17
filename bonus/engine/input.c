@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:04:09 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 12:10:58 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/17 12:32:12 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int player_inside_door(t_game *game)
 int	key_press(int key, t_game *game)
 {
 
-	printf("key=%d\n", key);
 	if (key == 53)
 		close_window(game);
 	if (key == 49 && game->has_button) // Space key
@@ -62,10 +61,7 @@ int	key_press(int key, t_game *game)
 					game->door_open = 0;
 			}
 			else
-			{
-				//! cant' close door and ur inside it 
-				
-			}
+				printf("you can't close the door while your inside it (⌐■_■)\n");			
 		}
 		else if (game->door_open == 0)
 		{
@@ -73,8 +69,6 @@ int	key_press(int key, t_game *game)
 			if (game->door_state == 5)
 				game->door_open = 1;
 		}
-		printf("door state == %d\n", game->door_state);
-		printf("full open == %d\n", game->door_open);
 	}
 	else if (key == 11)
 		game->has_button = !game->has_button;
