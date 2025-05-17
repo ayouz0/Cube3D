@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/16 19:42:31 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/17 12:03:27 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,12 @@ int	init_door(t_game *game)
 	load_image_and_address(&game->door_opening[3].ptr, game, "bonus/textures/doors/d_open3.xpm", &game->door_opening[3]);
 	load_image_and_address(&game->door_opening[4].ptr, game, "bonus/textures/doors/d_open4.xpm", &game->door_opening[4]);
 	load_image_and_address(&game->door_opening[5].ptr, game, "bonus/textures/doors/d_open5.xpm", &game->door_opening[5]);
+	load_image_and_address(&game->door_button[0].ptr, game, "bonus/textures/doors/button0.xpm", &game->door_button[0]);
+	load_image_and_address(&game->door_button[1].ptr, game, "bonus/textures/doors/button1.xpm", &game->door_button[1]);
+	load_image_and_address(&game->door_button[2].ptr, game, "bonus/textures/doors/button2.xpm", &game->door_button[2]);
+	load_image_and_address(&game->door_button[3].ptr, game, "bonus/textures/doors/button3.xpm", &game->door_button[3]);
+	load_image_and_address(&game->door_button[4].ptr, game, "bonus/textures/doors/button4.xpm", &game->door_button[4]);
+	load_image_and_address(&game->door_button[5].ptr, game, "bonus/textures/doors/button5.xpm", &game->door_button[5]);
 	return (0);
 }
 
@@ -219,6 +225,7 @@ int main(int ac, char **av)
 	game.ray.door.door_num = 0;
 	game.show_minimap = 1;
 	game.mouse.mouse_down = 0;
+	game.has_button = 0;
 	init_player(&game.player, &game);
 	init_minimap(&game);
 	init_door(&game);
