@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/18 11:26:41 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/18 11:43:51 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int close_window(t_game *game)
 	exit(1);
 }
 
-void	leaks()
-{
+void	leaks(){
 	system("leaks -q cub3D");
 }
 
@@ -34,12 +33,10 @@ long	get_current_time_ms(void)
 
 void	draw_light_sprite(t_game *game, t_cardinals *sprite, int dest_x, int dest_y)
 {
-	int		x, y;
-	int		color;
-	char	*dst;
-	int		dst_offset;
-	int		src_offset;
-
+	int	x;
+	int	y;
+	int	color;
+	int	src_offset;
 	y = 0;
 	while (y < sprite->h)
 	{
@@ -48,19 +45,8 @@ void	draw_light_sprite(t_game *game, t_cardinals *sprite, int dest_x, int dest_y
 		{
 			src_offset = y * sprite->line_length + x * (sprite->bits_per_pixel / 8);
 			color = *(int *)(sprite->addr + src_offset);
-
-			// Optional: skip transparent pixels (e.g., black background)
 			if ((color & 0x00FFFFFF) != 0x000000)
-			{
-				int draw_x = dest_x + x;
-				int draw_y = dest_y + y;
-				if (draw_x >= 0 && draw_x < WINDOW_WIDTH && draw_y >= 0 && draw_y < WINDOW_HEIGHT)
-				{
-					dst_offset = draw_y * game->line_length + draw_x * (game->bits_per_pixel / 8);
-					dst = game->addr + dst_offset;
-					*(int *)dst = color;
-				}
-			}
+				put_pixel_in_img(game, dest_x + x, dest_y + y, color);
 			x++;
 		}
 		y++;
@@ -71,25 +57,19 @@ void	animate_sprite(t_game *game)
 {
 	static long	last_update;
 	static int	anim_frame;
-	static int	direction;
 	long		current_time;
 
 	if (!game->light)
 		return;
-	last_update = 0;
-	anim_frame = 0;
-	direction = 1;
 	current_time = get_current_time_ms();
 	if (current_time - last_update >= 100)
 	{
-		anim_frame += direction;
+		anim_frame += game->direction;
 
 		if (anim_frame == 7 || anim_frame == 0)
-			direction *= -1; // Reverse direction
-
+			game->direction *= -1;
 		last_update = current_time;
 	}
-
 	draw_light_sprite(game, &game->light_img[anim_frame], 14 * 48, 8 * 48);
 }
 
@@ -183,7 +163,7 @@ int	released(int key, int x, int y, void *game_)
 
 int	mouse_movement_handeling(int x, int y, void *game_)
 {
-	t_game	*game;
+	t_game *game;
 
 	(void)y;
 	game = game_;
@@ -225,6 +205,7 @@ int main(int ac, char **av)
 	game.keys.right= 0;
 	game.keys.esc = 0;
 	game.stamina = 320;
+	game.direction = 1;
 	game.ray.door.door_num = 0;
 	game.show_minimap = 1;
 	game.mouse.mouse_down = 0;
