@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:05:10 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 13:11:30 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/18 09:54:35 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	move_player(t_game *game, float angle)
 void	door_button(t_game *game)
 {
 	if (!game->has_button)
-		return;
+		return ;
 	draw_light_sprite(game, &game->door_button[game->door_state], 0, 2 * 48);
 }
 
@@ -54,10 +54,9 @@ int	update(t_game *game)
 	draw_sky(game);
 	draw_floor(game);
 	cast_all_rays(game, &game->ray);
-	if (game->light  % 2 == 0)
+	if (game->light % 2 == 0)
 		animate_sprite(game);
 	door_button(game);
-	// open_door(game);
 	game->door_tex = game->door_opening[2];
 	mlx_put_image_to_window(game->mlx, game->win, game->img_ptr, 0, 0);
 	return (0);

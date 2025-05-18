@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 16:01:14 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/18 10:00:20 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,20 @@ void	cast_single_ray(t_game *game, t_ray *ray)
 	choose_closest_hit(game, ray);
 }
 
-int	get_door_texture_x(t_ray *ray) 
+int	get_door_texture_x(t_ray *ray)
 {
-	int tex_x;
+	int	tex_x;
 
 	tex_x = (int)ray->door.x % TILESIZE;
-	if (ray->ray_angle > 0 && ray->ray_angle < M_PI)  // Facing down
+	if (ray->ray_angle > 0 && ray->ray_angle < M_PI)
 		tex_x = TILESIZE - tex_x - 1;
 	if (tex_x < 0)
 		tex_x = 0;
 	if (tex_x >= TILESIZE)
 		tex_x = TILESIZE - 1;
-	return tex_x;
+	return (tex_x);
 }
+
 int	get_door_texture_y(t_cardinals *tex, int height, int y)
 {
 	int	offset;
@@ -96,16 +97,15 @@ int	get_door_texture_y(t_cardinals *tex, int height, int y)
 	return (tex_y);
 }
 
-void draw_door_column(t_game *game, t_ray *ray, int ray_id, int height)
+void	draw_door_column(t_game *game, t_ray *ray, int ray_id, int height)
 {
-	t_column_params params;
+	t_column_params	params;
 
 	params.x = ray_id * RES;
 	params.tex_x = get_door_texture_x(ray);
 	params.texture = &game->door_opening[game->door_state];
 	params.top = (WINDOW_HEIGHT / 2) - (height / 2);
 	params.bottom = (WINDOW_HEIGHT / 2) + (height / 2);
-	
 	if (params.top < 0)
 		params.top = 0;
 	if (params.bottom > WINDOW_HEIGHT)
@@ -123,9 +123,8 @@ void	render_wall_slice(t_game *game, t_ray *ray, int ray_id)
 	int		wall_height;
 	float	corrected_dist;
 	float	proj_plane_dist;
-	float	actual_dist;
 	float	wall_dist;
-	
+
 	corrected_dist = ray->distance * \
 		cos(ray->ray_angle - game->player.mv.player_angle);
 	wall_dist = ray->distance;
@@ -133,21 +132,7 @@ void	render_wall_slice(t_game *game, t_ray *ray, int ray_id)
 	wall_height = (TILESIZE / corrected_dist) * proj_plane_dist;
 	draw_textured_column(game, ray, ray_id, wall_height);
 	while (ray->door.door_num > 0)
-	{
-		if (ray->door.y / TILESIZE  >= 0 &&  ray->door.x / TILESIZE >=0 && game->map[(int)(ray->door.y / TILESIZE)][(int)(ray->door.x / TILESIZE)] == 'D')
-		{
-			actual_dist = distance_between_points(ray->door.x, ray->door.y, game->player.player_x, game->player.player_y);
-			corrected_dist = actual_dist * \
-				cos(ray->ray_angle - game->player.mv.player_angle);
-			proj_plane_dist = (WINDOW_WIDTH / 2) / tan(FOV / 2);
-			wall_height = (TILESIZE / corrected_dist) * proj_plane_dist;
-			if (actual_dist < wall_dist)
-				draw_door_column(game, ray, ray_id, wall_height);
-			ray->door.door_num--;
-		}
-		ray->door.y -= ray->door.dy;
-		ray->door.x -= ray->door.dx;
-	}
+		render_door_slice(game, ray, ray_id, wall_dist);
 }
 
 void	cast_all_rays(t_game *game, t_ray *ray)
@@ -167,6 +152,5 @@ void	cast_all_rays(t_game *game, t_ray *ray)
 		render_wall_slice(game, ray, ray_id);
 		ray_angle += FOV / NUM_RAYS;
 		ray_id++;
-	
 	}
 }

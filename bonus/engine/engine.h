@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 21:13:01 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/18 10:01:59 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ typedef struct s_column_params {
 } t_column_params;
 
 void	draw_floor(t_game *game);
+void	render_door_slice(t_game *game, t_ray *ray, int ray_id, float wall_dist);
 void	draw_sky(t_game *game);
 void	init_player(t_player *player, t_game *game);
 void	put_pixel_in_img(t_game *game, int x, int y, int color);
@@ -236,6 +237,7 @@ long	get_current_time_ms(void);
 void	draw_light_sprite(t_game *game, t_cardinals *sprite, int dest_x, int dest_y);
 t_cardinals	*choose_texture(t_game *game, t_ray *ray);
 int			get_intercept(t_ray *ray, int hit_type);
+void	draw_door_column(t_game *game, t_ray *ray, int ray_id, int height);
 
 
 #endif
