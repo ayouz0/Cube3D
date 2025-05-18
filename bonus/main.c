@@ -6,71 +6,22 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/18 11:43:51 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/18 16:40:18 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int close_window(t_game *game)
+int	close_window(t_game *game)
 {
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	exit(1);
 }
 
-void	leaks(){
+void	leaks()
+{
 	system("leaks -q cub3D");
-}
-
-long	get_current_time_ms(void)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-}
-
-void	draw_light_sprite(t_game *game, t_cardinals *sprite, int dest_x, int dest_y)
-{
-	int	x;
-	int	y;
-	int	color;
-	int	src_offset;
-	y = 0;
-	while (y < sprite->h)
-	{
-		x = 0;
-		while (x < sprite->w)
-		{
-			src_offset = y * sprite->line_length + x * (sprite->bits_per_pixel / 8);
-			color = *(int *)(sprite->addr + src_offset);
-			if ((color & 0x00FFFFFF) != 0x000000)
-				put_pixel_in_img(game, dest_x + x, dest_y + y, color);
-			x++;
-		}
-		y++;
-	}
-}
-
-void	animate_sprite(t_game *game)
-{
-	static long	last_update;
-	static int	anim_frame;
-	long		current_time;
-
-	if (!game->light)
-		return;
-	current_time = get_current_time_ms();
-	if (current_time - last_update >= 100)
-	{
-		anim_frame += game->direction;
-
-		if (anim_frame == 7 || anim_frame == 0)
-			game->direction *= -1;
-		last_update = current_time;
-	}
-	draw_light_sprite(game, &game->light_img[anim_frame], 14 * 48, 8 * 48);
 }
 
 void	handle_stamina(t_game *game)
@@ -98,40 +49,6 @@ int combined_update(t_game *game)
 	handle_stamina(game);
 	update(game);
 	render_minimap(game);
-	return (0);
-}
-
-int	init_door(t_game *game)
-{	
-	game->door_state = 0;
-	game->door_open = 0;
-	load_image_and_address(&game->door_opening[0].ptr, game, "bonus/textures/doors/d_open0.xpm", &game->door_opening[0]);
-	load_image_and_address(&game->door_opening[1].ptr, game, "bonus/textures/doors/d_open1.xpm", &game->door_opening[1]);
-	load_image_and_address(&game->door_opening[2].ptr, game, "bonus/textures/doors/d_open2.xpm", &game->door_opening[2]);
-	load_image_and_address(&game->door_opening[3].ptr, game, "bonus/textures/doors/d_open3.xpm", &game->door_opening[3]);
-	load_image_and_address(&game->door_opening[4].ptr, game, "bonus/textures/doors/d_open4.xpm", &game->door_opening[4]);
-	load_image_and_address(&game->door_opening[5].ptr, game, "bonus/textures/doors/d_open5.xpm", &game->door_opening[5]);
-	load_image_and_address(&game->door_button[0].ptr, game, "bonus/textures/doors/button0.xpm", &game->door_button[0]);
-	load_image_and_address(&game->door_button[1].ptr, game, "bonus/textures/doors/button1.xpm", &game->door_button[1]);
-	load_image_and_address(&game->door_button[2].ptr, game, "bonus/textures/doors/button2.xpm", &game->door_button[2]);
-	load_image_and_address(&game->door_button[3].ptr, game, "bonus/textures/doors/button3.xpm", &game->door_button[3]);
-	load_image_and_address(&game->door_button[4].ptr, game, "bonus/textures/doors/button4.xpm", &game->door_button[4]);
-	load_image_and_address(&game->door_button[5].ptr, game, "bonus/textures/doors/button5.xpm", &game->door_button[5]);
-	return (0);
-}
-
-int	init_light(t_game *game)
-{
-	game->light = 1;
-	load_image_and_address(&game->light_img[0].ptr, game, "bonus/textures/fire_1.xpm", &game->light_img[0]);
-	load_image_and_address(&game->light_img[1].ptr, game, "bonus/textures/fire_2.xpm", &game->light_img[1]);
-	load_image_and_address(&game->light_img[2].ptr, game, "bonus/textures/fire_3.xpm", &game->light_img[2]);
-	load_image_and_address(&game->light_img[3].ptr, game, "bonus/textures/fire_4.xpm", &game->light_img[3]);
-	load_image_and_address(&game->light_img[4].ptr, game, "bonus/textures/fire_5.xpm", &game->light_img[4]);
-	load_image_and_address(&game->light_img[5].ptr, game, "bonus/textures/fire_6.xpm", &game->light_img[5]);
-	load_image_and_address(&game->light_img[6].ptr, game, "bonus/textures/fire_7.xpm", &game->light_img[6]);
-	load_image_and_address(&game->light_img[7].ptr, game, "bonus/textures/fire_8.xpm", &game->light_img[7]);
-	load_image_and_address(&game->door_tex.ptr, game, "bonus/textures/door.xpm", &game->door_tex);
 	return (0);
 }
 
@@ -177,6 +94,27 @@ int	mouse_movement_handeling(int x, int y, void *game_)
 	return(0);
 }
 
+int	game_setup(t_game *game)
+{
+	init_logic(game);
+	init_player(&game->player, game);
+	init_minimap(game);
+	init_door(game);
+	init_light(game);
+	return (0);
+}
+
+void	game_hooks(t_game *game)
+{
+	mlx_hook(game->win, 2, 1L<<0, key_press, game);
+	mlx_hook(game->win, 3, 1L<<1, key_release, game);
+	mlx_loop_hook(game->mlx, combined_update, game);
+	mlx_hook(game->win, 17, 0, close_window, game);
+	mlx_hook(game->win, 4, 1, pressed, game);
+	mlx_hook(game->win, 5, 1, released, game);
+	mlx_hook(game->win, 6, 1, mouse_movement_handeling, game);
+}
+
 int main(int ac, char **av)
 {
 	t_game	game;
@@ -196,33 +134,7 @@ int main(int ac, char **av)
 	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cube3d");
 	game.img_ptr = mlx_new_image(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	game.addr = mlx_get_data_addr(game.img_ptr, &game.bits_per_pixel, &game.line_length, &game.endian);
-	game.keys.a = 0;
-	game.keys.d = 0;
-	game.keys.s = 0;
-	game.keys.w = 0;
-	game.is_healed = 1;
-	game.keys.left = 0;
-	game.keys.right= 0;
-	game.keys.esc = 0;
-	game.stamina = 320;
-	game.direction = 1;
-	game.ray.door.door_num = 0;
-	game.show_minimap = 1;
-	game.mouse.mouse_down = 0;
-	game.has_button = 0;
-	game.temp_message = NULL;
-    game.message_start_time = 0;
-    game.message_duration = 0;
-	init_player(&game.player, &game);
-	init_minimap(&game);
-	init_door(&game);
-	init_light(&game);
-	mlx_hook(game.win, 2, 1L<<0, key_press, &game);
-	mlx_hook(game.win, 3, 1L<<1, key_release, &game);
-	mlx_loop_hook(game.mlx, combined_update, &game);
-	mlx_hook(game.win, 17, 0, close_window, &game);
-	mlx_hook(game.win, 4, 1, pressed, &game);
-	mlx_hook(game.win, 5, 1, released, &game);
-	mlx_hook(game.win, 6, 1, mouse_movement_handeling, &game);
+	game_setup(&game);
+	game_hooks(&game);
 	mlx_loop(game.mlx);
 }

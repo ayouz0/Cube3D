@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/18 11:42:36 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/18 13:36:08 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,9 +187,6 @@ typedef struct s_game
 	int			direction;
 	int			door_open;
 	int			has_button;
-	int			message_duration;
-	time_t		message_start_time;
-	char		*temp_message;
 	t_minimap	minimap;
 }	t_game;
 // 06011156422
