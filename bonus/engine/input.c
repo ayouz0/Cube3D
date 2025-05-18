@@ -6,23 +6,35 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:04:09 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 20:53:37 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/18 10:26:09 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 
-int	player_inside_door(t_game *game)
+static int	is_door_close_enough(t_game *game, int check_x, int check_y)
 {
-	int		player_map_x;
-	int		player_map_y;
-	int		y;
-	int		x;
-	int		check_y;
-	int		check_x;
 	float	door_center_x;
 	float	door_center_y;
 	float	distance;
+
+	if (check_y < 0 || check_x < 0 || !game->map[check_y] || \
+		!game->map[check_y][check_x] || \
+		game->map[check_y][check_x] != 'D')
+		return (0);
+	door_center_x = (check_x * TILESIZE) + (TILESIZE / 2);
+	door_center_y = (check_y * TILESIZE) + (TILESIZE / 2);
+	distance = distance_between_points(game->player.player_x, \
+				game->player.player_y, door_center_x, door_center_y);
+	return (distance < TILESIZE * 0.7);
+}
+
+int	player_inside_door(t_game *game)
+{
+	int	player_map_x;
+	int	player_map_y;
+	int	y;
+	int	x;
 
 	y = -1;
 	player_map_x = (int)(game->player.player_x / TILESIZE);
@@ -32,19 +44,8 @@ int	player_inside_door(t_game *game)
 		x = -1;
 		while (x <= 1)
 		{
-			check_y = player_map_y + y;
-			check_x = player_map_x + x;
-			if (check_y < 0 || check_x < 0 || !game->map[check_y] || !game->map[check_y][check_x])
-				continue ;
-			if (game->map[check_y][check_x] == 'D')
-			{
-				door_center_x = (check_x * TILESIZE) + (TILESIZE / 2);
-				door_center_y = (check_y * TILESIZE) + (TILESIZE / 2);
-				distance = sqrt(pow(game->player.player_x - door_center_x, 2) + \
-								pow(game->player.player_y - door_center_y, 2));
-				if (distance < TILESIZE * 0.7)
-					return (1);
-			}
+			if (is_door_close_enough(game, player_map_x + x, player_map_y + y))
+				return (1);
 			x++;
 		}
 		y++;

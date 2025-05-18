@@ -6,10 +6,9 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/18 10:01:59 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/18 10:47:14 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef ENGINE_H
 # define ENGINE_H
@@ -24,13 +23,12 @@
 # define TILESIZE 80
 # define ROWS 9
 # define COLS 16
-# define FOV (60 * M_PI /180)
-# define WINDOW_WIDTH (COLS * TILESIZE)
-# define WINDOW_HEIGHT (ROWS * TILESIZE)
+# define FOV 1.0472f       /* 60 * PI/180 = 1.0472 radians */
+# define WINDOW_WIDTH 1280  /* COLS * TILESIZE = 16 * 80 */
+# define WINDOW_HEIGHT 720  /* ROWS * TILESIZE = 9 * 80 */
 # define RES 1
-# define NUM_RAYS (WINDOW_WIDTH / RES)
+# define NUM_RAYS 1280 /* WINDOW_WIDTH / RES = 1280 / 1 */
 # define PLAYER_RADIUS 8.3f
-
 
 typedef struct s_cardinals
 {
@@ -43,10 +41,10 @@ typedef struct s_cardinals
 	int		endian;
 }	t_cardinals;
 
-typedef struct	s_door
+typedef struct s_door
 {
-	int			x;
-	int			y;
+	int	x;
+	int	y;
 }	t_door;
 
 typedef struct s_parser
@@ -62,7 +60,6 @@ typedef struct s_parser
 	int			f;
 	int			c;
 }	t_parser;
-
 
 typedef struct s_moves
 {
@@ -95,7 +92,6 @@ typedef struct s_ddoor
 	float	y;
 }	t_ddoor;
 
-
 typedef struct s_ray
 {
 	float	ray_angle;
@@ -117,7 +113,7 @@ typedef struct s_ray
 	float	next_vert_y;
 	t_ddoor	door;
 }	t_ray;
- 
+
 typedef struct s_keys
 {
 	int	w;
@@ -129,7 +125,7 @@ typedef struct s_keys
 	int	esc;
 }	t_keys;
 
-typedef struct	s_minimap_ctx
+typedef struct s_minimap_ctx
 {
 	int	screen_x;
 	int	screen_y;
@@ -144,15 +140,15 @@ typedef struct s_minimap
 	void	*minimap_img;
 	char	*addr;
 	int		bits_per_pixel;
-    int		line_length;
-    int		endian;
+	int		line_length;
+	int		endian;
 	int		width;
 	int		height;
 	int		cell_size;
 	int		pos_x;
 	int		pos_y;
 	int		view_range;
-} t_minimap;
+}	t_minimap;
 
 typedef struct s_mouse
 {
@@ -160,7 +156,7 @@ typedef struct s_mouse
 	float	x;
 	float	y;
 }	t_mouse;
- 
+
 typedef struct s_game
 {
 	void		*mlx;
@@ -186,8 +182,8 @@ typedef struct s_game
 	t_cardinals	door_tex;
 	int			door_state;
 	t_cardinals	light_img[8];
-	t_cardinals door_opening[6];
-	t_cardinals door_button[6];
+	t_cardinals	door_opening[6];
+	t_cardinals	door_button[6];
 	int			door_open;
 	int			has_button;
 	int			message_duration;
@@ -197,47 +193,49 @@ typedef struct s_game
 }	t_game;
 // 06011156422
 
-typedef struct s_column_params {
-    int x;                // X position on screen
-    int tex_x;            // Texture x coordinate
-    t_cardinals *texture; // Texture pointer
-    int top;              // Clipped top y position
-    int bottom;           // Clipped bottom y position
-    int i;                // Sub-pixel offset within ray resolution
-    int unclipped_top;    // Unclipped top y position (new)
-    float distance;       // Distance for shading (new)
-} t_column_params;
+typedef struct s_column_params
+{
+	int			x;
+	int			tex_x;
+	t_cardinals	*texture;
+	int			top;
+	int			bottom;
+	int			i;
+}	t_column_params;
 
-void	draw_floor(t_game *game);
-void	render_door_slice(t_game *game, t_ray *ray, int ray_id, float wall_dist);
-void	draw_sky(t_game *game);
-void	init_player(t_player *player, t_game *game);
-void	put_pixel_in_img(t_game *game, int x, int y, int color);
-int		close_window(t_game *game);
-int		update(t_game *game);
-int		key_press(int key, t_game *game);
-int		key_release(int key, t_game *game);
-void	clear_image(t_game *game);
-float	norma_angle(float angle);
-int		has_wall_at(int x, int y, t_game *game);
-void	cast_all_rays(t_game *game, t_ray *ray);
-int		iswall(float x, float y, char **map, t_game *game);
-float	distance_between_points(float x1, float y1, float x2, float y2);
-void	set_closest_hit(t_ray *ray, float horz_dist, float vert_dist);
-void	check_vertical_hit(t_game *game, t_ray *ray,
-				int facing_left);
-void	check_horizontal_hit(t_game *game, t_ray *ray,
-				int facing_up);
-void	draw_textured_column(t_game *game, t_ray *ray, int ray_id, int height);
+void			draw_floor(t_game *game);
+void			render_door_slice(t_game *game, t_ray *ray, \
+						int ray_id, float wall_dist);
+void			draw_sky(t_game *game);
+void			init_player(t_player *player, t_game *game);
+void			put_pixel_in_img(t_game *game, int x, int y, int color);
+int				close_window(t_game *game);
+int				update(t_game *game);
+int				key_press(int key, t_game *game);
+int				key_release(int key, t_game *game);
+void			clear_image(t_game *game);
+float			norma_angle(float angle);
+int				has_wall_at(int x, int y, t_game *game);
+void			cast_all_rays(t_game *game, t_ray *ray);
+int				iswall(float x, float y, char **map, t_game *game);
+float			distance_between_points(float x1, float y1, float x2, float y2);
+void			set_closest_hit(t_ray *ray, float horz_dist, float vert_dist);
+void			check_vertical_hit(t_game *game, t_ray *ray, \
+									int facing_left);
+void			check_horizontal_hit(t_game *game, t_ray *ray,
+					int facing_up);
+void			draw_textured_column(t_game *game, \
+					t_ray *ray, int ray_id, int height);
 unsigned int	shade_color(unsigned int color, float distance, t_game *game);
-void	animate_sprite(t_game *game);
-int	get_texture_x(t_ray *ray);
-void	draw_column_strip(t_game *game, t_column_params *p, int height);
-long	get_current_time_ms(void);
-void	draw_light_sprite(t_game *game, t_cardinals *sprite, int dest_x, int dest_y);
-t_cardinals	*choose_texture(t_game *game, t_ray *ray);
-int			get_intercept(t_ray *ray, int hit_type);
-void	draw_door_column(t_game *game, t_ray *ray, int ray_id, int height);
-
+void			animate_sprite(t_game *game);
+int				get_texture_x(t_ray *ray);
+void			draw_column_strip(t_game *game, t_column_params *p, int height);
+long			get_current_time_ms(void);
+void			draw_light_sprite(t_game *game, \
+					t_cardinals *sprite, int dest_x, int dest_y);
+t_cardinals		*choose_texture(t_game *game, t_ray *ray);
+int				get_intercept(t_ray *ray, int hit_type);
+void			draw_door_column(t_game *game, \
+	t_ray *ray, int ray_id, int height);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 21:12:37 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/18 09:57:47 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/18 10:06:21 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	render_door_slice(t_game *game, t_ray *ray, int ray_id, float wall_dist)
 	float	corrected_dist;
 	float	proj_plane_dist;
 	float	actual_dist;
-	
+
 	if ((ray->door.y / TILESIZE) >= 0 && (ray->door.x / TILESIZE) >= 0 && \
 	game->map[(int)(ray->door.y / TILESIZE)][(int)(ray->door.x / TILESIZE)] \
 	== 'D')

@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:22:44 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/18 10:00:20 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/18 10:46:47 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,55 +67,6 @@ void	cast_single_ray(t_game *game, t_ray *ray)
 	check_horizontal_hit(game, ray, facing_up);
 	check_vertical_hit(game, ray, facing_left);
 	choose_closest_hit(game, ray);
-}
-
-int	get_door_texture_x(t_ray *ray)
-{
-	int	tex_x;
-
-	tex_x = (int)ray->door.x % TILESIZE;
-	if (ray->ray_angle > 0 && ray->ray_angle < M_PI)
-		tex_x = TILESIZE - tex_x - 1;
-	if (tex_x < 0)
-		tex_x = 0;
-	if (tex_x >= TILESIZE)
-		tex_x = TILESIZE - 1;
-	return (tex_x);
-}
-
-int	get_door_texture_y(t_cardinals *tex, int height, int y)
-{
-	int	offset;
-	int	tex_y;
-
-	offset = y + (height / 2) - (WINDOW_HEIGHT / 2);
-	tex_y = (offset * tex->h) / height;
-	if (tex_y < 0)
-		tex_y = 0;
-	if (tex_y >= tex->h)
-		tex_y = tex->h - 1;
-	return (tex_y);
-}
-
-void	draw_door_column(t_game *game, t_ray *ray, int ray_id, int height)
-{
-	t_column_params	params;
-
-	params.x = ray_id * RES;
-	params.tex_x = get_door_texture_x(ray);
-	params.texture = &game->door_opening[game->door_state];
-	params.top = (WINDOW_HEIGHT / 2) - (height / 2);
-	params.bottom = (WINDOW_HEIGHT / 2) + (height / 2);
-	if (params.top < 0)
-		params.top = 0;
-	if (params.bottom > WINDOW_HEIGHT)
-		params.bottom = WINDOW_HEIGHT;
-	params.i = 0;
-	while (params.i < RES)
-	{
-		draw_column_strip(game, &params, height);
-		params.i++;
-	}
 }
 
 void	render_wall_slice(t_game *game, t_ray *ray, int ray_id)
