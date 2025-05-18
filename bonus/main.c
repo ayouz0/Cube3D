@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/18 10:31:54 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/18 11:26:41 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int close_window(t_game *game)
 	exit(1);
 }
 
-void	leaks(){
+void	leaks()
+{
 	system("leaks -q cub3D");
 }
 
@@ -68,14 +69,16 @@ void	draw_light_sprite(t_game *game, t_cardinals *sprite, int dest_x, int dest_y
 
 void	animate_sprite(t_game *game)
 {
-	static long	last_update = 0;
-	static int	anim_frame = 0;
-	static int	direction = 1; // 1 = forward, -1 = backward
+	static long	last_update;
+	static int	anim_frame;
+	static int	direction;
 	long		current_time;
 
 	if (!game->light)
 		return;
-
+	last_update = 0;
+	anim_frame = 0;
+	direction = 1;
 	current_time = get_current_time_ms();
 	if (current_time - last_update >= 100)
 	{
@@ -180,7 +183,7 @@ int	released(int key, int x, int y, void *game_)
 
 int	mouse_movement_handeling(int x, int y, void *game_)
 {
-	t_game *game;
+	t_game	*game;
 
 	(void)y;
 	game = game_;
