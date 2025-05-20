@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:10:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/20 20:43:32 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/20 22:02:34 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int		render_minimap(void *game_);
 int		pressed(int key, int x, int y, void *game_);
 int		released(int key, int x, int y, void *game_);
 int		mouse_movement_handeling(int x, int y, void *game_);
-void	draw_line(t_game *game, int start_x, int start_y);
+void	draw_player_marker(t_game *game);
+void	minimap_pixel_put(t_minimap *minimap, int x, int y, int color);
 
 typedef struct s_pixel_ctx
 {
@@ -41,7 +42,6 @@ typedef struct s_line_ctx
 	int	sx;
 	int	sy;
 }	t_line_ctx;
-
 
 # define MINIMAP_PAD 6
 # define BORDER_THICKNESS 4
