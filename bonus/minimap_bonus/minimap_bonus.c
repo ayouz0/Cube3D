@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minimap_bonus.c                                    :+:      :+:    :+:   */
@@ -6,28 +6,27 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:23:29 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/14 17:01:21 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/20 20:44:52 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minimap_bonus.h"
 
-void minimap_pixel_put(t_minimap *minimap, int x, int y, int color)
+void	minimap_pixel_put(t_minimap *minimap, int x, int y, int color)
 {
 	char	*pixel;
 
 	if (x < 0 || y < 0 || x >= minimap->width || y >= minimap->height)
-		return;
-	pixel = minimap->addr + (y * minimap->line_length + 
-						   x * (minimap->bits_per_pixel / 8));
-	*(int*)pixel = color;
+		return ;
+	pixel = minimap->addr + (y * minimap->line_length + \
+						x * (minimap->bits_per_pixel / 8));
+	*(int *)pixel = color;
 }
 
-void draw_line(t_game *game, t_player *player, int x, int y, int color);
-void clear_minimap_background(t_game *game)
+void	clear_minimap_background(t_game *game)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	x = 0;
 	y = 0;
@@ -43,15 +42,17 @@ void clear_minimap_background(t_game *game)
 	}
 }
 
-// this is a circle equation, it checks if the point (i, j) is inside the circle
-// with center (0, 0) and radius size. If the point is inside the circle, it draws
-void draw_player_marker(t_game *game)
+// this is a circle equation
+// it checks if the point (i, j) is inside the circle
+// with center (0, 0) and radius size
+// if the pont is inside the circle, it draws it
+void	draw_player_marker(t_game *game)
 {
-	int center_x;
-	int center_y;
-	int size;
-	int i;
-	int j;
+	int	center_x;
+	int	center_y;
+	int	size;
+	int	i;
+	int	j;
 
 	center_x = game->minimap.width / 2;
 	center_y = game->minimap.height / 2;
@@ -62,54 +63,81 @@ void draw_player_marker(t_game *game)
 		j = -size;
 		while (j <= size)
 		{
-			if (i*i + j*j <= size*size)
-				minimap_pixel_put(&game->minimap, center_x + i, center_y + j,game->parse_data.f + 0xaedb09);
+			if (i * i + j * j <= size * size)
+				minimap_pixel_put(&game->minimap, center_x + i, \
+				center_y + j, game->parse_data.f + 0xaedb09);
 			j++;
 		}
 		i++;
 	}
-	draw_line(game, &game->player, center_x, center_y, game->parse_data.f + 0xaedb09);
+	draw_line(game, center_x, center_y);
 }
-// ceiling and floor are the same color the wall's color is incremented by 25
-void draw_visible_map_cells(t_game *game)
+
+static void	draw_pixel(t_game *game, t_pixel_ctx *pixel)
 {
-	int real_x;
-	int real_y;
+	int	real_x;
+	int	real_y;
 	int	x;
 	int	y;
 
-	(1) && (real_x = 0, real_y = 0);
-	(1) && (x = 0, y = 0);
-	while ( x < game->minimap.width)
+	real_x = pixel->real_x;
+	real_y = pixel->real_y;
+	x = pixel->x;
+	y = pixel->y;
+	if (real_y / TILESIZE < 0 || real_y / TILESIZE >= game->parse_data.height \
+		|| real_x / TILESIZE < 0 || real_x / TILESIZE >= game->parse_data.width)
+		minimap_pixel_put(&game->minimap, x, y, 0xFFFF00);
+	else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == '1')
+		minimap_pixel_put(&game->minimap, x, y, game->parse_data.c \
+		+ (game->parse_data.c == game->parse_data.f) * 25);
+	else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == 'D')
+		minimap_pixel_put(&game->minimap, x, y, 0x0 + \
+		(game->parse_data.c == game->parse_data.f) * 29);
+	else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == ' ')
+		minimap_pixel_put(&game->minimap, x, y, 0x00FFFF);
+}
+
+static void	draw_column(t_game *game, int x, int real_x)
+{
+	t_pixel_ctx	pixel;
+
+	pixel.y = 0;
+	pixel.x = x;
+	pixel.real_x = real_x;
+	while (pixel.y < game->minimap.height)
 	{
-		real_x = (int)game->player.player_x - TILESIZE * game->minimap.view_range + (x * TILESIZE) / game->minimap.cell_size;
-		y = 0;
-		while (y < game->minimap.height)
-		{
-			real_y = (int)game->player.player_y - TILESIZE * game->minimap.view_range + (y * TILESIZE) / game->minimap.cell_size;
-			if (real_y / TILESIZE < 0 || real_y / TILESIZE >= game->parse_data.height \
-				|| real_x / TILESIZE < 0 || real_x / TILESIZE >= game->parse_data.width)
-				minimap_pixel_put(&game->minimap, x, y, 0xFFFF00);
-			else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == '1')
-				minimap_pixel_put(&game->minimap, x, y, game->parse_data.c \
-				+ (game->parse_data.c == game->parse_data.f) * 25);
-			else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == 'D')
-				minimap_pixel_put(&game->minimap, x, y, 0x0 + \
-				(game->parse_data.c == game->parse_data.f) * 29);
-			else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == ' ')
-				minimap_pixel_put(&game->minimap, x, y, 0x00FFFF);
-			y++;
-		}
+		pixel.real_y = (int)game->player.player_y - TILESIZE * \
+		game->minimap.view_range + (pixel.y * TILESIZE) / \
+		game->minimap.cell_size;
+		draw_pixel(game, &pixel);
+		pixel.y++;
+	}
+}
+
+void	draw_visible_map_cells(t_game *game)
+{
+	int	real_x;
+	int	x;
+
+	real_x = 0;
+	x = 0;
+	while (x < game->minimap.width)
+	{
+		real_x = (int)game->player.player_x - TILESIZE * \
+		game->minimap.view_range + (x * TILESIZE) / game->minimap.cell_size;
+		draw_column(game, x, real_x);
 		x++;
 	}
 }
-void draw_minimap_border(t_minimap *minimap)
+
+void	draw_minimap_border(t_minimap *minimap)
 {
 	int	y;
 	int	x;
 	int	border;
 
-	(1) && (y = minimap->height - 1, x = minimap->width - 1);
+	y = minimap->height - 1;
+	x = minimap->width - 1;
 	while (x >= 0)
 	{
 		border = BORDER_THICKNESS;
@@ -124,53 +152,64 @@ void draw_minimap_border(t_minimap *minimap)
 	{
 		border = BORDER_THICKNESS;
 		while (--border >= 0)
-		{
-			minimap_pixel_put(minimap, border, y, 0xFFFFFF);
-			minimap_pixel_put(minimap, minimap->width - 1 - border, y, 0xFFFFFF);
-		}
+			(minimap_pixel_put(minimap, border, y, 0xFFFFFF), \
+			minimap_pixel_put(minimap, minimap->width - 1 - border, \
+			y, 0xFFFFFF));
 		y--;
 	}
 }
 
-void draw_line(t_game *game, t_player *player, int x, int y, int color)
+void	bresenham_line(t_game *game, t_line_ctx *l)
 {
-	int dx;
-	int dy;
-	int sx;
-	int sy;
-	int e2;
+	int	x;
+	int	y;
+	int	e2;
 
-	player->mv.dir_y = sin(player->mv.player_angle);
-	player->mv.dir_x = cos(player->mv.player_angle);
-	player->mv.end_x = (int)(x + player->mv.dir_x * game->minimap.cell_size);
-	player->mv.end_y = (int)(y + player->mv.dir_y * game->minimap.cell_size);
-	dx = abs(player->mv.end_x - x);
-	dy = abs(player->mv.end_y - y);
-	sx = x < player->mv.end_x ? 1 : -1;
-	sy = y < player->mv.end_y ? 1 : -1;
-	player->mv.err = dx - dy;
+	x = l->start_x;
+	y = l->start_y;
 	while (1)
 	{
 		if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT)
+			minimap_pixel_put(&game->minimap, x, y, game->parse_data.f + 0xaedb09);
+		if (x == l->end_x && y == l->end_y)
+			break ;
+		e2 = l->err;
+		if (e2 > -l->delta_x)
 		{
-			minimap_pixel_put(&game->minimap, x, y, color);
+			l->err -= l->delta_y;
+			x += l->sx;
 		}
-		if (x == player->mv.end_x && y == player->mv.end_y)
-			break;
-		e2 = player->mv.err * 2;
-		if (e2 > -dy)
+		if (e2 < l->delta_y)
 		{
-			player->mv.err -= dy;
-			x += sx;
-		}
-		if (e2 < dx)
-		{
-			player->mv.err += dx;
-			y += sy;
+			l->err += l->delta_x;
+			y += l->sy;
 		}
 	}
 }
 
+void	draw_line(t_game *game, int start_x, int start_y)
+{
+	t_line_ctx l;
+
+	l.start_x = start_x;
+	l.start_y = start_y;
+	game->player.mv.dir_x = cos(game->player.mv.player_angle);
+	game->player.mv.dir_y = sin(game->player.mv.player_angle);
+	l.end_x = l.start_x + game->player.mv.dir_x * game->minimap.cell_size;
+	l.end_y = l.start_y + game->player.mv.dir_y * game->minimap.cell_size;
+	l.delta_x = abs(l.end_x - l.start_x);
+	l.delta_y = abs(l.end_y - l.start_y);
+	l.sx = -1;
+	if (l.start_x < l.end_x)
+		l.sx = 1;
+	l.sy = -1;
+	if (l.start_y < l.end_y)
+		l.sy = 1;
+	l.err = -l.delta_y / 2;
+	if (l.delta_x > l.delta_y)
+		l.err = l.delta_x / 2;
+	bresenham_line(game, &l);
+}
 void	draw_stamina_bar(t_game *game)
 {
 	int	x;
@@ -219,6 +258,7 @@ int render_minimap(void *game_)
 	draw_visible_map_cells(game);
 	draw_player_marker(game);
 	draw_stamina_bar(game);
+	
 	mlx_put_image_to_window(game->mlx, game->win, game->minimap.minimap_img, 
 						game->minimap.pos_x, game->minimap.pos_y);
 	return (0);

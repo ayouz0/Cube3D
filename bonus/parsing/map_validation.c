@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:07:26 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 18:36:21 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/18 17:14:05 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,6 @@ int	check_map_interior(char **map, int rows, int cols, long long *player_count)
 	return (0);
 }
 
-int	is_valid_door(char **map, int y, int x)
-{
-	if (x == 0 || y == 0 || !map[y][x + 1] || !map[y + 1])
-		return (0);
-	if (map[y][x + 1] == '1' && map[y][x - 1] == '1' && map[y + 1][x] == '0' && map[y - 1][x] == '0')
-		return (0);
-		
-	printf(DOORS_ERROR);
-	return (1);
-}
-
 int	check_invalid_characters(char **map, t_game *game)
 {
 	int	i;
@@ -96,14 +85,15 @@ int	check_invalid_characters(char **map, t_game *game)
 	{
 		while (map[i][j])
 		{
-			if ((map[i][j] != ' ' && map[i][j] != '1' && map[i][j] != '0' && map[i][j] != 'D') && \
-				(map[i][j] != 'N' && map[i][j] != 'S' && map[i][j] != 'E' && \
-				map[i][j] != 'W'))
+			if ((map[i][j] != ' ' && map[i][j] != '1' && map[i][j] != '0' && \
+			map[i][j] != 'D') && \
+			(map[i][j] != 'N' && map[i][j] != 'S' && map[i][j] != 'E' \
+			&& map[i][j] != 'W'))
 				return (printf \
 				("Error: invalid character found while reading map:\n|%c|\n", \
 				map[i][j]), 1);
-				if (map[i][j] == 'D' && is_valid_door(map, i, j))
-					return (1);
+			if (map[i][j] == 'D' && is_valid_door(map, i, j))
+				return (1);
 			j++;
 		}
 		i++;
