@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:47:57 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/18 17:14:50 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/21 17:30:52 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		check_side_borders(char **map, int rows, int cols);
 int		is_player_char(char c);
 int		is_map_cell(char c);
 void	move_offset_to_map(char **line, int fd);
-void	load_image_and_address(void	**img, t_game *game, \
+int		load_image_and_address(void	**img, t_game *game, \
 		char *filename, t_cardinals *cardinal);
 void	load_images(char **split, t_game *game, void **img);
 int		is_valid_door(char **map, int y, int x);
