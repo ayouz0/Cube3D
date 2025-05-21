@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:13:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/21 17:32:11 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/21 18:04:08 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char *filename, t_cardinals *cardinal)
 	*img = mlx_xpm_file_to_image(game->mlx, filename, &cardinal->w, \
 	&cardinal->h);
 	if (!(*img))
-		return (printf("Error: image failed to load"), 1);
+		return (printf("Error: image failed to load :\n%s\n", filename), 1);
 	cardinal->ptr = *img;
 	if (*img)
 		cardinal->addr = mlx_get_data_addr(cardinal->ptr, \
@@ -27,14 +27,15 @@ char *filename, t_cardinals *cardinal)
 	return (0);
 }
 
-void	load_images(char **split, t_game *game, void **img)
+int	load_images(char **split, t_game *game, void **img)
 {
 	if (ft_strncmp(split[0], "NO", 3) == 0)
-		load_image_and_address(img, game, split[1], &game->parse_data.no);
+		return (load_image_and_address(img, game, split[1], &game->parse_data.no));
 	else if (ft_strncmp(split[0], "SO", 3) == 0)
-		load_image_and_address(img, game, split[1], &game->parse_data.so);
+		return (load_image_and_address(img, game, split[1], &game->parse_data.so));
 	else if (ft_strncmp(split[0], "WE", 3) == 0)
-		load_image_and_address(img, game, split[1], &game->parse_data.we);
+		return (load_image_and_address(img, game, split[1], &game->parse_data.we));
 	else if (ft_strncmp(split[0], "EA", 3) == 0)
-		load_image_and_address(img, game, split[1], &game->parse_data.ea);
+		return (load_image_and_address(img, game, split[1], &game->parse_data.ea));
+	return (0);
 }

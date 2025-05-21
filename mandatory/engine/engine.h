@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/20 10:43:09 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:14:31 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@
 # define TILESIZE 80
 # define ROWS 9
 # define COLS 16
-# define FOV (60 * M_PI /180)
-# define WINDOW_WIDTH (COLS * TILESIZE)
-# define WINDOW_HEIGHT (ROWS * TILESIZE)
+# define FOV 1.0472f       /* 60 * PI/180 = 1.0472 radians */
+# define WINDOW_WIDTH 1280  /* COLS * TILESIZE = 16 * 80 */
+# define WINDOW_HEIGHT 720  /* ROWS * TILESIZE = 9 * 80 */
 # define RES 1
-# define NUM_RAYS (WINDOW_WIDTH / RES)
-# define PLAYER_RADIUS 1.0f
-
+# define NUM_RAYS 1280 /* WINDOW_WIDTH / RES = 1280 / 1 */
+# define PLAYER_RADIUS 5.0f
 
 typedef struct s_cardinals
 {
@@ -148,9 +147,8 @@ void	cast_all_rays(t_game *game, t_ray *ray);
 int		iswall(float x, float y, char **map);
 float	distance_between_points(float x1, float y1, float x2, float y2);
 void	set_closest_hit(t_ray *ray, float horz_dist, float vert_dist);
-void	check_vertical_hit(t_game *game, t_ray *ray,
-				int facing_left);
-void	check_horizontal_hit(t_game *game, t_ray *ray,
-				int facing_up);
+void	check_vertical_hit(t_game *game, t_ray *ray, int facing_left);
+void	check_horizontal_hit(t_game *game, t_ray *ray, int facing_up);
 void	draw_textured_column(t_game *game, t_ray *ray, int ray_id, int height);
+
 #endif
