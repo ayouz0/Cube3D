@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 13:32:33 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/18 13:39:59 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/21 15:53:07 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	init_door(t_game *game)
 {	
 	game->door_state = 0;
 	game->door_open = 0;
-    game->ray.door.door_num = 0;
-    game->has_button = 0;
+	game->ray.door.door_num = 0;
+	game->has_button = 0;
 	load_image_and_address(&game->door_opening[0].ptr, game, "bonus/textures/doors/d_open0.xpm", &game->door_opening[0]);
 	load_image_and_address(&game->door_opening[1].ptr, game, "bonus/textures/doors/d_open1.xpm", &game->door_opening[1]);
 	load_image_and_address(&game->door_opening[2].ptr, game, "bonus/textures/doors/d_open2.xpm", &game->door_opening[2]);
@@ -36,7 +36,7 @@ int	init_door(t_game *game)
 int	init_light(t_game *game)
 {
 	game->light = 1;
-    game->direction = 1;
+	game->direction = 1;
 	load_image_and_address(&game->light_img[0].ptr, game, "bonus/textures/fire_1.xpm", &game->light_img[0]);
 	load_image_and_address(&game->light_img[1].ptr, game, "bonus/textures/fire_2.xpm", &game->light_img[1]);
 	load_image_and_address(&game->light_img[2].ptr, game, "bonus/textures/fire_3.xpm", &game->light_img[2]);
@@ -51,16 +51,16 @@ int	init_light(t_game *game)
 
 int init_logic(t_game *game)
 {
-    game->keys.a = 0;
+	game->keys.a = 0;
 	game->keys.d = 0;
 	game->keys.s = 0;
 	game->keys.w = 0;
 	game->keys.left = 0;
 	game->keys.right= 0;
 	game->keys.esc = 0;
-    game->is_healed = 1;
-    game->stamina = 320;
+	game->is_healed = 1;
+	game->stamina = 320;
 	game->show_minimap = 1;
 	game->mouse.mouse_down = 0;
-    return (0);
+	return (0);
 }
