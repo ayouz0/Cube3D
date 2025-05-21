@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/18 16:40:18 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/18 21:48:43 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,48 +50,6 @@ int combined_update(t_game *game)
 	update(game);
 	render_minimap(game);
 	return (0);
-}
-
-int	pressed(int key, int x, int y, void *game_)
-{
-	t_game *game;
-
-	(void)x;
-	(void)y;
-	game = game_;
-	if (key == 1)
-	{
-		game->mouse.mouse_down = 1;
-		game->mouse.x = x;
-	}
-	return (1);
-}
-int	released(int key, int x, int y, void *game_)
-{
-	t_game *game;
-
-	(void)y;
-	(void)key;
-	game = game_;
-	game->mouse.mouse_down = 0;
-	game->mouse.x = x;
-	return (1);
-}
-
-int	mouse_movement_handeling(int x, int y, void *game_)
-{
-	t_game *game;
-
-	(void)y;
-	game = game_;
-	if (!game->mouse.mouse_down)
-		return (1);
-	if (x > game->mouse.x)
-		game->player.mv.player_angle += MOUSE_ANGLE;
-	else if (x < game->mouse.x)
-		game->player.mv.player_angle -= MOUSE_ANGLE;
-	game->mouse.x = x;
-	return(0);
 }
 
 int	game_setup(t_game *game)
