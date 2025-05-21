@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 13:32:33 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/21 15:53:07 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/21 21:07:27 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	init_door(t_game *game)
 
 int	init_light(t_game *game)
 {
-	game->light = 1;
+	game->light = 2;
 	game->direction = 1;
 	load_image_and_address(&game->light_img[0].ptr, game, "bonus/textures/fire_1.xpm", &game->light_img[0]);
 	load_image_and_address(&game->light_img[1].ptr, game, "bonus/textures/fire_2.xpm", &game->light_img[1]);

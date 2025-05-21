@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 20:58:29 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/20 15:12:35 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/21 21:06:17 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ unsigned int	shade_color(unsigned int color, float distance, t_game *game)
 	unsigned char	b;
 
 	if (game->light % 2 == 0)
-		shade_factor = 1.0f / (1.0f + distance * 0.001f);
+		shade_factor = 1.0f / (1.0f + distance * 0.002f);
 	else
-		shade_factor = 1.0f / (1.0f + distance * 0.03f);
+		shade_factor = 1.0f / (1.0f + distance * 0.05f);
 	r = ((color >> 16) & 0xFF) * shade_factor;
 	g = ((color >> 8) & 0xFF) * shade_factor;
 	b = (color & 0xFF) * shade_factor;
