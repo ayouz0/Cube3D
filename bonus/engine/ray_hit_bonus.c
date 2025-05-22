@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_hit.c                                          :+:      :+:    :+:   */
+/*   ray_hit_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 20:03:04 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/17 21:14:00 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/22 09:44:25 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
+#include "engine_bonus.h"
 
 void	prepare_horizontal_check(t_game *game, t_ray *ray,
 				float *x_step, float *y_step)

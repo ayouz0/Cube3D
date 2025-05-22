@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minimap_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:10:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/21 17:37:17 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/22 09:45:01 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIMAP_BONUS_H
 # define MINIMAP_BONUS_H
-# include "../header.h"
+# include "../header_bonus.h"
 
 void	init_minimap(t_game *game);
 int		render_minimap(void *game_);

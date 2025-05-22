@@ -16,7 +16,7 @@ HEADERS_MANDATORY = mandatory/header.h mandatory/engine/engine.h \
 	mandatory/parsing/parsing.h mandatory/utils/utils.h \
 	mandatory/utils/get_next_line.h
 
-HEADERS_BONUS = bonus/header.h bonus/engine/engine.h \
+HEADERS_BONUS = bonus/header_bonus.h bonus/engine/engine_bonus.h \
 	bonus/parsing/parsing.h bonus/utils/utils.h \
 	bonus/utils/get_next_line.h bonus/minimap_bonus/minimap_bonus.h
 
@@ -34,23 +34,23 @@ SRC_MANDATORY = mandatory/main.c mandatory/engine/player.c \
 	mandatory/parsing/loading_data_helpers.c \
 	$(UTILS_MANDATORY)
 
-SRC_BONUS = bonus/main.c bonus/engine/player.c \
-	bonus/engine/input.c bonus/engine/map.c \
-	bonus/engine/raycasting.c bonus/engine/settings.c \
-	bonus/engine/update.c bonus/parsing/parser.c \
+SRC_BONUS = bonus/main_bonus.c bonus/engine/player_bonus.c \
+	bonus/engine/input_bonus.c bonus/engine/map_bonus.c \
+	bonus/engine/raycasting_bonus.c bonus/engine/settings_bonus.c \
+	bonus/engine/update_bonus.c bonus/parsing/parser.c \
 	bonus/parsing/loading_cardinals.c \
 	bonus/parsing/loading_map_utils.c \
-	bonus/parsing/loading_map.c bonus/engine/display.c \
+	bonus/parsing/loading_map.c bonus/engine/display_bonus.c \
 	bonus/parsing/parsing_cardinals_and_colors.c \
-	bonus/engine/draw.c bonus/engine/ray_hit.c \
-	bonus/engine/ray_draw.c bonus/parsing/map_validation.c \
+	bonus/engine/draw_bonus.c bonus/engine/ray_hit_bonus.c \
+	bonus/engine/ray_draw_bonus.c bonus/parsing/map_validation.c \
 	bonus/parsing/map_validation_helpers.c \
 	bonus/parsing/loading_data_helpers.c \
-	bonus/minimap_bonus/minimap_bonus.c bonus/engine/utils.c \
+	bonus/minimap_bonus/minimap_bonus.c bonus/engine/utils_bonus.c \
 	bonus/minimap_bonus/minimap_init_bonus.c \
 	bonus/minimap_bonus/mouse_hook_bonus.c \
 	bonus/minimap_bonus/player_minimap_bonus.c \
-	bonus/init.c bonus/engine/animation.c \
+	bonus/init_bonus.c bonus/engine/animation_bonus.c \
 	bonus/parsing/door_validation_bonus.c \
 	$(UTILS_BONUS)
 
