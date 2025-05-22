@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/21 21:03:35 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/22 08:55:21 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ typedef struct s_game
 	void		*win;
 	void		*img_ptr;
 	char		*addr;
+	int			load;
 	float		fov;
 	t_player	player;
 	t_keys		keys;
@@ -235,5 +236,6 @@ t_cardinals		*choose_texture(t_game *game, t_ray *ray);
 int				get_intercept(t_ray *ray, int hit_type);
 void			draw_door_column(t_game *game, \
 	t_ray *ray, int ray_id, int height);
-
+int				combined_update(t_game *game);
+int				render_minimap(void *game_);
 #endif

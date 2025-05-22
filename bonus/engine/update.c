@@ -6,11 +6,42 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 17:05:10 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/18 09:54:35 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/22 08:54:19 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
+
+void	handle_stamina(t_game *game)
+{
+	long		current_time;
+
+	current_time = get_current_time_ms();
+	if (game->player.mv.mov_speed == 8 && \
+		current_time >= 500 && game->stamina != 0)
+	{
+		game->stamina--;
+		if (game->stamina == 0)
+			game->is_healed = 0;
+	}
+	if ((game->stamina == 0 || game->player.mv.mov_speed == 3.5) \
+		&& current_time >= 500 && game->is_healed != 1)
+	{
+		game->stamina++;
+		if (game->stamina == 320)
+			game->is_healed = 1;
+	}
+	if (game->is_healed == 0)
+		game->player.mv.mov_speed = 3.5;
+}
+
+int	combined_update(t_game *game)
+{
+	handle_stamina(game);
+	update(game);
+	render_minimap(game);
+	return (0);
+}
 
 void	move_player(t_game *game, float angle)
 {

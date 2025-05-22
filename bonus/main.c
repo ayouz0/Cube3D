@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/21 21:04:05 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/22 08:54:13 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,53 +19,22 @@ int	close_window(t_game *game)
 	exit(1);
 }
 
-void	leaks()
-{
-	system("leaks -q cub3D");
-}
-
-void	handle_stamina(t_game *game)
-{
-	long		current_time;
-	current_time = get_current_time_ms();
-	if (game->player.mv.mov_speed == 8 && current_time >= 500 && game->stamina != 0)
-	{
-		game->stamina--;
-		if (game->stamina == 0)
-			game->is_healed = 0;
-	}
-	if ((game->stamina == 0 || game->player.mv.mov_speed == 3.5) && current_time >= 500 && game->is_healed != 1)
-	{
-		game->stamina++;
-		if (game->stamina == 320)
-			game->is_healed = 1;
-	}
-	if (game->is_healed == 0)
-		game->player.mv.mov_speed = 3.5;
-}
-
-int combined_update(t_game *game)
-{
-	handle_stamina(game);
-	update(game);
-	render_minimap(game);
-	return (0);
-}
-
 int	game_setup(t_game *game)
 {
 	init_logic(game);
 	init_player(&game->player, game);
 	init_minimap(game);
-	init_door(game);
-	init_light(game);
+	game->load += init_door(game);
+	game->load += init_light(game);
+	if (game->load)
+		return (1);
 	return (0);
 }
 
 void	game_hooks(t_game *game)
 {
-	mlx_hook(game->win, 2, 1L<<0, key_press, game);
-	mlx_hook(game->win, 3, 1L<<1, key_release, game);
+	mlx_hook(game->win, 2, 1L << 0, key_press, game);
+	mlx_hook(game->win, 3, 1L << 1, key_release, game);
 	mlx_loop_hook(game->mlx, combined_update, game);
 	mlx_hook(game->win, 17, 0, close_window, game);
 	mlx_hook(game->win, 4, 1, pressed, game);
@@ -73,15 +42,16 @@ void	game_hooks(t_game *game)
 	mlx_hook(game->win, 6, 1, mouse_movement_handeling, game);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_game	game;
+
 	(void)av;
 	(void)ac;
-	atexit(leaks);
 	game.mlx = mlx_init();
 	if (!game.mlx)
 		return (printf("Error: mlx initialization failed\n"), 1);
+	game.load = 0;
 	game.parse_data.no.ptr = NULL;
 	game.parse_data.so.ptr = NULL;
 	game.parse_data.we.ptr = NULL;
@@ -91,8 +61,11 @@ int main(int ac, char **av)
 		return (free_parse_data(&game), 1);
 	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cube3d");
 	game.img_ptr = mlx_new_image(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	game.addr = mlx_get_data_addr(game.img_ptr, &game.bits_per_pixel, &game.line_length, &game.endian);
-	game_setup(&game);
+	game.addr = mlx_get_data_addr(game.img_ptr, \
+				&game.bits_per_pixel, &game.line_length, &game.endian);
+	if (game_setup(&game))
+		return (write(2, "Error: faild to load some xpm files\n", 37), \
+				exit(1), 1);
 	game_hooks(&game);
 	mlx_loop(game.mlx);
 }
