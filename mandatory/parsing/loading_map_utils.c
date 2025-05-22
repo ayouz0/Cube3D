@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:51:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/12 16:26:20 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/21 18:03:02 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_2d(char **arr)
 	free(arr);
 }
 
-void	trim_endl(char **split)
+int	trim_endl(char **split)
 {
 	int	i;
 	int	len;
@@ -40,6 +40,7 @@ void	trim_endl(char **split)
 			split[i][len - 1] = '\0';
 		i++;
 	}
+	return (0);
 }
 
 void	free_parse_data(t_game *game)

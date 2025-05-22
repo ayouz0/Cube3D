@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/21 21:07:54 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/21 21:13:04 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int ac, char **av)
 	(void)ac;
 	game.mlx = mlx_init();
 	if (!game.mlx)
-		return (0);
+		return (1);
 	game.parse_data.no.ptr = NULL;
 	game.parse_data.so.ptr = NULL;
 	game.parse_data.we.ptr = NULL;

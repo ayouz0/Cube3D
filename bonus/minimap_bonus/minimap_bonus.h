@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:10:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/20 22:02:34 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/21 17:37:17 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,5 @@ typedef struct s_line_ctx
 # define BORDER_THICKNESS 4
 # define LINE_LENGHT 20
 # define MOUSE_ANGLE 0.07
+
 #endif

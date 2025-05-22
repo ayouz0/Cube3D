@@ -6,30 +6,35 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 13:32:33 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/21 21:07:27 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/21 21:12:15 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
 int	init_door(t_game *game)
-{	
+{
+	int	i;
+
+	i = 0;
 	game->door_state = 0;
 	game->door_open = 0;
 	game->ray.door.door_num = 0;
 	game->has_button = 0;
-	load_image_and_address(&game->door_opening[0].ptr, game, "bonus/textures/doors/d_open0.xpm", &game->door_opening[0]);
-	load_image_and_address(&game->door_opening[1].ptr, game, "bonus/textures/doors/d_open1.xpm", &game->door_opening[1]);
-	load_image_and_address(&game->door_opening[2].ptr, game, "bonus/textures/doors/d_open2.xpm", &game->door_opening[2]);
-	load_image_and_address(&game->door_opening[3].ptr, game, "bonus/textures/doors/d_open3.xpm", &game->door_opening[3]);
-	load_image_and_address(&game->door_opening[4].ptr, game, "bonus/textures/doors/d_open4.xpm", &game->door_opening[4]);
-	load_image_and_address(&game->door_opening[5].ptr, game, "bonus/textures/doors/d_open5.xpm", &game->door_opening[5]);
-	load_image_and_address(&game->door_button[0].ptr, game, "bonus/textures/doors/button0.xpm", &game->door_button[0]);
-	load_image_and_address(&game->door_button[1].ptr, game, "bonus/textures/doors/button1.xpm", &game->door_button[1]);
-	load_image_and_address(&game->door_button[2].ptr, game, "bonus/textures/doors/button2.xpm", &game->door_button[2]);
-	load_image_and_address(&game->door_button[3].ptr, game, "bonus/textures/doors/button3.xpm", &game->door_button[3]);
-	load_image_and_address(&game->door_button[4].ptr, game, "bonus/textures/doors/button4.xpm", &game->door_button[4]);
-	load_image_and_address(&game->door_button[5].ptr, game, "bonus/textures/doors/button5.xpm", &game->door_button[5]);
+	i += load_image_and_address(&game->door_opening[0].ptr, game, "bonus/textures/doors/d_open0.xpm", &game->door_opening[0]);
+	i += load_image_and_address(&game->door_opening[1].ptr, game, "bonus/textures/doors/d_open1.xpm", &game->door_opening[1]);
+	i += load_image_and_address(&game->door_opening[2].ptr, game, "bonus/textures/doors/d_open2.xpm", &game->door_opening[2]);
+	i += load_image_and_address(&game->door_opening[3].ptr, game, "bonus/textures/doors/d_open3.xpm", &game->door_opening[3]);
+	i += load_image_and_address(&game->door_opening[4].ptr, game, "bonus/textures/doors/d_open4.xpm", &game->door_opening[4]);
+	i += load_image_and_address(&game->door_opening[5].ptr, game, "bonus/textures/doors/d_open5.xpm", &game->door_opening[5]);
+	i += load_image_and_address(&game->door_button[0].ptr, game, "bonus/textures/doors/button0.xpm", &game->door_button[0]);
+	i += load_image_and_address(&game->door_button[1].ptr, game, "bonus/textures/doors/button1.xpm", &game->door_button[1]);
+	i += load_image_and_address(&game->door_button[2].ptr, game, "bonus/textures/doors/button2.xpm", &game->door_button[2]);
+	i += load_image_and_address(&game->door_button[3].ptr, game, "bonus/textures/doors/button3.xpm", &game->door_button[3]);
+	i += load_image_and_address(&game->door_button[4].ptr, game, "bonus/textures/doors/button4.xpm", &game->door_button[4]);
+	i += load_image_and_address(&game->door_button[5].ptr, game, "bonus/textures/doors/button5.xpm", &game->door_button[5]);
+	if (i)
+		return (1);
 	return (0);
 }
 

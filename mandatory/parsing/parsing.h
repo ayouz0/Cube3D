@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:47:57 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/12 16:34:29 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/21 18:07:57 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		parsing(int ac, char **av, t_game *game);
 int		load_cardinals_and_colors(t_game *game, char **av);
 int		load_map(t_game *game);
 void	free_parse_data(t_game *game);
-void	trim_endl(char **split);
+int		trim_endl(char **split);
 int		parse_rgb(char *str, int *out_color);
 void	free_2d(char **arr);
 int		is_cardinal(char *line);
@@ -53,7 +53,7 @@ int		check_side_borders(char **map, int rows, int cols);
 int		is_player_char(char c);
 int		is_map_cell(char c);
 void	move_offset_to_map(char **line, int fd);
-void	load_image_and_address(void	**img, t_game *game, \
+int		load_image_and_address(void	**img, t_game *game, \
 		char *filename, t_cardinals *cardinal);
-void	load_images(char **split, t_game *game, void **img);
+int		load_images(char **split, t_game *game, void **img);
 #endif
