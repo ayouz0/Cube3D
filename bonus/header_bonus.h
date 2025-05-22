@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   header_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 14:59:02 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/22 10:28:51 by aaitabde         ###   ########.fr       */
+/*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
+/*   Updated: 2025/05/22 10:18:56 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef HEADER_BONUS_H
+# define HEADER_BONUS_H
 
+# include <mlx.h>
+# include <math.h>
+# include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <limits.h>
-# include "utils.h"
+# include <string.h>
+# include "engine/engine_bonus.h"
+# include "parsing/parsing_bonus.h"
+# include "minimap_bonus/minimap_bonus.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
-
-char	*get_next_line(int fd);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*fill_fix_line(char **buf, int len);
-int		check_new_line(char *buf);
-
+void	init_logic(t_game *game);
+int		init_door(t_game *game);
+int		init_light(t_game *game);
 #endif

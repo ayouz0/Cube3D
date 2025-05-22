@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/21 21:13:04 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/22 09:45:31 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "header_bonus.h"
 
 int	close_window(t_game *game)
 {
@@ -19,15 +19,27 @@ int	close_window(t_game *game)
 	exit(1);
 }
 
-void	init_keys(t_game *game)
+int	game_setup(t_game *game)
 {
-	game->keys.a = 0;
-	game->keys.d = 0;
-	game->keys.s = 0;
-	game->keys.w = 0;
-	game->keys.left = 0;
-	game->keys.right = 0;
-	game->keys.esc = 0;
+	init_logic(game);
+	init_player(&game->player, game);
+	init_minimap(game);
+	game->load += init_door(game);
+	game->load += init_light(game);
+	if (game->load)
+		return (1);
+	return (0);
+}
+
+void	game_hooks(t_game *game)
+{
+	mlx_hook(game->win, 2, 1L << 0, key_press, game);
+	mlx_hook(game->win, 3, 1L << 1, key_release, game);
+	mlx_loop_hook(game->mlx, combined_update, game);
+	mlx_hook(game->win, 17, 0, close_window, game);
+	mlx_hook(game->win, 4, 1, pressed, game);
+	mlx_hook(game->win, 5, 1, released, game);
+	mlx_hook(game->win, 6, 1, mouse_movement_handeling, game);
 }
 
 int	main(int ac, char **av)
@@ -38,22 +50,22 @@ int	main(int ac, char **av)
 	(void)ac;
 	game.mlx = mlx_init();
 	if (!game.mlx)
-		return (1);
+		return (printf("Error: mlx initialization failed\n"), 1);
+	game.load = 0;
 	game.parse_data.no.ptr = NULL;
 	game.parse_data.so.ptr = NULL;
 	game.parse_data.we.ptr = NULL;
 	game.parse_data.ea.ptr = NULL;
+	game.parse_data.fd = -1;
 	if (parsing(ac, av, &game) != 0)
-		(free_parse_data(&game), exit(1));
+		return (free_parse_data(&game), 1);
 	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cube3d");
 	game.img_ptr = mlx_new_image(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	game.addr = mlx_get_data_addr(game.img_ptr, \
 				&game.bits_per_pixel, &game.line_length, &game.endian);
-	init_player(&game.player, &game);
-	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
-	mlx_hook(game.win, 3, 1L << 1, key_release, &game);
-	mlx_loop_hook(game.mlx, update, &game);
-	mlx_put_image_to_window(game.mlx, game.win, game.img_ptr, 0, 0);
-	mlx_hook(game.win, 17, 0, close_window, &game);
+	if (game_setup(&game))
+		return (write(2, "Error: faild to load some xpm files\n", 37), \
+				exit(1), 1);
+	game_hooks(&game);
 	mlx_loop(game.mlx);
 }

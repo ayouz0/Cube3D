@@ -6,11 +6,11 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:14:21 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/18 17:14:36 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:18:02 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "parsing_bonus.h"
 
 int	is_valid_door(char **map, int y, int x)
 {
