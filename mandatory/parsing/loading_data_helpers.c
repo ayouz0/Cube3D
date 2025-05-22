@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:13:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/21 21:07:37 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:05:20 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,16 @@ char *filename, t_cardinals *cardinal)
 int	load_images(char **split, t_game *game, void **img)
 {
 	if (ft_strncmp(split[0], "NO", 3) == 0)
-		return (load_image_and_address(img, game, split[1], &game->parse_data.no));
+		return (load_image_and_address(img, game, \
+		split[1], &game->parse_data.no));
 	else if (ft_strncmp(split[0], "SO", 3) == 0)
-		return (load_image_and_address(img, game, split[1], &game->parse_data.so));
+		return (load_image_and_address(img, game, \
+		split[1], &game->parse_data.so));
 	else if (ft_strncmp(split[0], "WE", 3) == 0)
-		return (load_image_and_address(img, game, split[1], &game->parse_data.we));
+		return (load_image_and_address(img, game, \
+		split[1], &game->parse_data.we));
 	else if (ft_strncmp(split[0], "EA", 3) == 0)
-		return (load_image_and_address(img, game, split[1], &game->parse_data.ea));
+		return (load_image_and_address(img, game, \
+		split[1], &game->parse_data.ea));
 	return (0);
 }

@@ -46,12 +46,13 @@ SRC_BONUS = bonus/main.c bonus/engine/player.c \
 	bonus/engine/ray_draw.c bonus/parsing/map_validation.c \
 	bonus/parsing/map_validation_helpers.c \
 	bonus/parsing/loading_data_helpers.c \
+	bonus/parsing/door_validation_bonus.c \
+	bonus/init.c bonus/engine/animation.c \
 	bonus/minimap_bonus/minimap_bonus.c bonus/engine/utils.c \
 	bonus/minimap_bonus/minimap_init_bonus.c \
 	bonus/minimap_bonus/mouse_hook_bonus.c \
 	bonus/minimap_bonus/player_minimap_bonus.c \
-	bonus/init.c bonus/engine/animation.c \
-	bonus/parsing/door_validation_bonus.c \
+	bonus/minimap_bonus/minimap_drawing_utils.c \
 	$(UTILS_BONUS)
 
 OBJ_MANDATORY = ${SRC_MANDATORY:.c=.o}

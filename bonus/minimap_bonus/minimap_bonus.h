@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:10:31 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/21 17:37:17 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/22 09:55:36 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int		released(int key, int x, int y, void *game_);
 int		mouse_movement_handeling(int x, int y, void *game_);
 void	draw_player_marker(t_game *game);
 void	minimap_pixel_put(t_minimap *minimap, int x, int y, int color);
+void	draw_visible_map_cells(t_game *game);
+void	draw_minimap_border(t_minimap *minimap);
 
 typedef struct s_pixel_ctx
 {
@@ -34,7 +36,7 @@ typedef struct s_line_ctx
 {
 	int	delta_x;
 	int	delta_y;
-	int	err;
+	int	err;	
 	int	start_x;
 	int	start_y;
 	int	end_x;
