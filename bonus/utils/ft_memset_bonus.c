@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_bonus.h                                      :+:      :+:    :+:   */
+/*   ft_memset_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 15:40:28 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/23 15:30:38 by hfhad            ###   ########.fr       */
+/*   Created: 2024/10/22 21:18:46 by hfhad             #+#    #+#             */
+/*   Updated: 2025/05/23 15:30:45 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_BONUS_H
-# define UTILS_BONUS_H
+#include "utils_bonus.h"
 
-# include <stddef.h>
-# include "get_next_line_bonus.h"
+void	*ft_memset(void *b, int c, size_t len)
+{
+	size_t			i;
+	unsigned char	*ptr;
 
-char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(const char *s1);
-size_t	ft_strlen(const char *s);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-void	*ft_memset(void *b, int c, size_t len);
-
-#endif
+	ptr = (unsigned char *) b;
+	i = 0;
+	while (i < len)
+	{
+		ptr[i] = (unsigned char)c;
+		i++;
+	}
+	return (ptr);
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/23 12:58:27 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/23 15:31:35 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	game_setup(t_game *game)
 	game->load += init_door(game);
 	game->load += init_light(game);
 	if (game->load)
-		return (1);
+		return (destroy_img(game), 1);
 	return (0);
 }
 
@@ -72,8 +72,7 @@ int	main(int ac, char **av)
 {
 	t_game	game;
 
-	(void)av;
-	(void)ac;
+	ft_memset(&game, 0, sizeof(t_game));
 	game.mlx = mlx_init();
 	if (!game.mlx)
 		return (printf("Error: mlx initialization failed\n"), 1);
@@ -85,14 +84,13 @@ int	main(int ac, char **av)
 	game.parse_data.fd = -1;
 	if (parsing(ac, av, &game) != 0)
 		return (free_parse_data(&game), 1);
-	print_how_to_use();
 	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cube3d");
 	game.img_ptr = mlx_new_image(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	game.addr = mlx_get_data_addr(game.img_ptr, \
 				&game.bits_per_pixel, &game.line_length, &game.endian);
 	if (game_setup(&game))
-		return (write(2, "Error: faild to load some xpm files\n", 37), \
-				exit(1), 1);
+		return (destroy_img(&game), exit(1), 1);
+	print_how_to_use();
 	game_hooks(&game);
 	mlx_loop(game.mlx);
 }

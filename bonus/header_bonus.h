@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/23 12:57:59 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/23 15:28:38 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,5 @@
 void	init_logic(t_game *game);
 int		init_door(t_game *game);
 int		init_light(t_game *game);
+void	destroy_img(t_game *game);
 #endif

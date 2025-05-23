@@ -10,7 +10,8 @@ UTILS_MANDATORY = mandatory/utils/ft_strchr.c mandatory/utils/ft_strdup.c \
 
 UTILS_BONUS = bonus/utils/ft_strchr_bonus.c bonus/utils/ft_strdup_bonus.c \
 	bonus/utils/ft_strncmp_bonus.c bonus/utils/ft_strlen_bonus.c \
-	bonus/utils/get_next_line_bonus.c bonus/utils/get_next_line_utils_bonus.c
+	bonus/utils/get_next_line_bonus.c bonus/utils/get_next_line_utils_bonus.c \
+	bonus/utils/ft_memset_bonus.c
 
 HEADERS_MANDATORY = mandatory/header.h mandatory/engine/engine.h \
 	mandatory/parsing/parsing.h mandatory/utils/utils.h \
@@ -53,6 +54,7 @@ SRC_BONUS = bonus/main_bonus.c bonus/engine/player_bonus.c \
 	bonus/init_bonus.c bonus/engine/animation_bonus.c \
 	bonus/parsing/door_validation_bonus.c \
 	bonus/minimap_bonus/minimap_drawing_utils_bonus.c \
+	bonus/destroy_image_bonus.c \
 	$(UTILS_BONUS)
 
 OBJ_MANDATORY = ${SRC_MANDATORY:.c=.o}
