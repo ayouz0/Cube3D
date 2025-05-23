@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/22 20:48:44 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/23 11:35:24 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ int	main(int ac, char **av)
 	game.addr = mlx_get_data_addr(game.img_ptr, \
 				&game.bits_per_pixel, &game.line_length, &game.endian);
 	init_player(&game.player, &game);
-	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
-	mlx_hook(game.win, 3, 1L << 1, key_release, &game);
+	init_keys(&game);
+	mlx_hook(game.win, 2, 1L<<0, key_press, &game);
+	mlx_hook(game.win, 3, 1L<<1, key_release, &game);
 	mlx_loop_hook(game.mlx, update, &game);
 	mlx_put_image_to_window(game.mlx, game.win, game.img_ptr, 0, 0);
 	mlx_hook(game.win, 17, 0, close_window, &game);
