@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:46:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/21 18:03:34 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:22:52 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	load_data(t_game *game, char *line)
 	if (!split || !split[0] || !split[1])
 		return (printf(INVALID_CONFG, line), free(line), free_2d(split), 1);
 	if (trim_endl(split) == 0 && load_images(split, game, &img))
-		return (1);
+		return (free_2d(split), 1);
 	if (ft_strncmp(split[0], "F", 2) == 0)
 	{
 		if (parse_rgb(split[1], &color))

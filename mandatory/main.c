@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/21 21:13:04 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/22 20:48:44 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,15 @@ void	init_keys(t_game *game)
 	game->keys.esc = 0;
 }
 
+void	f(){system("leaks -q cub3D");}
+
 int	main(int ac, char **av)
 {
 	t_game	game;
 
 	(void)av;
 	(void)ac;
+	atexit(f);
 	game.mlx = mlx_init();
 	if (!game.mlx)
 		return (1);
