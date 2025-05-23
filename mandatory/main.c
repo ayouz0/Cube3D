@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/23 11:35:24 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/23 13:04:59 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
+#include "time.h"
 
 int	close_window(t_game *game)
 {
@@ -30,15 +31,12 @@ void	init_keys(t_game *game)
 	game->keys.esc = 0;
 }
 
-void	f(){system("leaks -q cub3D");}
-
 int	main(int ac, char **av)
 {
 	t_game	game;
 
 	(void)av;
 	(void)ac;
-	atexit(f);
 	game.mlx = mlx_init();
 	if (!game.mlx)
 		return (1);
@@ -54,8 +52,8 @@ int	main(int ac, char **av)
 				&game.bits_per_pixel, &game.line_length, &game.endian);
 	init_player(&game.player, &game);
 	init_keys(&game);
-	mlx_hook(game.win, 2, 1L<<0, key_press, &game);
-	mlx_hook(game.win, 3, 1L<<1, key_release, &game);
+	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
+	mlx_hook(game.win, 3, 1L << 1, key_release, &game);
 	mlx_loop_hook(game.mlx, update, &game);
 	mlx_put_image_to_window(game.mlx, game.win, game.img_ptr, 0, 0);
 	mlx_hook(game.win, 17, 0, close_window, &game);

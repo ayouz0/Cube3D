@@ -13,6 +13,7 @@
 		"fcntl.h": "c",
 		"time.h": "c",
 		"mlx.h": "c",
-		"stddef.h": "c"
+		"stddef.h": "c",
+		"header_bonus.h": "c"
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/22 09:45:31 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/23 12:58:27 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,32 @@ void	game_hooks(t_game *game)
 	mlx_hook(game->win, 6, 1, mouse_movement_handeling, game);
 }
 
+void	print_how_to_use(void)
+{
+	printf("\n");
+	printf("  " ORANGE1 " ██████╗██╗   ██╗██████╗ ██████╗ ██████╗" RESET "\n");
+	printf("  " ORANGE2 "██╔════╝██║   ██║██╔══██╗╚════██╗██╔══██╗" RESET "\n");
+	printf("  " ORANGE3 "██║     ██║   ██║██████╔╝ █████╔╝██║  ██║" RESET "\n");
+	printf("  " ORANGE4 "██║     ██║   ██║██╔══██╗ ╚═══██╗██║  ██║" RESET "\n");
+	printf("  " ORANGE1 "╚██████╗╚██████╔╝██████╔╝██████╔╝██████╔╝" RESET "\n");
+	printf("  " ORANGE5 " ╚═════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚═════╝" RESET "\n");
+	printf("                    " TITLE_CLR "BONUS EDITION" RESET "\n");
+	printf("\nUsage: ./cub3D_bonus <map.cub>\n\n");
+	printf(BOLD "Movement Controls:" RESET "\n");
+	printf("  W A S D      → Move around\n");
+	printf("  ← →          → Rotate view\n");
+	printf("  " GREEN "Mouse drag   → Look around (click & drag)" RESET "\n");
+	printf("  ESC          → Exit\n\n");
+	printf(BOLD "Minimap Controls:" RESET "\n");
+	printf("  " BLUE "M            → Toggle minimap on/off" RESET "\n");
+	printf("  " BLUE "↑ ↓          → Resize minimap" RESET "\n\n");
+	printf(BOLD "Special Features:" RESET "\n");
+	printf("  " YELLOW "F            → Toggle flashlight" RESET "\n");
+	printf("  " PURPLE "B            → Show door button" RESET "\n");
+	printf("  " PURPLE "SPACE        → Activate door button" RESET "\n");
+	printf("\nEnhanced maze experience with interactive elements! 🎮🗺️\n\n");
+}
+
 int	main(int ac, char **av)
 {
 	t_game	game;
@@ -59,6 +85,7 @@ int	main(int ac, char **av)
 	game.parse_data.fd = -1;
 	if (parsing(ac, av, &game) != 0)
 		return (free_parse_data(&game), 1);
+	print_how_to_use();
 	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cube3d");
 	game.img_ptr = mlx_new_image(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	game.addr = mlx_get_data_addr(game.img_ptr, \
