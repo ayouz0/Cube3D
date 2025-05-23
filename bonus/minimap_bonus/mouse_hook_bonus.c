@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 17:55:20 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/23 13:05:11 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/23 14:46:56 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	released(int key, int x, int y, void *game_)
 {
 	t_game	*game;
 
-	(void)y;
 	(void)key;
 	game = game_;
 	game->mouse.mouse_down = 0;
@@ -45,7 +44,6 @@ int	mouse_movement_handeling(int x, int y, void *game_)
 {
 	t_game	*game;
 
-	(void)y;
 	game = game_;
 	if (!game->mouse.mouse_down)
 		return (1);
