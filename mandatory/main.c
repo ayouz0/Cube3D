@@ -6,12 +6,11 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/23 15:16:45 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/23 15:38:28 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-#include "time.h"
 
 int	close_window(t_game *game)
 {

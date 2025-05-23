@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/23 15:31:35 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/23 15:39:39 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	close_window(t_game *game)
 {
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
+	destroy_img(game);
 	exit(1);
 }
 
@@ -84,6 +85,7 @@ int	main(int ac, char **av)
 	game.parse_data.fd = -1;
 	if (parsing(ac, av, &game) != 0)
 		return (free_parse_data(&game), 1);
+	close(game.parse_data.fd);
 	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cube3d");
 	game.img_ptr = mlx_new_image(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	game.addr = mlx_get_data_addr(game.img_ptr, \
