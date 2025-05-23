@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minimap_drawing_utils.c                            :+:      :+:    :+:   */
+/*   minimap_drawing_utils_bonus.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:53:16 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/22 10:04:46 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/23 11:25:18 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	draw_pixel(t_game *game, t_pixel_ctx *pixel)
 		minimap_pixel_put(&game->minimap, x, y, game->parse_data.c \
 		+ (game->parse_data.c == game->parse_data.f) * 25);
 	else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == 'D')
-		minimap_pixel_put(&game->minimap, x, y, 0x0 + \
+		minimap_pixel_put(&game->minimap, x, y, 0xADEF00 + \
 		(game->parse_data.c == game->parse_data.f) * 29);
 	else if (game->map[real_y / TILESIZE][real_x / TILESIZE] == ' ')
 		minimap_pixel_put(&game->minimap, x, y, 0x00FFFF);
