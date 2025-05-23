@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/23 15:39:39 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/23 15:48:23 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ int	close_window(t_game *game)
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	destroy_img(game);
+	mlx_destroy_image(game->mlx, game->minimap.minimap_img);
+	mlx_destroy_image(game->mlx, game->img_ptr);
+	free_parse_data(game);
 	exit(1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:22:27 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/23 15:40:52 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/23 15:43:51 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,4 @@ void	destroy_img(t_game *game)
 	destroy_light(game);
 	destroy_door(game);
 	destroy_button(game);
-	mlx_destroy_window(game->mlx, game->win);
 }
