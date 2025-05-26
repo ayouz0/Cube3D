@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/23 15:48:23 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/26 14:58:16 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,9 @@ int	main(int ac, char **av)
 	t_game	game;
 
 	ft_memset(&game, 0, sizeof(t_game));
-	game.mlx = mlx_init();
-	if (!game.mlx)
-		return (printf("Error: mlx initialization failed\n"), 1);
-	game.load = 0;
-	game.parse_data.no.ptr = NULL;
-	game.parse_data.so.ptr = NULL;
-	game.parse_data.we.ptr = NULL;
-	game.parse_data.ea.ptr = NULL;
 	game.parse_data.fd = -1;
 	if (parsing(ac, av, &game) != 0)
-		return (free_parse_data(&game), 1);
+		return (1);
 	close(game.parse_data.fd);
 	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cube3d");
 	game.img_ptr = mlx_new_image(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);

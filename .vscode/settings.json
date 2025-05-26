@@ -14,6 +14,7 @@
 		"time.h": "c",
 		"mlx.h": "c",
 		"stddef.h": "c",
-		"header_bonus.h": "c"
+		"header_bonus.h": "c",
+		"utils_bonus.h": "c"
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/23 15:47:55 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/26 13:44:15 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	close_window(t_game *game)
 		mlx_destroy_window(game->mlx, game->win);
 	mlx_destroy_image(game->mlx, game->img_ptr);
 	free_parse_data(game);
+	free_2d(game->map);
 	exit(1);
 }
 
@@ -36,15 +37,8 @@ int	main(int ac, char **av)
 {
 	t_game	game;
 
-	game.mlx = mlx_init();
-	if (!game.mlx)
-		return (1);
-	game.parse_data.no.ptr = NULL;
-	game.parse_data.so.ptr = NULL;
-	game.parse_data.we.ptr = NULL;
-	game.parse_data.ea.ptr = NULL;
 	if (parsing(ac, av, &game) != 0)
-		(free_parse_data(&game), exit(1));
+		return (1);
 	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cube3d");
 	game.img_ptr = mlx_new_image(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	game.addr = mlx_get_data_addr(game.img_ptr, \

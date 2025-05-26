@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:46:53 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/22 10:19:05 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/26 14:39:47 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,16 @@ int	parsing(int ac, char **av, t_game *game)
 	game->parse_data.so.ptr = 0x0;
 	game->parse_data.we.ptr = 0x0;
 	game->parse_data.ea.ptr = 0x0;
+	game->mlx = mlx_init();
+	if (!game->mlx)
+		return (printf("Error: mlx initialization failed\n"), 1);
 	if (load_cardinals_and_colors(game, av) != 0)
-		return (1);
+		(free_parse_data(game), exit(1));
 	if (load_map(game))
-		return (1);
+		(free_parse_data(game), exit (1));
 	if (validate_map(game->map, game->parse_data.height, \
 	game->parse_data.width, game))
-		return (free_2d(game->map), 1);
+		return (free_2d(game->map), close(game->parse_data.fd), \
+		free_parse_data(game), exit(1), 1);
 	return (0);
 }

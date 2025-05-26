@@ -1,17 +1,18 @@
 NAME = cub3D
 BONUS_NAME = cub3D_bonus
 
-FLAGS = -Wall -Werror -Wextra -fsanitize=address
+FLAGS = -Wall -Werror -Wextra
 LINKING = -lmlx -framework OpenGL -framework AppKit
 
 UTILS_MANDATORY = mandatory/utils/ft_strchr.c mandatory/utils/ft_strdup.c \
 	mandatory/utils/ft_strncmp.c mandatory/utils/ft_strlen.c \
-	mandatory/utils/get_next_line.c mandatory/utils/get_next_line_utils.c
+	mandatory/utils/get_next_line.c mandatory/utils/get_next_line_utils.c \
+	mandatory/utils/ft_strtrim.c
 
 UTILS_BONUS = bonus/utils/ft_strchr_bonus.c bonus/utils/ft_strdup_bonus.c \
 	bonus/utils/ft_strncmp_bonus.c bonus/utils/ft_strlen_bonus.c \
 	bonus/utils/get_next_line_bonus.c bonus/utils/get_next_line_utils_bonus.c \
-	bonus/utils/ft_memset_bonus.c
+	bonus/utils/ft_memset_bonus.c bonus/utils/ft_strtrim_bonus.c
 
 HEADERS_MANDATORY = mandatory/header.h mandatory/engine/engine.h \
 	mandatory/parsing/parsing.h mandatory/utils/utils.h \
