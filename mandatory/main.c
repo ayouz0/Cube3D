@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/26 15:13:48 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/26 15:27:26 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	close_window(t_game *game)
 {
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
-	mlx_destroy_image(game->mlx, game->img_ptr);
+	if (game->img_ptr)
+		mlx_destroy_image(game->mlx, game->img_ptr);
 	free_parse_data(game);
 	free_2d(game->map);
 	exit(1);
@@ -47,8 +48,6 @@ int	main(int ac, char **av)
 		close_window(&game);
 	game.addr = mlx_get_data_addr(game.img_ptr, \
 				&game.bits_per_pixel, &game.line_length, &game.endian);
-	if (!game.addr)
-		close_window(&game);
 	init_player(&game.player, &game);
 	init_keys(&game);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
