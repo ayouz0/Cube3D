@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/26 14:58:16 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:04:54 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	close_window(t_game *game)
 	mlx_destroy_image(game->mlx, game->minimap.minimap_img);
 	mlx_destroy_image(game->mlx, game->img_ptr);
 	free_parse_data(game);
+	free_2d(game->map);
 	exit(1);
 }
 
