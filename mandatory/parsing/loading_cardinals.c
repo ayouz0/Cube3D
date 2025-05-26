@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:46:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/23 10:22:52 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/26 14:59:12 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,24 @@ static char	**split_to_first_char(char *str, char sep)
 {
 	char	*second_string;
 	char	**new;
+	char	*trimmed;
 
 	second_string = ft_strchr(str, sep);
 	if (!second_string)
 		return ((char **)str);
 	second_string[0] = '\0';
 	second_string++;
+	second_string[ft_strlen(second_string) - 1] = '\0';
+	trimmed = ft_strtrim(second_string, " ");
+	if (!trimmed)
+		return (NULL);
 	new = malloc(sizeof(char *) * 3);
+	if (!new)
+		return (free(trimmed), NULL);
 	new[0] = ft_strdup(str);
-	new[1] = ft_strdup(second_string);
+	if (!new[0])
+		return (free(trimmed), free(new), NULL);
+	new[1] = trimmed;
 	new[2] = 0x0;
 	return (new);
 }
