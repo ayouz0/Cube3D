@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/26 13:44:15 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:13:48 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,15 @@ int	main(int ac, char **av)
 	if (parsing(ac, av, &game) != 0)
 		return (1);
 	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cube3d");
+	if (!game.win)
+		close_window(&game);
 	game.img_ptr = mlx_new_image(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!game.img_ptr)
+		close_window(&game);
 	game.addr = mlx_get_data_addr(game.img_ptr, \
 				&game.bits_per_pixel, &game.line_length, &game.endian);
+	if (!game.addr)
+		close_window(&game);
 	init_player(&game.player, &game);
 	init_keys(&game);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);

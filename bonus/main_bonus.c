@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/26 15:04:54 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:13:24 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,17 @@ int	main(int ac, char **av)
 		return (1);
 	close(game.parse_data.fd);
 	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cube3d");
+	if (!game.win)
+		close_window(&game);
 	game.img_ptr = mlx_new_image(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!game.img_ptr)
+		close_window(&game);
 	game.addr = mlx_get_data_addr(game.img_ptr, \
 				&game.bits_per_pixel, &game.line_length, &game.endian);
+	if (!game.addr)
+		close_window(&game);
 	if (game_setup(&game))
-		return (destroy_img(&game), exit(1), 1);
+		close_window(&game);
 	print_how_to_use();
 	game_hooks(&game);
 	mlx_loop(game.mlx);
