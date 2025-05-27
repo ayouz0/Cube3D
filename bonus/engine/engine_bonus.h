@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:02:19 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/22 10:27:53 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:20:25 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,6 @@ typedef struct s_game
 	int			has_button;
 	t_minimap	minimap;
 }	t_game;
-// 06011156422
 
 typedef struct s_column_params
 {

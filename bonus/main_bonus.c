@@ -6,7 +6,7 @@
 /*   By: hfhad <hfhad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:00:51 by hfhad             #+#    #+#             */
-/*   Updated: 2025/05/26 15:28:00 by hfhad            ###   ########.fr       */
+/*   Updated: 2025/05/27 12:13:53 by hfhad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	close_window(t_game *game)
 {
+	destroy_img(game);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
-	destroy_img(game);
 	if (game->minimap.minimap_img)
 		mlx_destroy_image(game->mlx, game->minimap.minimap_img);
 	if (game->img_ptr)
@@ -34,7 +34,7 @@ int	game_setup(t_game *game)
 	game->load += init_door(game);
 	game->load += init_light(game);
 	if (game->load)
-		return (destroy_img(game), 1);
+		return (1);
 	return (0);
 }
 
