@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:51:44 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/22 10:18:23 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:36:30 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,11 @@ void	free_parse_data(t_game *game)
 	game->parse_data.so.ptr = NULL;
 	game->parse_data.we.ptr = NULL;
 	game->parse_data.ea.ptr = NULL;
-	close(game->parse_data.fd);
+	if (game->parse_data.fd != -1)
+	{
+		close(game->parse_data.fd);
+		game->parse_data.fd = -1;
+	}
 	exit(1);
 }
 

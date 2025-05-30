@@ -6,7 +6,7 @@
 /*   By: aaitabde <aaitabde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:48:16 by aaitabde          #+#    #+#             */
-/*   Updated: 2025/05/12 20:54:21 by aaitabde         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:39:35 by aaitabde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static int	read_component(char *str, int *i, int *value)
 	count = 0;
 	while (str[*i] >= '0' && str[*i] <= '9')
 	{
+		if (n > 255)
+			return (1);
 		n = n * 10 + (str[*i] - '0');
 		(*i)++;
 		count++;
